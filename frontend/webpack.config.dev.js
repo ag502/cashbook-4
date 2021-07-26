@@ -1,22 +1,22 @@
-const path = require('path')
+const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const BUILD_DIR = path.resolve(__dirname, "dist")
+const BUILD_DIR = path.resolve(__dirname, 'dist');
 
 module.exports = {
-  mode: "development",
-  devtool: "inline-source-map",
+  mode: 'development',
+  devtool: 'inline-source-map',
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "src/"),
+      '@': path.resolve(__dirname, 'src/'),
     },
   },
-  entry: "./src/index.js",
+  entry: './src/index.js',
   output: {
     path: BUILD_DIR,
-    filename: "bundle.js",
-    assetModuleFilename: 'assets/images/[name][ext]'
+    filename: 'bundle.js',
+    assetModuleFilename: 'assets/images/[name][ext]',
   },
   module: {
     rules: [
@@ -24,34 +24,38 @@ module.exports = {
         test: /.js$/,
         exclude: /node_modules/,
         use: [
-          {loader: 'babel-loader', options: {
-            presets: [['@babel/preset-env']]
-          }}
-        ]
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [['@babel/preset-env']],
+            },
+          },
+        ],
       },
       {
         test: /.css$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
         test: /.(png|jpg|jpeg|svg)$/,
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 10 * 1024
-          }
-        }
-      }
-    ]
+            maxSize: 10 * 1024,
+          },
+        },
+      },
+    ],
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: './src/index.html'
-  }),
-  new MiniCssExtractPlugin({
-    filename: 'index.css'
-  })
-],
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+    }),
+    new MiniCssExtractPlugin({
+      filename: 'index.css',
+    }),
+  ],
   devServer: {
-    contentBase: BUILD_DIR
-  }
-}
+    contentBase: BUILD_DIR,
+  },
+};
