@@ -20,7 +20,8 @@ const render = () => {
   }
 
   $app.innerHTML = '';
-  $app.appendChild($page);
+  // $app.appendChild($page);
+  $app.innerHTML = `<main-header></main-header>`;
 };
 
 window.addEventListener('hashchange', render);

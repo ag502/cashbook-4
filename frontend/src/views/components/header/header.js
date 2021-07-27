@@ -1,14 +1,35 @@
 import { prevArrow, nextArrow, fileText, calender, chart } from '../icons';
+import headerController from './controller';
+import observer from '@/common/utils/observer';
+
 import './style.css';
 
 class Header extends HTMLElement {
   constructor() {
     super();
-    // TODO: setting observer & controller
+    this.controller = headerController;
+    this.observer = observer;
+    this.currentMonth = this.controller.getCurrentMonth();
   }
+
   connectedCallback() {
     this.render();
+    this.observer.subscribe(
+      'currentDate-changed',
+      this,
+      this.handleMonthChanged.bind(this)
+    );
   }
+
+  handleMonthChanged = (data) => {
+    this.currentMonth = data.getMonth() + 1;
+    this.render();
+  };
+
+  addEvents = () => {
+    const $prevBtn = this.querySelector('#prev-button');
+    $prevBtn.addEventListener('click', this.controller.handlePrevBtnClick);
+  };
 
   render = () => {
     this.innerHTML = /*html*/ `
@@ -21,10 +42,9 @@ class Header extends HTMLElement {
       </div>
 
       <div class='center'>
-        
         <button id='prev-button'>${prevArrow}</button>
         <div id='time'>
-          <h1 id='current-month'>7월</h1>
+          <h1 id='current-month'>${this.currentMonth}월</h1>
           <span id='current-year'>2021</span>
         </div>
         <button id='next-button'>${nextArrow}</button>
@@ -36,6 +56,8 @@ class Header extends HTMLElement {
         <button>${chart}</button>
       </div>
     `;
+
+    this.addEvents();
   };
 }
 
