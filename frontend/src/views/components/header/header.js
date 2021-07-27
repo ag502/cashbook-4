@@ -9,7 +9,9 @@ class Header extends HTMLElement {
     super();
     this.controller = headerController;
     this.observer = observer;
-    this.currentMonth = this.controller.getCurrentMonth();
+    this.currentDate = this.controller.getCurrentDate();
+    this.currentMonth = this.currentDate.getMonth() + 1;
+    this.currentYear = this.currentDate.getFullYear();
   }
 
   connectedCallback() {
@@ -17,18 +19,22 @@ class Header extends HTMLElement {
     this.observer.subscribe(
       'currentDate-changed',
       this,
-      this.handleMonthChanged.bind(this)
+      this.handleDateChanged
     );
   }
 
-  handleMonthChanged = (data) => {
+  handleDateChanged = (data) => {
     this.currentMonth = data.getMonth() + 1;
+    this.currentYear = data.getFullYear();
     this.render();
   };
 
   addEvents = () => {
     const $prevBtn = this.querySelector('#prev-button');
     $prevBtn.addEventListener('click', this.controller.handlePrevBtnClick);
+
+    const $nextBtn = this.querySelector('#next-button');
+    $nextBtn.addEventListener('click', this.controller.handleNextBtnClick);
   };
 
   render = () => {
@@ -45,7 +51,7 @@ class Header extends HTMLElement {
         <button id='prev-button'>${prevArrow}</button>
         <div id='time'>
           <h1 id='current-month'>${this.currentMonth}월</h1>
-          <span id='current-year'>2021</span>
+          <span id='current-year'>${this.currentYear}</span>
         </div>
         <button id='next-button'>${nextArrow}</button>
       </div>

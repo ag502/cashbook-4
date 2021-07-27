@@ -9,8 +9,12 @@ class HeaderController {
     this.cashBookModel.moveMonth(-1);
   };
 
-  getCurrentMonth() {
-    return this.cashBookModel.getCurrentDate().getMonth() + 1;
+  handleNextBtnClick = () => {
+    this.cashBookModel.moveMonth(+1);
+  };
+
+  getCurrentDate() {
+    return this.cashBookModel.getCurrentDate();
   }
 }
 
