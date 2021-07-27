@@ -1,10 +1,9 @@
+import MainPage from '@/views/pages/mainPage';
+
 const $app = document.querySelector('#app');
 
-const $home = document.createElement('div');
-$home.innerText = 'this is home';
-
 const routes = {
-  '': $home,
+  '': new MainPage(),
 };
 
 const render = () => {
