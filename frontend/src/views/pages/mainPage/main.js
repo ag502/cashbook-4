@@ -1,4 +1,4 @@
-import Header from '@/views/components/header.js';
+import Header from '@/views/components/header/header.js';
 
 class MainPage extends HTMLElement {
   constructor() {
