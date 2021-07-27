@@ -22,16 +22,16 @@ class Header extends HTMLElement {
 
       <div class='center'>
         
-        <button id="prev-button">${prevArrow}</button>
-        <div>
-          <h1>7월</h1>
-          <span>2021</span>
+        <button id='prev-button'>${prevArrow}</button>
+        <div id='time'>
+          <h1 id='current-month'>7월</h1>
+          <span id='current-year'>2021</span>
         </div>
-        <button id="next-button">${nextArrow}</button>
+        <button id='next-button'>${nextArrow}</button>
       </div>
 
       <div class='right'>
-        <button>${fileText}</button>
+        <button class="active">${fileText}</button>
         <button>${calender}</button>
         <button>${chart}</button>
       </div>
