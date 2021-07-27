@@ -4,6 +4,11 @@
     url('@/assets/fonts/NotoSansKR-Medium.otf');
 }
 
+@font-face {
+  font-family: DoHyeon;
+  src: url('@/assets/fonts/DoHyeon-Regular.ttf');
+}
+
 :root {
   --title-active: #1e2222;
   --body: #626666;
@@ -33,4 +38,6 @@
   --bold-small: normal bold 12px/16px defaulFont;
   --bold-medium: normal bold 14px/24px defaultFont;
   --bold-large: normal bold 16px/24px defaultFont;
+  --display-small: normal normal 24px/24px dohyeon;
+  --display-large: normal normal 48px/56px dohyeon;
 }

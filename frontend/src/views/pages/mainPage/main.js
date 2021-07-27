@@ -3,6 +3,7 @@ import Header from '@/views/components/header/header.js';
 class MainPage extends HTMLElement {
   constructor() {
     super();
+    this.style.display = 'block';
     // TODO: setting observer & controller
   }
 
