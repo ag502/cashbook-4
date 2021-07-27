@@ -45,6 +45,13 @@ module.exports = {
           },
         },
       },
+      {
+        test: /.(ttf|otf)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name][ext]',
+        },
+      },
     ],
   },
   plugins: [

@@ -1,5 +1,8 @@
 import MainPage from '@/views/pages/mainPage';
 
+import '@/common/styles/normalize.css';
+import '@/common/styles/global.css';
+
 const $app = document.querySelector('#app');
 
 const routes = {
