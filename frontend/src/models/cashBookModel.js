@@ -6,12 +6,10 @@ class CashBookModel {
     this.observer = observer;
     this.currentDate = null;
     this.records = [];
-    console.log('cash book construct');
     this.init();
   }
 
   init = async () => {
-    console.log('init data');
     this.currentDate = new Date();
     this.records = await this._fetchRecordsByMonth();
     this.observer.notify('model-init');

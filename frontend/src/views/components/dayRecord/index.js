@@ -12,7 +12,6 @@ class DayRecord extends HTMLElement {
     super();
 
     this.date = new Date(Number(date));
-    console.log(this.date);
     this.records = records;
 
     this.totalIncome = 0;
@@ -43,8 +42,18 @@ class DayRecord extends HTMLElement {
             </div>
 
             <div class="right">
-                <span>수입 ${this.totalIncome}</span>
-                <span>지출 ${this.totalExpenditure}</span>
+                ${
+                  this.totalIncome > 0
+                    ? `<span>수입 ${this.totalIncome}</span>`
+                    : ``
+                }
+                ${
+                  this.totalExpenditure > 0
+                    ? `<span>지출 ${this.totalExpenditure}</span>`
+                    : ``
+                }
+                  
+                
             </div>
         </div>
 

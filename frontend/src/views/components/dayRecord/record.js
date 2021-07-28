@@ -1,3 +1,20 @@
+const getCategoryString = (category) => {
+  const categories = [
+    '월급',
+    '용돈',
+    '기타수입',
+    '생활',
+    '식비',
+    '교통',
+    '쇼핑/뷰티',
+    '의료/건강',
+    '문화/여가',
+    '미분류',
+  ];
+  const categoryNumber = Number(category);
+  return categories[categoryNumber - 1];
+};
+
 class Record extends HTMLElement {
   constructor(recordInfo) {
     super();
@@ -11,8 +28,8 @@ class Record extends HTMLElement {
   render = () => {
     this.innerHTML = /*html*/ `
         <div class="left">
-            <div class="category category1">
-                ${this.recordInfo.category}
+            <div class="category category${this.recordInfo.category}">
+                ${getCategoryString(this.recordInfo.category)}
             </div>
 
             <p class="context">

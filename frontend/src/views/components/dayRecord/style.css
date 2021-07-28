@@ -56,6 +56,33 @@ record-item .category {
 record-item .category.category1 {
   background-color: var(--category1);
 }
+record-item .category.category2 {
+  background-color: var(--category2);
+}
+record-item .category.category3 {
+  background-color: var(--category3);
+}
+record-item .category.category4 {
+  background-color: var(--category4);
+}
+record-item .category.category5 {
+  background-color: var(--category5);
+}
+record-item .category.category6 {
+  background-color: var(--category6);
+}
+record-item .category.category7 {
+  background-color: var(--category7);
+}
+record-item .category.category8 {
+  background-color: var(--category8);
+}
+record-item .category.category9 {
+  background-color: var(--category9);
+}
+record-item .category.category10 {
+  background-color: var(--category10);
+}
 
 record-item .context {
   width: 100%;
