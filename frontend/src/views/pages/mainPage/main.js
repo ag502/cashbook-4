@@ -1,4 +1,5 @@
-import Header from '@/views/components/header/header.js';
+import Header from '@/views/components/header/header';
+import HistoryContainer from '@/views/components/historyContainer/historyContainer';
 
 class MainPage extends HTMLElement {
   constructor() {
@@ -11,7 +12,10 @@ class MainPage extends HTMLElement {
     // TODO : observer event subscrib & controller init
 
     const header = new Header();
+    const historyContainer = new HistoryContainer();
+    console.log('before attach');
     this.appendChild(header);
+    this.appendChild(historyContainer);
     // content
   }
 }

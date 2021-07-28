@@ -1,0 +1,32 @@
+history-statics {
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  height: 76px;
+  padding: 16px;
+  background-color: var(--off-white);
+}
+
+history-statics > form {
+  display: flex;
+  padding-left: 16px;
+}
+
+history-statics > form > div {
+  width: 104px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-input-box label {
+  font: var(--bold-small);
+  color: var(--primary3);
+}
+
+.date-input-box input {
+  width: 100%;
+}
