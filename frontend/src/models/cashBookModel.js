@@ -20,7 +20,7 @@ class CashBookModel {
     this.observer.notify('currentDate-changed', this.currentDate);
   };
 
-  _fetchRecordsByMonth = () => {
+  _fetchRecordsByMonth = (month = this.currentDate.getMonth() - 1) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(records);
