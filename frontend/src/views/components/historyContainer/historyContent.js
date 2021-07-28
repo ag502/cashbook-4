@@ -1,59 +1,38 @@
 import historyContainerController from './controller';
+import observer from '@/common/utils/observer';
+import DayRecord from '@/views/components/DayRecord';
 
 class HistoryContent extends HTMLElement {
   constructor() {
     super();
     this.controller = historyContainerController;
+    this.observer = observer;
+    this.dayRecords = [];
   }
 
   connectedCallback() {
     this.render();
+    this.observer.subscribe('model-init', this, this.handleModelInit);
   }
 
+  handleModelInit = () => {
+    this.dayRecords = this.controller.getDayRecords();
+    this.render();
+  };
+
   render = () => {
-    this.innerHTML = /*html*/ `
+    // 내림차순 정렬
+    const dayRecordKeys = Object.keys(this.dayRecords).sort((a, b) => {
+      return b - a;
+    });
 
-        <div class="day-records">
-            <div class="info">
-                <div class="left">
-                    <span class="date">
-                        7월 15일
-                    </span>
-                    <span class="day">
-                        목
-                    </span>
-                </div>
+    dayRecordKeys.forEach((dayRecordKey) => {
+      const $dayRecord = new DayRecord({
+        records: this.dayRecords[dayRecordKey],
+      });
 
-                <div class="right">
-                    <span>수입 1,822,480</span>
-                    <span>지출 9,500</span>
-                </div>
-            </div>
-
-            <div class="record-list">
-                <div class="record"> 
-                    <div class="left">
-                        <div class="category category1">
-                            생활
-                        </div>
-
-                        <p class="context">
-                            7월 월세
-                        </p>
-                    </div>
-                    <div class="right">
-                        <div class="payment">
-                            현대카드
-                        </div>
-                        <div class="price">
-                            -500,000 원
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-    `;
+      this.appendChild($dayRecord);
+    });
   };
 }
 

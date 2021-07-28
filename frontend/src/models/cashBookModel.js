@@ -1,14 +1,20 @@
 import observer from '@/common/utils/observer';
+import records from './mockDatas';
 
 class CashBookModel {
   constructor() {
     this.observer = observer;
     this.currentDate = null;
+    this.records = [];
+    console.log('cash book construct');
     this.init();
   }
 
-  init = () => {
+  init = async () => {
+    console.log('init data');
     this.currentDate = new Date();
+    this.records = await this._fetchRecordsByMonth();
+    this.observer.notify('model-init');
   };
 
   moveMonth = (monthCount) => {
@@ -16,8 +22,20 @@ class CashBookModel {
     this.observer.notify('currentDate-changed', this.currentDate);
   };
 
+  _fetchRecordsByMonth = () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve(records);
+      });
+    }, 100);
+  };
+
   getCurrentDate = () => {
     return this.currentDate;
+  };
+
+  getRecords = () => {
+    return this.records;
   };
 }
 
