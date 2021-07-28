@@ -13,6 +13,7 @@ class CalendarStatistic extends HTMLElement {
 
   connectedCallback() {
     this.observer.subscribe('fetch-data', this, this.handleFetchdata);
+    this.observer.subscribe('currentDate-changed', this, this.handleFetchdata);
     this.render();
   }
 

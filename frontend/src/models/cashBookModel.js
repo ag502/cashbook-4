@@ -1,5 +1,5 @@
 import observer from '@/common/utils/observer';
-import data from './api';
+import { seven, eight } from './api';
 
 class CashBookModel {
   constructor() {
@@ -11,21 +11,29 @@ class CashBookModel {
 
   init = async () => {
     this.currentDate = new Date();
-    this.paymentInfo = await this._fecthPaymentInfo();
-    observer.notify('fetch-data');
+    this.paymentInfo = await this._fecthPaymentInfo(7);
+    this.observer.notify('fetch-data');
   };
 
-  _fecthPaymentInfo = () => {
+  _fecthPaymentInfo = (type = 7) => {
     return new Promise((resovle, reject) => {
       setTimeout(() => {
-        resovle(data);
+        if (type === 7) {
+          resovle(seven);
+        } else {
+          resovle(eight);
+        }
       }, 1000);
     });
   };
 
-  moveMonth = (monthCount) => {
+  moveMonth = async (monthCount) => {
     this.currentDate.setMonth(this.currentDate.getMonth() + monthCount);
     this.observer.notify('currentDate-changed', this.currentDate);
+    this.paymentInfo = await this._fecthPaymentInfo(
+      this.currentDate.getMonth() + 1 === 8 ? 8 : 7
+    );
+    this.observer.notify('fetch-data', this.paymentInfo);
   };
 
   getCurrentDate = () => {

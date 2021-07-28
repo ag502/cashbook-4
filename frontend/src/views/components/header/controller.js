@@ -1,16 +1,16 @@
-import cashBookModel from '@/models/CashBookModel';
+import cashBookModel from '@/models/cashBookModel';
 
 class HeaderController {
   constructor() {
     this.cashBookModel = cashBookModel;
   }
 
-  handlePrevBtnClick = () => {
-    this.cashBookModel.moveMonth(-1);
+  handlePrevBtnClick = async () => {
+    await this.cashBookModel.moveMonth(-1);
   };
 
-  handleNextBtnClick = () => {
-    this.cashBookModel.moveMonth(+1);
+  handleNextBtnClick = async () => {
+    await this.cashBookModel.moveMonth(+1);
   };
 
   getCurrentDate() {

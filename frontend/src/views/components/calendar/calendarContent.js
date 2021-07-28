@@ -17,8 +17,12 @@ class CalendarContent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    observer.subscribe('fetch-data', this, this.handlefetchedData);
-    observer.subscribe('currentDate-changed', this, this.render);
+    this.observer.subscribe('fetch-data', this, this.handlefetchedData);
+    this.observer.subscribe(
+      'currentDate-changed',
+      this,
+      this.handlefetchedData
+    );
   }
 
   handlefetchedData = () => {

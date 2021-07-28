@@ -31,10 +31,14 @@ class Header extends HTMLElement {
 
   addEvents = () => {
     const $prevBtn = this.querySelector('#prev-button');
-    $prevBtn.addEventListener('click', this.controller.handlePrevBtnClick);
+    $prevBtn.addEventListener('click', async () => {
+      await this.controller.handlePrevBtnClick();
+    });
 
     const $nextBtn = this.querySelector('#next-button');
-    $nextBtn.addEventListener('click', this.controller.handleNextBtnClick);
+    $nextBtn.addEventListener('click', async () => {
+      this.controller.handleNextBtnClick();
+    });
   };
 
   render = () => {
