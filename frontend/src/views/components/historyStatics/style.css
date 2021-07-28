@@ -1,32 +1,47 @@
 history-statics {
   display: flex;
-  position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(-50%);
+  width: 904px;
   height: 76px;
-  padding: 16px;
+  padding: 16px 0;
   background-color: var(--off-white);
+  border: 1px solid var(--place-holder);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 0 auto;
 }
 
 history-statics > form {
   display: flex;
-  padding-left: 16px;
+  width: 100%;
+  padding-left: 8px;
 }
 
-history-statics > form > div {
+.date-input-box {
   width: 104px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-right: 2px solid var(--place-holder);
+  padding-left: 24px;
 }
 
 .date-input-box label {
   font: var(--bold-small);
   color: var(--primary3);
+  width: 80px;
+  background-color: inherit;
 }
 
 .date-input-box input {
-  width: 100%;
+  width: 80px;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.date-input-box input::placeholder {
+  color: var(--place-holder);
 }

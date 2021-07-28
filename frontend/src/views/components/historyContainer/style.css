@@ -1,8 +1,17 @@
-.history-controller {
+history-container {
   display: flex;
   width: 100%;
   flex-direction: column;
   justify-content: center;
   padding: 92px;
   position: relative;
+}
+
+.history-statics-fixer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 38px;
+  background-color: var(--primary1);
+  left: 0;
 }
