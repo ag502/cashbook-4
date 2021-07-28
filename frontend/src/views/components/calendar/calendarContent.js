@@ -1,19 +1,30 @@
 import headerController from '../header/controller';
+import calendarController from './controller';
 import observer from '@/common/utils/observer';
 import './style.css';
 
 class CalendarContent extends HTMLElement {
   constructor() {
-    super('test');
+    super();
     this.controller = headerController;
+    this.calendarController = calendarController;
+
     this.observer = observer;
+    this.paymentInfo = null;
     this.currentDate = this.controller.getCurrentDate();
   }
 
   connectedCallback() {
     this.render();
+    observer.subscribe('fetch-data', this, this.handlefetchedData);
     observer.subscribe('currentDate-changed', this, this.render);
   }
+
+  handlefetchedData = () => {
+    this.paymentInfo = this.calendarController.getCurrentPaymentInfo();
+    console.log(this.paymentInfo);
+    this.render();
+  };
 
   getLastDay = () => {
     const [curYear, curMonth] = [
