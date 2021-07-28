@@ -52,6 +52,10 @@ calendar-content {
   color: var(--error);
 }
 
+.calendar-cell.today {
+  background-color: var(--background);
+}
+
 .calendar-date {
   text-align: right;
   font: var(--bold-medium);

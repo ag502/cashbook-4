@@ -1,7 +1,11 @@
 import headerController from '../header/controller';
 import calendarController from './controller';
 import observer from '@/common/utils/observer';
-import { appendZero, checkUndefined } from '@/common/utils/functions';
+import {
+  appendZero,
+  checkUndefined,
+  parsingDate,
+} from '@/common/utils/functions';
 import './style.css';
 
 class CalendarContent extends HTMLElement {
@@ -80,11 +84,12 @@ class CalendarContent extends HTMLElement {
 
   render = () => {
     const calendarDates = this.composeCalender();
+    const today = parsingDate(new Date());
     this.innerHTML = /*html*/ `
       ${calendarDates
         .map(
           (date) => /*html*/ `
-          <div class='calendar-cell'>
+          <div class='calendar-cell ${today === date ? 'today' : ''}'>
             <div class='date-info'>${this.paymentInfo(date)}</div>
             <div class='calendar-date'>${date.slice(-2)}</div>
           </div>
