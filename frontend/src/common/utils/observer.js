@@ -9,13 +9,9 @@ class Observer {
     }
 
     this.subscribers[name].push({
-      name,
       context,
       cb,
     });
-
-    console.log(`subscribers`);
-    console.log(this.subscribers);
   };
 
   unsubscribe = (name, context) => {
