@@ -6,3 +6,10 @@ export const appendZero = (number) => {
 export const checkUndefined = (value, replaceValue, returnValue = null) => {
   return !value ? replaceValue : !returnValue ? value : returnValue;
 };
+
+export const parsingDate = (date) => {
+  const curDate = new Date(date);
+  return `${curDate.getFullYear()}${appendZero(
+    curDate.getMonth() + 1
+  )}${appendZero(curDate.getDate())}`;
+};
