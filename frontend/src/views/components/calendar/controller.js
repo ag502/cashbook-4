@@ -7,11 +7,25 @@ class CalendarController {
 
   getCurrentPaymentInfo = () => {
     const paymentInfoPerDay = {};
-    // let
-    // this.cashBookModel.getCurrentPaymentInfo().forEach(({date, price}) => {
+    let totalIncome = 0;
+    let totalExpenditure = 0;
+    this.cashBookModel.getCurrentPaymentInfo().forEach(({ date, price }) => {
+      if (!paymentInfoPerDay[date]) {
+        paymentInfoPerDay[date] = { income: 0, expenditure: 0 };
+      }
+      if (price < 0) {
+        paymentInfoPerDay[date].expenditure += price;
+        totalExpenditure += price;
+      } else {
+        paymentInfoPerDay[date].income += price;
+        totalIncome += price;
+      }
+    });
 
-    // })
-    return this.cashBookModel.getPaymentInfo();
+    paymentInfoPerDay.totalIncome = totalIncome;
+    paymentInfoPerDay.totalExpenditure = totalExpenditure;
+
+    return paymentInfoPerDay;
   };
 }
 

@@ -40,6 +40,18 @@ calendar-content {
   border-bottom: 1px solid var(--line);
 }
 
+.date-info {
+  font: var(--body-regular);
+}
+
+.date-info .income {
+  color: var(--primary3);
+}
+
+.date-info .expenditure {
+  color: var(--error);
+}
+
 .calendar-date {
   text-align: right;
   font: var(--bold-medium);

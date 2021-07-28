@@ -5,7 +5,7 @@ class CashBookModel {
   constructor() {
     this.observer = observer;
     this.currentDate = null;
-    this.paymentInfo = null;
+    this.paymentInfo = [];
     this.init();
   }
 
@@ -32,7 +32,7 @@ class CashBookModel {
     return this.currentDate;
   };
 
-  getPaymentInfo = () => {
+  getCurrentPaymentInfo = () => {
     return this.paymentInfo;
   };
 }
