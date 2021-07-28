@@ -36,7 +36,7 @@
   --body-medium: normal normal 18px/24px defaultFont;
   --body-large: normal normal 22px/32px defaultFont;
   --bold-small: normal bold 12px/16px defaulFont;
-  --bold-medium: normal bold 14px/24px defaultFont;
+  --bold-medium: normal 500 14px/24px defaultFont;
   --bold-large: normal bold 16px/24px defaultFont;
   --display-small: normal normal 24px/24px dohyeon;
   --display-large: normal normal 48px/56px dohyeon;
