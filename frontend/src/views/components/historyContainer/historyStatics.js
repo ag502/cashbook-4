@@ -1,10 +1,10 @@
 import { check, iconButton } from '../icons';
-import headerController from './controller';
+import historyContainerController from './controller';
 
 class HistoryStatics extends HTMLElement {
   constructor() {
     super();
-    this.controller = headerController;
+    this.controller = historyContainerController;
     this.currentDate = this.controller.getCurrentDate();
 
     this.currentYear = this.currentDate.getFullYear();

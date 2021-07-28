@@ -1,6 +1,6 @@
 import cashBookModel from '@/models/CashBookModel';
 
-class HeaderController {
+class HistoryContainerController {
   constructor() {
     this.cashBookModel = cashBookModel;
   }
@@ -10,4 +10,4 @@ class HeaderController {
   }
 }
 
-export default new HeaderController();
+export default new HistoryContainerController();

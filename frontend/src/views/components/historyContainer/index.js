@@ -1,5 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import HistoryStatics from './historyStatics'; // this can use history-statics tag in inner html
+// eslint-disable-next-line no-unused-vars
+import HistoryContent from './historyContent'; // this can use history-content tag in inner html
 
 import './style.css';
 
@@ -16,6 +18,7 @@ class HistoryContainer extends HTMLElement {
     this.innerHTML = /*html*/ `
       <div class="history-statics-fixer">
         <history-statics></history-statics>
+        <history-content></history-content>
       </div>
       
     `;

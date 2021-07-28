@@ -98,3 +98,13 @@ history-statics .check-box > svg > path {
 .cost-content > input {
   text-align: right;
 }
+
+history-content {
+  width: 100%;
+  max-width: 904px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-grow: 1;
+  margin: 0 auto;
+}
