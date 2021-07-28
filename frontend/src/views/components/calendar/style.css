@@ -57,3 +57,23 @@ calendar-content {
   font: var(--bold-medium);
   color: var(--line);
 }
+
+calendar-statistic {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  margin-top: 20px;
+  color: var(--place-holder);
+}
+
+calendar-statistic .left {
+  display: flex;
+}
+
+calendar-statistic .left div:not(:last-of-type) {
+  margin-right: 8px;
+}
+
+calendar-statistic span:not(:last-of-type) {
+  margin-right: 8px;
+}
