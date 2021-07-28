@@ -1,0 +1,55 @@
+main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28px;
+  background-color: var(--primary1);
+  height: 146px;
+  color: var(--off-white);
+}
+
+main-header .left {
+  font: var(--display-small);
+}
+
+main-header .center {
+  display: flex;
+  align-items: center;
+}
+
+.center button {
+  width: 24px;
+  height: 24px;
+}
+
+.center #time {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 52px;
+}
+
+#time #current-month {
+  font: var(--display-large);
+}
+
+#time #current-year {
+  font: var(--display-small);
+}
+
+main-header .right {
+  display: flex;
+  justify-content: space-around;
+}
+
+.right button {
+  margin-left: 26px;
+}
+
+.right button.active svg path {
+  stroke: var(--off-white);
+}
+
+.right button svg path {
+  stroke: #a0e1e0;
+}

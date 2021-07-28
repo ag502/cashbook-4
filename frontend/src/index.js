@@ -1,10 +1,12 @@
+import MainPage from '@/views/pages/mainPage';
+
+import '@/common/styles/normalize.css';
+import '@/common/styles/global.css';
+
 const $app = document.querySelector('#app');
 
-const $home = document.createElement('div');
-$home.innerText = 'this is home';
-
 const routes = {
-  '': $home,
+  '': new MainPage(),
 };
 
 const render = () => {
@@ -18,7 +20,8 @@ const render = () => {
   }
 
   $app.innerHTML = '';
-  $app.appendChild($page);
+  // $app.appendChild($page);
+  $app.innerHTML = `<main-header></main-header>`;
 };
 
 window.addEventListener('hashchange', render);
