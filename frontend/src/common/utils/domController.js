@@ -1,4 +1,4 @@
-export const $ = {
+export default {
   create: (tag) => {
     return document.createElement(tag);
   },
