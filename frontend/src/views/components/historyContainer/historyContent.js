@@ -28,6 +28,7 @@ class HistoryContent extends HTMLElement {
 
     dayRecordKeys.forEach((dayRecordKey) => {
       const $dayRecord = new DayRecord({
+        date: dayRecordKey,
         records: this.dayRecords[dayRecordKey],
       });
 

@@ -2,9 +2,17 @@ import './style.css';
 
 import Record from './record';
 
+const getDayString = (dayNumber) => {
+  const days = ['일', '월', '화', '수', '목', '금', '토'];
+  return days[dayNumber];
+};
+
 class DayRecord extends HTMLElement {
-  constructor({ records }) {
+  constructor({ date, records }) {
     super();
+
+    this.date = new Date(Number(date));
+    console.log(this.date);
     this.records = records;
 
     this.totalIncome = 0;
@@ -27,10 +35,10 @@ class DayRecord extends HTMLElement {
         <div class="info">
             <div class="left">
                 <span class="date">
-                    7월 15일
+                  ${this.date.getMonth() + 1}월 ${this.date.getDate()}일
                 </span>
                 <span class="day">
-                    목
+                  ${getDayString(this.date.getDay())}
                 </span>
             </div>
 
