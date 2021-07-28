@@ -15,3 +15,86 @@ history-container {
   background-color: var(--primary1);
   left: 0;
 }
+
+history-statics {
+  display: flex;
+  top: 0;
+  width: 904px;
+  height: 76px;
+  padding: 16px 0;
+  background-color: var(--off-white);
+  border: 1px solid var(--place-holder);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+history-statics > form {
+  display: flex;
+  width: 100%;
+  padding-left: 8px;
+}
+
+.history-input-box {
+  width: 144px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid var(--place-holder);
+  padding: 0 24px;
+}
+.history-input-box:first-child {
+  width: 124px;
+}
+.history-input-box.cash {
+  border: none;
+  width: 194px;
+}
+
+.history-input-box.context {
+  width: 220px;
+}
+
+history-statics .check-box {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--primary1);
+  border-radius: 10px;
+}
+
+history-statics .check-box > svg > path {
+  stroke: var(--primary1);
+}
+
+.history-input-box label {
+  font: var(--bold-small);
+  color: var(--primary3);
+  width: 100%;
+  background-color: inherit;
+}
+
+.history-input-box input {
+  width: 100%;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.history-input-box input::placeholder {
+  color: var(--place-holder);
+}
+
+.history-input-box.cash .cost-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cost-content > input {
+  text-align: right;
+}

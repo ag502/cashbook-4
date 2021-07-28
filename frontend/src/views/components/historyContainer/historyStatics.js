@@ -1,6 +1,5 @@
 import { check, iconButton } from '../icons';
 import headerController from './controller';
-import './style.css';
 
 class HistoryStatics extends HTMLElement {
   constructor() {
@@ -16,7 +15,6 @@ class HistoryStatics extends HTMLElement {
       this.currentYear +
       (this.currentMonth < 10 ? '0' + this.currentMonth : this.currentMonth) +
       (this.currentDate < 10 ? '0' + this.currentDate : this.currentDate);
-    console.log(this.todayString);
   }
 
   connectedCallback() {
@@ -27,7 +25,7 @@ class HistoryStatics extends HTMLElement {
     this.innerHTML =
       /*html*/ `
         <form>
-            <div class="date-input-box">
+            <div class="history-input-box">
                 <label>일자</label>
                 <input type="text" name="time" value=` +
       `${this.todayString}` +
@@ -35,29 +33,29 @@ class HistoryStatics extends HTMLElement {
             </div>
                 
 
-            <div class="date-input-box">
+            <div class="history-input-box">
                 <label>분류</label>
                 <button id="select-category-button">선택하세요</button>
             </div>
 
 
-            <div class="date-input-box">
+            <div class="history-input-box context">
                 <label>내용</label>
                 <input type="text" name="context" placeholder="입력하세요">
             </div>
 
 
-            <div class="date-input-box">
+            <div class="history-input-box">
                 <label>결제수단</label>
                 <button id="select-payment-button">선택하세요</button>
             </div>
 
 
-            <div class="date-input-box">
+            <div class="history-input-box cash">
                 <label>금액</label>
                 <div class="cost-content">
                     ${iconButton}
-                    <input type="number" placholder="입력하세요">원
+                    <input type="number" placholder="입력하세요">&nbsp;원
                 </div>
             </div>
 

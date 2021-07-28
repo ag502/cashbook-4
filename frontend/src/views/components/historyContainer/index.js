@@ -1,5 +1,5 @@
 // eslint-disable-next-line no-unused-vars
-import HistoryStatics from '@/views/components/historyStatics/historyStatics'; // this can use history-statics tag in inner html
+import HistoryStatics from './historyStatics'; // this can use history-statics tag in inner html
 
 import './style.css';
 
