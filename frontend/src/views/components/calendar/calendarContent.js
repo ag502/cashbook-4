@@ -1,7 +1,7 @@
 import headerController from '../header/controller';
 import calendarController from './controller';
 import observer from '@/common/utils/observer';
-import { appendZero } from '@/common/utils/functions';
+import { appendZero, checkUndefined } from '@/common/utils/functions';
 import './style.css';
 
 class CalendarContent extends HTMLElement {
@@ -60,16 +60,16 @@ class CalendarContent extends HTMLElement {
     }
     const { income, expenditure } = this.curPaymentInfo[date];
     return /*html*/ `
-      ${
-        income !== 0
-          ? `<div class='income'>${income.toLocaleString()}</div>`
-          : ''
-      }
-      ${
-        expenditure !== 0
-          ? `<div class='expenditure'>${expenditure.toLocaleString()}</div>`
-          : ''
-      }
+      ${checkUndefined(
+        income,
+        '',
+        `<div class='income'>${income.toLocaleString()}</div>`
+      )}
+      ${checkUndefined(
+        expenditure,
+        '',
+        `<div class='expenditure'>${expenditure.toLocaleString()}</div>`
+      )}
       <div class='total'>${(income + expenditure).toLocaleString()}</div>
     `;
   };
