@@ -9,7 +9,7 @@ class CalendarHeader extends HTMLElement {
     this.innerHTML = /*html*/ `
       <div class='calendar-header'>
         ${dates
-          .map((date) => `<div class='calendar-date'>${date}</div>`)
+          .map((date) => `<div class='calendar-day'>${date}</div>`)
           .join('')}
       </div>
     `;

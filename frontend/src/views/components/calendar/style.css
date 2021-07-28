@@ -1,22 +1,32 @@
+calendar-container {
+  display: block;
+  width: 848px;
+  margin: -25px auto 0 auto;
+}
+
 .calendar-header {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   align-items: center;
+  background-color: var(--off-white);
   height: 48px;
+  margin-bottom: 16px;
   font: var(--body-regular);
-  color: var(--label);
   text-align: center;
+  color: var(--label);
   border: 1px solid var(--line);
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-cashbook-calendar {
+calendar-content {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  overflow: hidden;
   border-top: 1px solid var(--line);
-  border-left: 1pxl solid var(--line);
+  border-left: 1px solid var(--line);
   border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .calendar-cell {

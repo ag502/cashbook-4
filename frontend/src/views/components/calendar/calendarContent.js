@@ -1,10 +1,8 @@
-import CalendarHeader from './calendarHeader';
-import $ from '@/common/utils/domController';
 import headerController from '../header/controller';
 import observer from '@/common/utils/observer';
 import './style.css';
 
-class Calendar extends HTMLElement {
+class CalendarContent extends HTMLElement {
   constructor() {
     super('test');
     this.controller = headerController;
@@ -60,6 +58,6 @@ class Calendar extends HTMLElement {
   };
 }
 
-customElements.define('cashbook-calendar', Calendar);
+customElements.define('calendar-content', CalendarContent);
 
-export default customElements.get('cashbook-calendar');
+export default customElements.get('calendar-content');

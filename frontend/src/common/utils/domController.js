@@ -25,6 +25,11 @@ Element.prototype.addId = function (id) {
   return this;
 };
 
+Element.prototype.addElement = function (element) {
+  this.appendChild(element);
+  return this;
+};
+
 Element.prototype.setText = function (text) {
   this.innerText = text;
   return this;

@@ -1,5 +1,5 @@
 import Header from '@/views/components/header/header.js';
-import Calendar from '@/views/components/calendar';
+import Calendar from '@/views/components/calendar/index.js';
 
 class MainPage extends HTMLElement {
   constructor() {
