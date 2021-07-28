@@ -1,5 +1,6 @@
 import calendarController from './controller';
 import observer from '@/common/utils/observer';
+import { checkUndefined } from '@/common/utils/functions';
 
 class CalendarStatistic extends HTMLElement {
   constructor() {
@@ -7,7 +8,7 @@ class CalendarStatistic extends HTMLElement {
     this.calendarController = calendarController;
     this.observer = observer;
 
-    this.currentPaymentInfo = [];
+    this.currentPaymentInfo = {};
   }
 
   connectedCallback() {
@@ -21,20 +22,24 @@ class CalendarStatistic extends HTMLElement {
   };
 
   render = () => {
+    const { totalIncome, totalExpenditure } = this.currentPaymentInfo;
     this.setHTML(/*html*/ `
       <div class='left'>
         <div class='total-income'>
           <span>총 수입</span>
-          <span>1822480</span>
+          <span>${checkUndefined(totalIncome, 0).toLocaleString()}</span>
         </div>
         <div class='total-expenditure'>
           <span>총 지출</span>
-          <span>834640</span>
+          <span>${checkUndefined(-totalExpenditure, 0).toLocaleString()}</span>
         </div>
       </div>
       <div class='right'>
         <span>총계</span>
-        <span>987840</span>
+        <span>${checkUndefined(
+          totalIncome + totalExpenditure,
+          0
+        ).toLocaleString()}</span>
       </div>
     `);
   };
