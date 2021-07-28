@@ -1,11 +1,12 @@
 import CalendarHeader from './calendarHeader';
+import $ from '@/common/utils/domController';
 import headerController from '../header/controller';
 import observer from '@/common/utils/observer';
 import './style.css';
 
 class Calendar extends HTMLElement {
   constructor() {
-    super();
+    super('test');
     this.controller = headerController;
     this.observer = observer;
     this.currentDate = this.controller.getCurrentDate();
@@ -13,7 +14,7 @@ class Calendar extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    observer.subscribe('currentDate-changed', this, this.composeCalender);
+    observer.subscribe('currentDate-changed', this, this.render);
   }
 
   getLastDay = () => {
@@ -41,7 +42,19 @@ class Calendar extends HTMLElement {
   };
 
   render = () => {
-    this.innerHTML = `<calendar-header></calendar-header>`;
+    const calendarDates = this.composeCalender();
+    this.innerHTML = /*html*/ `
+      ${calendarDates
+        .map(
+          (date) => /*html*/ `
+          <div class='calendar-cell'>
+            <div class='cash-info'>TEST</div>
+            <div class='calendar-date'>${date}</div>
+          </div>
+        `
+        )
+        .join('')}
+    `;
 
     this.composeCalender();
   };
