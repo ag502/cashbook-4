@@ -139,6 +139,10 @@ history-statics .right button {
 
 history-statics .right {
   font: var(--body-medium);
+  color: var(--label);
+}
+
+history-statics .right div.active {
   color: var(--primary3);
 }
 
@@ -146,4 +150,5 @@ history-statics .right > div {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }

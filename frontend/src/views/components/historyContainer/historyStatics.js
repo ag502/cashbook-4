@@ -23,6 +23,11 @@ class HistoryStatics extends HTMLElement {
       this,
       this.handleFetchedData
     );
+    this.observer.subscribe(
+      notifyTypes.CHANGED_RECORD_DATA,
+      this,
+      this.handleDataChanged
+    );
   }
 
   handleFetchedData = () => {
@@ -35,15 +40,17 @@ class HistoryStatics extends HTMLElement {
     this.render();
   };
 
+  handleDataChanged = () => {
+    this.render();
+  };
+
   handleIncomeDisplayToggle = () => {
-    console.log('income toggle');
     this.isIncomeChecked = !this.isIncomeChecked;
     const currentOptions = this.controller.getRecordIncludeOptions();
     currentOptions.income = this.isIncomeChecked;
     this.controller.setRecordIncludeOptions(currentOptions);
   };
   handleExpenditureDisplayToggle = () => {
-    console.log('expenditure toggle');
     this.isExpenditureChecked = !this.isExpenditureChecked;
     const currentOptions = this.controller.getRecordIncludeOptions();
     currentOptions.expenditure = this.isExpenditureChecked;
@@ -76,8 +83,10 @@ class HistoryStatics extends HTMLElement {
         </div>
 
         <div class="right">
-          <div class="income ${this.isIncomeChecked === true ? 'active' : ''}">
-            <button id="income-display-toggle-btn">${
+          <div class="income ${
+            this.isIncomeChecked === true ? 'active' : ''
+          }" id="income-display-toggle-btn">
+            <button>${
               this.isIncomeChecked === true
                 ? saveActiveButtonSmall
                 : saveButtonSmall
@@ -85,12 +94,12 @@ class HistoryStatics extends HTMLElement {
           </div>
           <div class="expenditure ${
             this.isExpenditureChecked === true ? 'active' : ''
-          }">
-          <button id='expenditure-display-toggle-btn'>${
-            this.isExpenditureChecked === true
-              ? saveActiveButtonSmall
-              : saveButtonSmall
-          }</button> 지출 ${this.totalExpenditure}
+          }"id='expenditure-display-toggle-btn'>
+            <button >${
+              this.isExpenditureChecked === true
+                ? saveActiveButtonSmall
+                : saveButtonSmall
+            }</button> 지출 ${this.totalExpenditure}
           </div>
         <div>
     `;
