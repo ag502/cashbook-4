@@ -9,7 +9,7 @@ class CalendarStatistic extends HTMLElement {
     this.calendarController = calendarController;
     this.observer = observer;
 
-    this.currentPaymentInfo = {};
+    this.curAccounts = this.calendarController.getCurAccountsInfo();
   }
 
   connectedCallback() {
@@ -27,12 +27,12 @@ class CalendarStatistic extends HTMLElement {
   }
 
   handleFetchdata = () => {
-    this.currentPaymentInfo = calendarController.getCurrentPaymentInfo();
+    this.curAccounts = calendarController.getCurAccountsInfo();
     this.render();
   };
 
   render = () => {
-    const { totalIncome, totalExpenditure } = this.currentPaymentInfo;
+    const { totalIncome, totalExpenditure } = this.curAccounts;
     this.setHTML(/*html*/ `
       <div class='left'>
         <div class='total-income'>

@@ -1,5 +1,5 @@
-import cashBookModel from '@/models/cashBookModel';
 import BaseController from '@/common/utils/baseController';
+import { parsingDate } from '@/common/utils/functions';
 
 class CalendarController extends BaseController {
   constructor() {
@@ -12,14 +12,15 @@ class CalendarController extends BaseController {
     let totalExpenditure = 0;
 
     this.cashBookModel.getAccounts().forEach(({ date, price }) => {
-      if (!accountInfoPerDay[date]) {
-        accountInfoPerDay[date] = { income: 0, expenditure: 0 };
+      const parsedDate = parsingDate(date);
+      if (!accountInfoPerDay[parsedDate]) {
+        accountInfoPerDay[parsedDate] = { income: 0, expenditure: 0 };
       }
       if (price < 0) {
-        accountInfoPerDay[date].expenditure += price;
+        accountInfoPerDay[parsedDate].expenditure += price;
         totalExpenditure += price;
       } else {
-        accountInfoPerDay[date].income += price;
+        accountInfoPerDay[parsedDate].income += price;
         totalIncome += price;
       }
     });

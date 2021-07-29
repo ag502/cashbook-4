@@ -20,7 +20,7 @@ class CashBookModel {
     this.accounts = await this._fecthAccountsByMonth();
 
     this.records = await this._fetchRecordsByMonth();
-    this.paymentInfo = await this._fecthPaymentInfo(7);
+    // this.paymentInfo = await this._fecthPaymentInfo(7);
 
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
@@ -28,7 +28,11 @@ class CashBookModel {
   _fecthAccountsByMonth = (month = this.currentDate.getMonth() + 1) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve(records);
+        if (month === 7) {
+          resolve(records);
+        } else {
+          resolve([]);
+        }
       });
     }, 1000);
   };
@@ -60,9 +64,9 @@ class CashBookModel {
     return this.records;
   };
 
-  getCurrentPaymentInfo = () => {
-    return this.paymentInfo;
-  };
+  // getCurrentPaymentInfo = () => {
+  //   return this.paymentInfo;
+  // };
 
   _fetchRecordsByMonth = (month = this.currentDate.getMonth() - 1) => {
     return new Promise((resolve) => {

@@ -33,7 +33,7 @@ class CalendarContent extends HTMLElement {
   }
 
   handlefetchedData = () => {
-    this.curPaymentInfo = this.calendarController.getCurAccountsInfo();
+    this.curAccounts = this.calendarController.getCurAccountsInfo();
     this.render();
   };
 
@@ -65,11 +65,11 @@ class CalendarContent extends HTMLElement {
     return [...prevDates, ...thisDates.slice(1), ...nextDates];
   };
 
-  paymentInfo = (date) => {
-    if (!this.curPaymentInfo[date]) {
+  insertAccountInfo = (date) => {
+    if (!this.curAccounts[date]) {
       return '';
     }
-    const { income, expenditure } = this.curPaymentInfo[date];
+    const { income, expenditure } = this.curAccounts[date];
     return /*html*/ `
       ${checkUndefined(
         income,
@@ -93,7 +93,7 @@ class CalendarContent extends HTMLElement {
         .map(
           (date) => /*html*/ `
           <div class='calendar-cell ${today === date ? 'today' : ''}'>
-            <div class='date-info'>${this.paymentInfo(date)}</div>
+            <div class='date-info'>${this.insertAccountInfo(date)}</div>
             <div class='calendar-date'>${date.slice(-2)}</div>
           </div>
         `
