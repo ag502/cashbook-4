@@ -8,7 +8,7 @@ class HistoryContent extends HTMLElement {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
-    this.dayRecords = [];
+    this.dayRecords = this.controller.getDayRecords();
   }
 
   connectedCallback() {
@@ -16,7 +16,7 @@ class HistoryContent extends HTMLElement {
     this.observer.subscribe(
       notifyTypes.FETCHED_DATA,
       this,
-      this.handleDataChanged
+      this.handleModelInit
     );
     this.observer.subscribe(
       notifyTypes.CHANGED_RECORD_DATA,
@@ -24,9 +24,19 @@ class HistoryContent extends HTMLElement {
       this.handleDataChanged
     );
   }
+  disconnectedCallback() {
+    this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
+    this.observer.unsubscribe(notifyTypes.CHANGED_RECORD_DATA, this);
+  }
+
+  handleModelInit = () => {
+    this.handleDataChanged();
+  };
 
   handleDataChanged = () => {
     this.dayRecords = this.controller.getDayRecords();
+    console.log('controller에서 받아온');
+    console.log(this.dayRecords);
     this.render();
   };
 
@@ -36,7 +46,8 @@ class HistoryContent extends HTMLElement {
     const dayRecordKeys = Object.keys(this.dayRecords).sort((a, b) => {
       return b - a;
     });
-
+    console.log('dayRecordKeys');
+    console.log(dayRecordKeys);
     dayRecordKeys.forEach((dayRecordKey) => {
       const $dayRecord = new DayRecord({
         date: dayRecordKey,

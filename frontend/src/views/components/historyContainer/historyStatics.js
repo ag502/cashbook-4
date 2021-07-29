@@ -9,9 +9,8 @@ class HistoryStatics extends HTMLElement {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
-    this.totalCount = 0;
-    this.totalIncome = 0;
-    this.totalExpenditure = 0;
+
+    this.initStaticsInfo();
     this.isIncomeChecked = true;
     this.isExpenditureChecked = true;
   }
@@ -21,7 +20,7 @@ class HistoryStatics extends HTMLElement {
     this.observer.subscribe(
       notifyTypes.FETCHED_DATA,
       this,
-      this.handleFetchedData
+      this.initStaticsInfo
     );
     this.observer.subscribe(
       notifyTypes.CHANGED_RECORD_DATA,
@@ -29,8 +28,12 @@ class HistoryStatics extends HTMLElement {
       this.handleDataChanged
     );
   }
+  disconnectedCallback() {
+    this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
+    this.observer.unsubscribe(notifyTypes.CHANGED_RECORD_DATA, this);
+  }
 
-  handleFetchedData = () => {
+  initStaticsInfo = () => {
     const { totalCount, totalIncome, totalExpenditure } =
       this.controller.getRecordsStatistics();
     this.totalCount = totalCount;
@@ -41,6 +44,9 @@ class HistoryStatics extends HTMLElement {
   };
 
   handleDataChanged = () => {
+    const { totalCount } = this.controller.getRecordsStatistics();
+    this.totalCount = totalCount;
+
     this.render();
   };
 

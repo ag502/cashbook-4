@@ -1,7 +1,6 @@
 import Header from '@/views/components/header/header';
-import HistoryContainer from '@/views/components/historyContainer';
 import observer from '../../../common/utils/observer';
-// import Calendar from '@/views/components/calendar/index.js';
+import Calendar from '@/views/components/calendar/index.js';
 
 class MainPage extends HTMLElement {
   constructor() {
@@ -15,13 +14,11 @@ class MainPage extends HTMLElement {
     this.innerHTML = '';
 
     const header = new Header();
-    const historyContainer = new HistoryContainer();
-    // const calendar = new Calendar();
+    const calendar = new Calendar();
     this.appendChild(header);
-    this.appendChild(historyContainer);
-    // this.appendChild(calendar);
+    this.appendChild(calendar);
   }
 }
 
-customElements.define('main-page', MainPage);
-export default customElements.get('main-page');
+customElements.define('calender-page', MainPage);
+export default customElements.get('calender-page');

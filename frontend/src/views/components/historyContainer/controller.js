@@ -1,4 +1,4 @@
-import cashBookModel from '@/models/CashBookModel';
+import cashBookModel from '@/models/cashBookModel';
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
 
@@ -10,6 +10,13 @@ class HistoryContainerController {
       income: true,
       expenditure: true,
     };
+  }
+
+  init() {
+    const currentOptions = this.getRecordIncludeOptions();
+    currentOptions.income = true;
+    currentOptions.expenditure = true;
+    this.recordIncludeOptions = currentOptions;
   }
 
   getCurrentDate() {
@@ -24,7 +31,6 @@ class HistoryContainerController {
       }
       return this.recordIncludeOptions.expenditure ? true : false;
     });
-
     return filteredRecords;
   }
 

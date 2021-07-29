@@ -1,15 +1,16 @@
-// eslint-disable-next-line no-unused-vars
 import HistoryPanel from './historyPanel'; // this can use history-statics tag in inner html
-// eslint-disable-next-line no-unused-vars
 import HistoryContent from './historyContent'; // this can use history-content tag in inner html
-// eslint-disable-next-line no-unused-vars
 import historyStatics from './historyStatics';
+
+import historyContainerController from './controller';
 
 import './style.css';
 
 class HistoryContainer extends HTMLElement {
   constructor() {
     super();
+    this.controller = historyContainerController;
+    this.controller.init();
   }
 
   connectedCallback() {

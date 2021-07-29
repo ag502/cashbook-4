@@ -1,3 +1,6 @@
+import observer from '@/common/utils/observer';
+import notifyTypes from '@/common/utils/notifyTypes';
+
 const getCategoryString = (category) => {
   const categories = [
     '월급',
@@ -19,10 +22,14 @@ class Record extends HTMLElement {
   constructor(recordInfo) {
     super();
     this.recordInfo = recordInfo;
+    this.observer = observer;
   }
 
   connectedCallback() {
     this.render();
+    this.addEventListener('click', () => {
+      this.observer.notify(notifyTypes.RECORD_CLICK);
+    });
   }
 
   render = () => {

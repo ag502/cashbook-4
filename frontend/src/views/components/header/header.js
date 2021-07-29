@@ -40,6 +40,19 @@ class Header extends HTMLElement {
     $nextBtn.addEventListener('click', async () => {
       this.controller.handleNextBtnClick();
     });
+
+    const $fileTextBtn = this.querySelector('#file-text-btn');
+    $fileTextBtn.addEventListener('click', () => {
+      location.hash = '';
+    });
+    const $calenderBtn = this.querySelector('#calender-btn');
+    $calenderBtn.addEventListener('click', () => {
+      location.hash = '#/calender';
+    });
+    const $chartBtn = this.querySelector('#chart-btn');
+    $chartBtn.addEventListener('click', () => {
+      location.hash = '#/chat';
+    });
   };
 
   render = () => {
@@ -62,9 +75,9 @@ class Header extends HTMLElement {
       </div>
 
       <div class='right'>
-        <button class="active">${fileText}</button>
-        <button>${calender}</button>
-        <button>${chart}</button>
+        <button class='active' id='file-text-btn'>${fileText}</button>
+        <button id='calender-btn'>${calender}</button>
+        <button id='chart-btn'>${chart}</button>
       </div>
     `;
 

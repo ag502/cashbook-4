@@ -17,6 +17,7 @@ class CashBookModel {
     this.currentDate = new Date();
     this.records = await this._fetchRecordsByMonth();
     this.paymentInfo = await this._fecthPaymentInfo(7);
+
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
@@ -55,6 +56,8 @@ class CashBookModel {
   };
 
   getRecords = () => {
+    console.log('getRecord called');
+    console.log(this.records);
     return this.records;
   };
   getCurrentPaymentInfo = () => {
