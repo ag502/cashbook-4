@@ -1,7 +1,6 @@
 import CalendarHeader from './calendarHeader';
 import CalendarContent from './calendarContent';
 import CalendarStatistic from './calendarStatistic';
-import $ from '@/common/utils/domController';
 
 class Calendar extends HTMLElement {
   connectedCallback() {

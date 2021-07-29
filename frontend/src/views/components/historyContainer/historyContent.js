@@ -39,7 +39,7 @@ class HistoryContent extends HTMLElement {
   };
 
   render = () => {
-    this.innerHTML = '';
+    this.setHTML('');
     // 내림차순 정렬
     const dayRecordKeys = Object.keys(this.dayRecords).sort((a, b) => {
       return b - a;

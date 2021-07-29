@@ -56,7 +56,7 @@ class Header extends HTMLElement {
   };
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
       <div class='left'>  
         <a href='#/'>
           <h1>
@@ -79,7 +79,7 @@ class Header extends HTMLElement {
         <button id='calender-btn'>${calender}</button>
         <button id='chart-btn'>${chart}</button>
       </div>
-    `;
+    `);
 
     this.addEvents();
   };

@@ -31,7 +31,7 @@ class DayRecord extends HTMLElement {
   }
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
         <div class="info">
             <div class="left">
                 <span class="date">
@@ -59,7 +59,7 @@ class DayRecord extends HTMLElement {
         </div>
 
         <div id='record-list' class="record-list"></div>
-    `;
+    `);
 
     const $recordList = this.querySelector('#record-list');
     this.records.forEach((recordInfo) => {

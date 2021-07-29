@@ -5,6 +5,8 @@ import observer from '@/common/utils/observer';
 
 import '@/common/styles/normalize.css';
 import '@/common/styles/global.css';
+
+import $ from '@/common/utils/domController';
 import notifyTypes from './common/utils/notifyTypes';
 
 const $app = document.querySelector('#app');

@@ -6,13 +6,13 @@ class CalendarHeader extends HTMLElement {
   }
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
       <div class='calendar-header'>
         ${dates
           .map((date) => `<div class='calendar-day'>${date}</div>`)
           .join('')}
       </div>
-    `;
+    `);
   };
 }
 

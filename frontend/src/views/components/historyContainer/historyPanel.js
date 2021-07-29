@@ -114,14 +114,14 @@ class HistoryPanel extends HTMLElement {
   };
 
   render = () => {
-    this.innerHTML =
+    this.setHTML(
       /*html*/ `
         <form>
             <div class="history-input-box">
                 <label>일자</label>
                 <input type="text" name="time" value=` +
-      `${this.dateString}` +
-      `>
+        `${this.dateString}` +
+        `>
             </div>
                 
 
@@ -190,7 +190,8 @@ class HistoryPanel extends HTMLElement {
                 ${check}
             </div>
         </form> 
-    `;
+    `
+    );
 
     this.addEvents();
   };

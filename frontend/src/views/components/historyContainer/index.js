@@ -18,14 +18,15 @@ class HistoryContainer extends HTMLElement {
   }
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(
+      /*html*/ `
       <div class="history-panel-fixer">
         <history-panel></history-panel>
       </div>
       <history-statics></history-statics>
       <history-content></history-content>
-    `;
-    this.classList.add('history-container');
+    `
+    ).addClass('history-controller');
   };
 }
 

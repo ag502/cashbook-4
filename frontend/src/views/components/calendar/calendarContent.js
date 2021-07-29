@@ -90,7 +90,7 @@ class CalendarContent extends HTMLElement {
   render = () => {
     const calendarDates = this.composeCalender();
     const today = parsingDate(new Date());
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
       ${calendarDates
         .map(
           (date) => /*html*/ `
@@ -101,7 +101,7 @@ class CalendarContent extends HTMLElement {
         `
         )
         .join('')}
-    `;
+    `);
 
     this.composeCalender();
   };

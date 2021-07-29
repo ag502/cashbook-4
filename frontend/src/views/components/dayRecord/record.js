@@ -33,7 +33,7 @@ class Record extends HTMLElement {
   }
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
         <div class="left">
             <div class="category category${this.recordInfo.category}">
                 ${getCategoryString(this.recordInfo.category)}
@@ -51,7 +51,7 @@ class Record extends HTMLElement {
                 ${this.recordInfo.price} 원
             </div>
         </div>
-      `;
+      `);
   };
 }
 

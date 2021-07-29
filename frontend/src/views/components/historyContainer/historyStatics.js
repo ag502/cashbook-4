@@ -83,7 +83,7 @@ class HistoryStatics extends HTMLElement {
   };
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
         <div class="left">
             <strong>전체 내역 ${this.totalCount} 건</strong>
         </div>
@@ -108,7 +108,7 @@ class HistoryStatics extends HTMLElement {
             }</button> 지출 ${this.totalExpenditure}
           </div>
         <div>
-    `;
+    `);
 
     this.addEvents();
   };
