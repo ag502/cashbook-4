@@ -109,3 +109,41 @@ history-content {
   flex-grow: 1;
   margin: 0 auto;
 }
+
+history-statics {
+  width: 100%;
+  max-width: 848px;
+  margin: 38px auto 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+history-statics .left {
+  width: 100%;
+  font: var(--body-large);
+  color: var(--primary3);
+}
+
+history-statics .right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+history-statics .right button {
+  width: 40px;
+  height: 40px;
+}
+
+history-statics .right {
+  font: var(--body-medium);
+  color: var(--primary3);
+}
+
+history-statics .right > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -1,5 +1,6 @@
 day-record {
-  width: 848px;
+  width: 100%;
+  max-width: 848px;
   display: flex;
   flex-direction: column;
   margin-top: 32px;
