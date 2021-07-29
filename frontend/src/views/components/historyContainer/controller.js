@@ -9,11 +9,11 @@ const initalIncludeOptions = {
 class HistoryContainerController extends BaseController {
   constructor() {
     super();
-    this.accountsIncludeOptions = initalIncludeOptions;
+    this.accountsIncludeOptions = { ...initalIncludeOptions };
   }
 
   init = () => {
-    this.accountsIncludeOptions = initalIncludeOptions;
+    this.accountsIncludeOptions = { ...initalIncludeOptions };
   };
 
   getAccounts = () => {
