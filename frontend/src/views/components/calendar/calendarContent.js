@@ -1,4 +1,3 @@
-import headerController from '../header/controller';
 import calendarController from './controller';
 import observer from '@/common/utils/observer';
 import {
@@ -12,12 +11,11 @@ import notifyTypes from '@/common/utils/notifyTypes';
 class CalendarContent extends HTMLElement {
   constructor() {
     super();
-    this.controller = headerController;
     this.calendarController = calendarController;
     this.observer = observer;
 
-    this.curPaymentInfo = [];
-    this.currentDate = this.controller.getCurrentDate();
+    this.curAccounts = this.calendarController.getCurAccountsInfo();
+    this.currentDate = this.calendarController.getCurrentDate();
   }
 
   connectedCallback() {
@@ -35,7 +33,7 @@ class CalendarContent extends HTMLElement {
   }
 
   handlefetchedData = () => {
-    this.curPaymentInfo = this.calendarController.getCurrentPaymentInfo();
+    this.curPaymentInfo = this.calendarController.getCurAccountsInfo();
     this.render();
   };
 
