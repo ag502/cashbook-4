@@ -41,3 +41,45 @@ export const check = /*html*/ `
 <path d="M21 6L8.625 18L3 12.5455" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
 `;
+
+export const chevronDown = /*html*/ `
+<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M4 6.5L8 10.5L12 6.5" stroke="#8D9393" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const iconButton = /*html*/ `
+<svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M3.33325 8.5H12.6666" stroke="#222222" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const saveButtonLarge = /*html*/ `
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10C0 4.47715 4.47715 0 10 0H30C35.5228 0 40 4.47715 40 10V30C40 35.5228 35.5228 40 30 40H10C4.47715 40 0 35.5228 0 30V10Z" fill="#BBBBBB"/>
+<path d="M29 14L16.625 26L11 20.5455" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+export const saveActiveButtonLarge = /*html*/ `
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 10C0 4.47715 4.47715 0 10 0H30C35.5228 0 40 4.47715 40 10V30C40 35.5228 35.5228 40 30 40H10C4.47715 40 0 35.5228 0 30V10Z" fill="#2AC1BC"/>
+<path d="M29 14L16.625 26L11 20.5455" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+`;
+
+export const saveActiveButtonSmall = /*html*/ `
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="5" y="5" width="18" height="18" rx="4" fill="#2AC1BC"/>
+<path d="M19.9902 11L18.5802 9.57996L11.9902 16.17L9.41023 13.6L7.99023 15.01L11.9902 19L19.9902 11Z" fill="white"/>
+<rect x="5" y="5" width="18" height="18" rx="4" stroke="#2AC1BC" stroke-width="2"/>
+</svg>
+`;
+
+export const saveButtonSmall = /*html*/ `
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="1" y="1" width="18" height="18" rx="4" fill="#BBBBBB"/>
+<path d="M15.9902 6.99996L14.5802 5.57996L7.99023 12.17L5.41023 9.59996L3.99023 11.01L7.99023 15L15.9902 6.99996Z" fill="white"/>
+<rect x="1" y="1" width="18" height="18" rx="4" stroke="#BBBBBB" stroke-width="2"/>
+</svg>
+
+`;

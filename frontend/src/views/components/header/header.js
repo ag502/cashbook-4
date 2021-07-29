@@ -3,6 +3,7 @@ import headerController from './controller';
 import observer from '@/common/utils/observer';
 
 import './style.css';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class Header extends HTMLElement {
   constructor() {
@@ -17,7 +18,7 @@ class Header extends HTMLElement {
   connectedCallback() {
     this.render();
     this.observer.subscribe(
-      'currentDate-changed',
+      notifyTypes.CHANGED_CURRENT_DATE,
       this,
       this.handleDateChanged
     );
@@ -39,10 +40,23 @@ class Header extends HTMLElement {
     $nextBtn.addEventListener('click', async () => {
       this.controller.handleNextBtnClick();
     });
+
+    const $fileTextBtn = this.querySelector('#file-text-btn');
+    $fileTextBtn.addEventListener('click', () => {
+      location.hash = '';
+    });
+    const $calenderBtn = this.querySelector('#calender-btn');
+    $calenderBtn.addEventListener('click', () => {
+      location.hash = '#/calender';
+    });
+    const $chartBtn = this.querySelector('#chart-btn');
+    $chartBtn.addEventListener('click', () => {
+      location.hash = '#/chat';
+    });
   };
 
   render = () => {
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
       <div class='left'>  
         <a href='#/'>
           <h1>
@@ -61,11 +75,11 @@ class Header extends HTMLElement {
       </div>
 
       <div class='right'>
-        <button class="active">${fileText}</button>
-        <button>${calender}</button>
-        <button>${chart}</button>
+        <button class='active' id='file-text-btn'>${fileText}</button>
+        <button id='calender-btn'>${calender}</button>
+        <button id='chart-btn'>${chart}</button>
       </div>
-    `;
+    `);
 
     this.addEvents();
   };

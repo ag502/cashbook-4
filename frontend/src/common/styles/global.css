@@ -32,12 +32,12 @@
   --category9: #e6d267;
   --category10: #e2b765;
 
-  --body-regular: normal normal 16px/24px defaultFont;
-  --body-medium: normal normal 18px/24px defaultFont;
-  --body-large: normal normal 22px/32px defaultFont;
-  --bold-small: normal bold 12px/16px defaulFont;
-  --bold-medium: normal bold 14px/24px defaultFont;
-  --bold-large: normal bold 16px/24px defaultFont;
-  --display-small: normal normal 24px/24px dohyeon;
-  --display-large: normal normal 48px/56px dohyeon;
+  --body-regular: normal 400 16px/24px defaultFont;
+  --body-medium: normal 400 18px/24px defaultFont;
+  --body-large: normal 400 22px/32px defaultFont;
+  --bold-small: normal 500 12px/16px defaulFont;
+  --bold-medium: normal 500 14px/24px defaultFont;
+  --bold-large: normal 500 16px/24px defaultFont;
+  --display-small: normal 400 24px/24px dohyeon;
+  --display-large: normal 400 48px/56px dohyeon;
 }

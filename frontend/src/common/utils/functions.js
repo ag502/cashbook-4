@@ -7,9 +7,13 @@ export const checkUndefined = (value, replaceValue, returnValue = null) => {
   return !value ? replaceValue : !returnValue ? value : returnValue;
 };
 
-export const parsingDate = (date) => {
+export const parsingDate = (date, type = 'calender') => {
   const curDate = new Date(date);
-  return `${curDate.getFullYear()}${appendZero(
-    curDate.getMonth() + 1
-  )}${appendZero(curDate.getDate())}`;
+  if (type === 'calender') {
+    return `${curDate.getFullYear()}${appendZero(
+      curDate.getMonth() + 1
+    )}${appendZero(curDate.getDate())}`;
+  } else if (type === 'record') {
+    return `${curDate.getMonth() + 1}월 ${curDate.getDate()}일`;
+  }
 };

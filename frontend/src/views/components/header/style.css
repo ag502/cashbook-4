@@ -42,14 +42,14 @@ main-header .right {
   justify-content: space-around;
 }
 
-.right button {
+main-header .right button {
   margin-left: 26px;
 }
 
-.right button.active svg path {
+main-header .right button.active svg path {
   stroke: var(--off-white);
 }
 
-.right button svg path {
+main-header .right button svg path {
   stroke: #a0e1e0;
 }

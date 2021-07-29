@@ -7,6 +7,7 @@ import {
   parsingDate,
 } from '@/common/utils/functions';
 import './style.css';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class CalendarContent extends HTMLElement {
   constructor() {
@@ -21,9 +22,13 @@ class CalendarContent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.observer.subscribe('fetch-data', this, this.handlefetchedData);
     this.observer.subscribe(
-      'currentDate-changed',
+      notifyTypes.FETCHED_DATA,
+      this,
+      this.handlefetchedData
+    );
+    this.observer.subscribe(
+      notifyTypes.CHANGED_CURRENT_DATE,
       this,
       this.handlefetchedData
     );
@@ -85,7 +90,7 @@ class CalendarContent extends HTMLElement {
   render = () => {
     const calendarDates = this.composeCalender();
     const today = parsingDate(new Date());
-    this.innerHTML = /*html*/ `
+    this.setHTML(/*html*/ `
       ${calendarDates
         .map(
           (date) => /*html*/ `
@@ -96,7 +101,7 @@ class CalendarContent extends HTMLElement {
         `
         )
         .join('')}
-    `;
+    `);
 
     this.composeCalender();
   };

@@ -14,10 +14,12 @@ Element.prototype.addClass = function (...className) {
 
 Element.prototype.removeClass = function (...className) {
   className.forEach((name) => this.classList.remove(name));
+  return this;
 };
 
 Element.prototype.toggleClass = function (...className) {
   className.forEach((name) => this.classList.toggle(name));
+  return this;
 };
 
 Element.prototype.addId = function (id) {

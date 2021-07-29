@@ -1,6 +1,7 @@
 import calendarController from './controller';
 import observer from '@/common/utils/observer';
 import { checkUndefined } from '@/common/utils/functions';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class CalendarStatistic extends HTMLElement {
   constructor() {
@@ -12,8 +13,16 @@ class CalendarStatistic extends HTMLElement {
   }
 
   connectedCallback() {
-    this.observer.subscribe('fetch-data', this, this.handleFetchdata);
-    this.observer.subscribe('currentDate-changed', this, this.handleFetchdata);
+    this.observer.subscribe(
+      notifyTypes.FETCHED_DATA,
+      this,
+      this.handleFetchdata
+    );
+    this.observer.subscribe(
+      notifyTypes.CHANGED_CURRENT_DATE,
+      this,
+      this.handleFetchdata
+    );
     this.render();
   }
 

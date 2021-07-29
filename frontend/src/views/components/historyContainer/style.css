@@ -1,0 +1,211 @@
+history-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 92px;
+  position: relative;
+}
+
+.history-panel-fixer {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 38px;
+  background-color: var(--primary1);
+  left: 0;
+}
+
+history-panel {
+  display: flex;
+  top: 0;
+  width: 904px;
+  height: 76px;
+  padding: 16px 0;
+  background-color: var(--off-white);
+  border: 1px solid var(--place-holder);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+history-panel > form {
+  display: flex;
+  width: 100%;
+  padding-left: 8px;
+}
+
+.history-input-box {
+  width: 144px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-right: 2px solid var(--place-holder);
+  padding: 0 24px;
+  position: relative;
+}
+.history-input-box:first-child {
+  width: 124px;
+}
+.history-input-box.cash {
+  border: none;
+  width: 194px;
+}
+
+.history-input-box.context {
+  width: 220px;
+}
+
+history-panel .check-box {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid var(--primary1);
+  border-radius: 10px;
+}
+
+history-panel .check-box > svg > path {
+  stroke: var(--primary1);
+}
+
+history-panel button {
+  color: var(--label);
+  font: var(--body-regular);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+history-panel button.selected {
+  color: var(--title-active);
+}
+
+history-panel .dropdown {
+  width: 148px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: calc(100% + 24px);
+  background-color: var(--off-white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+history-panel .dropdown > div {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+history-panel .dropdown > div:hover {
+  background-color: var(--background);
+}
+
+history-panel .dropdown .content {
+  border-bottom: 1px solid var(--line);
+  width: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+history-panel .dropdown > :last-child .content {
+  border: none;
+}
+
+.history-input-box label {
+  font: var(--bold-small);
+  color: var(--primary3);
+  width: 100%;
+  background-color: inherit;
+}
+
+.history-input-box input {
+  width: 100%;
+  background-color: inherit;
+  border: none;
+  outline: none;
+  padding: 0;
+}
+
+.history-input-box input::placeholder {
+  color: var(--place-holder);
+}
+
+.history-input-box.cash .cost-content {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cost-content > input {
+  text-align: right;
+}
+
+history-content {
+  width: 100%;
+  max-width: 904px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  margin: 0 auto;
+}
+
+history-statics {
+  width: 100%;
+  max-width: 848px;
+  margin: 38px auto 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+history-statics .left {
+  width: 100%;
+  font: var(--body-large);
+  color: var(--primary3);
+}
+
+history-statics .right {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+history-statics .right button {
+  width: 40px;
+  height: 40px;
+}
+
+history-statics .right {
+  font: var(--body-medium);
+  color: var(--label);
+}
+
+history-statics .right div.active {
+  color: var(--primary3);
+}
+
+history-statics .right > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
