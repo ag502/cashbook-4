@@ -159,13 +159,13 @@ class HistoryPanel extends HTMLElement {
                 <button id="select-payment-btn">선택하세요 ${chevronDown}</button>
                 <div class="dropdown payment">
                       ${payments
-                        .map((category, index) => {
+                        .map((payment, index) => {
                           return (
                             '<div class="payment-item" data-id=' +
                             index +
                             '>' +
-                            '<div class="payment">' +
-                            category +
+                            '<div class="content">' +
+                            payment +
                             '</div>' +
                             '</div>'
                           );
