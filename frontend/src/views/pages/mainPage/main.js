@@ -1,4 +1,5 @@
 import Header from '@/views/components/header/header.js';
+import Calendar from '@/views/components/calendar/index.js';
 
 class MainPage extends HTMLElement {
   constructor() {
@@ -11,8 +12,9 @@ class MainPage extends HTMLElement {
     // TODO : observer event subscrib & controller init
 
     const header = new Header();
+    const calendar = new Calendar();
     this.appendChild(header);
-    // content
+    this.appendChild(calendar);
   }
 }
 
