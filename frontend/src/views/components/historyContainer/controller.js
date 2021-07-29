@@ -1,8 +1,15 @@
 import cashBookModel from '@/models/CashBookModel';
+import observer from '@/common/utils/observer';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class HistoryContainerController {
   constructor() {
     this.cashBookModel = cashBookModel;
+    this.observer = observer;
+    this.recordIncludeOptions = {
+      income: true,
+      expenditure: true,
+    };
   }
 
   getCurrentDate() {
@@ -10,7 +17,15 @@ class HistoryContainerController {
   }
 
   getRecords() {
-    return this.cashBookModel.getRecords();
+    const records = this.cashBookModel.getRecords();
+    const filteredRecords = records.filter((record) => {
+      if (record.price >= 0) {
+        return this.recordIncludeOptions.income ? true : false;
+      }
+      return this.recordIncludeOptions.expenditure ? true : false;
+    });
+
+    return filteredRecords;
   }
 
   getDayRecords = () => {
@@ -45,6 +60,14 @@ class HistoryContainerController {
     });
 
     return { totalCount, totalIncome, totalExpenditure };
+  };
+
+  getRecordIncludeOptions = () => {
+    return this.recordIncludeOptions;
+  };
+  setRecordIncludeOptions = (recordIncludeOptions) => {
+    this.recordIncludeOptions = recordIncludeOptions;
+    this.observer.notify(notifyTypes.CHANGED_RECORD_DATA);
   };
 }
 

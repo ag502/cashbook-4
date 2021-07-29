@@ -16,11 +16,16 @@ class HistoryContent extends HTMLElement {
     this.observer.subscribe(
       notifyTypes.FETCHED_DATA,
       this,
-      this.handleModelInit
+      this.handleDataChanged
+    );
+    this.observer.subscribe(
+      notifyTypes.CHANGED_RECORD_DATA,
+      this,
+      this.handleDataChanged
     );
   }
 
-  handleModelInit = () => {
+  handleDataChanged = () => {
     this.dayRecords = this.controller.getDayRecords();
     this.render();
   };
