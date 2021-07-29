@@ -120,6 +120,7 @@ history-panel .dropdown .content {
   display: flex;
   justify-content: center;
   align-items: center;
+  pointer-events: none;
 }
 
 history-panel .dropdown > :last-child .content {

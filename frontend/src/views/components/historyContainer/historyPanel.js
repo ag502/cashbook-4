@@ -103,18 +103,13 @@ class HistoryPanel extends HTMLElement {
       this.togglePaymentDropdown();
     });
 
-    const categoryItems = this.querySelectorAll('.category-item');
-    categoryItems.forEach(($categoryItem) => {
-      $categoryItem.addEventListener('click', (e) =>
-        this.selectCategory(e.currentTarget.dataset.id)
-      );
+    const $categoryDropdown = this.querySelector('.dropdown.category');
+    $categoryDropdown.addEventListener('click', ({ target }) => {
+      this.selectCategory(target.dataset.id);
     });
-
-    const paymentItems = this.querySelectorAll('.payment-item');
-    paymentItems.forEach(($paymentItem) => {
-      $paymentItem.addEventListener('click', (e) =>
-        this.selectPayment(e.currentTarget.dataset.id)
-      );
+    const $paymentDropdown = this.querySelector('.dropdown.payment');
+    $paymentDropdown.addEventListener('click', ({ target }) => {
+      this.selectPayment(target.dataset.id);
     });
   };
 
