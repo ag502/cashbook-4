@@ -1,31 +1,34 @@
-import cashBookModel from '@/models/cashBookModel';
+import BaseController from '@/common/utils/baseController';
+import { parsingDate } from '@/common/utils/functions';
 
-class CalendarController {
+class CalendarController extends BaseController {
   constructor() {
-    this.cashBookModel = cashBookModel;
+    super();
   }
 
-  getCurrentPaymentInfo = () => {
-    const paymentInfoPerDay = {};
+  getCurAccountsInfo = () => {
+    const accountInfoPerDay = {};
     let totalIncome = 0;
     let totalExpenditure = 0;
-    this.cashBookModel.getCurrentPaymentInfo().forEach(({ date, price }) => {
-      if (!paymentInfoPerDay[date]) {
-        paymentInfoPerDay[date] = { income: 0, expenditure: 0 };
+
+    this.cashBookModel.getAccounts().forEach(({ date, price }) => {
+      const parsedDate = parsingDate(date);
+      if (!accountInfoPerDay[parsedDate]) {
+        accountInfoPerDay[parsedDate] = { income: 0, expenditure: 0 };
       }
       if (price < 0) {
-        paymentInfoPerDay[date].expenditure += price;
+        accountInfoPerDay[parsedDate].expenditure += price;
         totalExpenditure += price;
       } else {
-        paymentInfoPerDay[date].income += price;
+        accountInfoPerDay[parsedDate].income += price;
         totalIncome += price;
       }
     });
 
-    paymentInfoPerDay.totalIncome = totalIncome;
-    paymentInfoPerDay.totalExpenditure = totalExpenditure;
+    accountInfoPerDay.totalIncome = totalIncome;
+    accountInfoPerDay.totalExpenditure = totalExpenditure;
 
-    return paymentInfoPerDay;
+    return accountInfoPerDay;
   };
 }
 

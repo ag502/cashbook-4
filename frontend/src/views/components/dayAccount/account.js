@@ -18,43 +18,43 @@ const getCategoryString = (category) => {
   return categories[categoryNumber - 1];
 };
 
-class Record extends HTMLElement {
-  constructor(recordInfo) {
+class Account extends HTMLElement {
+  constructor(accountInfo) {
     super();
-    this.recordInfo = recordInfo;
+    this.accountInfo = accountInfo;
     this.observer = observer;
   }
 
   connectedCallback() {
     this.render();
     this.addEventListener('click', () => {
-      this.observer.notify(notifyTypes.CLICK_RECORD, this.recordInfo);
+      this.observer.notify(notifyTypes.CLICK_ACCOUNT, this.accountInfo);
     });
   }
 
   render = () => {
     this.setHTML(/*html*/ `
         <div class="left">
-            <div class="category category${this.recordInfo.category}">
-                ${getCategoryString(this.recordInfo.category)}
+            <div class="category category${this.accountInfo.category}">
+                ${getCategoryString(this.accountInfo.category)}
             </div>
 
             <p class="context">
-                ${this.recordInfo.content}
+                ${this.accountInfo.content}
             </p>
         </div>
         <div class="right">
             <div class="payment">
-                ${this.recordInfo.paymentMethod}
+                ${this.accountInfo.paymentMethod}
             </div>
             <div class="price">
-                ${this.recordInfo.price} 원
+                ${this.accountInfo.price} 원
             </div>
         </div>
       `);
   };
 }
 
-customElements.define('record-item', Record);
+customElements.define('account-item', Account);
 
-export default customElements.get('record-item');
+export default customElements.get('account-item');

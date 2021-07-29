@@ -167,7 +167,7 @@ history-content {
   margin: 0 auto;
 }
 
-history-statics {
+history-statistics {
   width: 100%;
   max-width: 848px;
   margin: 38px auto 0;
@@ -176,34 +176,34 @@ history-statics {
   justify-content: space-between;
 }
 
-history-statics .left {
+history-statistics .left {
   width: 100%;
   font: var(--body-large);
   color: var(--primary3);
 }
 
-history-statics .right {
+history-statistics .right {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   width: 100%;
 }
 
-history-statics .right button {
+history-statistics .right button {
   width: 40px;
   height: 40px;
 }
 
-history-statics .right {
+history-statistics .right {
   font: var(--body-medium);
   color: var(--label);
 }
 
-history-statics .right div.active {
+history-statistics .right div.active {
   color: var(--primary3);
 }
 
-history-statics .right > div {
+history-statistics .right > div {
   display: flex;
   justify-content: center;
   align-items: center;

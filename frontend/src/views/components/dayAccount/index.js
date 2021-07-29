@@ -1,6 +1,6 @@
 import './style.css';
 
-import Record from './record';
+import Account from './account';
 import { parsingDate } from '../../../common/utils/functions';
 
 const getDayString = (dayNumber) => {
@@ -8,21 +8,21 @@ const getDayString = (dayNumber) => {
   return days[dayNumber];
 };
 
-class DayRecord extends HTMLElement {
-  constructor({ date, records }) {
+class DayAccount extends HTMLElement {
+  constructor({ date, accounts }) {
     super();
 
     this.date = new Date(Number(date));
-    this.records = records;
+    this.accounts = accounts;
 
     this.totalIncome = 0;
     this.totalExpenditure = 0;
 
-    records.forEach((record) => {
-      if (record.price >= 0) {
-        return (this.totalIncome += record.price);
+    accounts.forEach((account) => {
+      if (account.price >= 0) {
+        return (this.totalIncome += account.price);
       }
-      return (this.totalExpenditure -= record.price);
+      return (this.totalExpenditure -= account.price);
     });
   }
 
@@ -35,7 +35,7 @@ class DayRecord extends HTMLElement {
         <div class="info">
             <div class="left">
                 <span class="date">
-                  ${parsingDate(this.date, 'record')}
+                  ${parsingDate(this.date, 'account')}
                 </span>
                 <span class="day">
                   ${getDayString(this.date.getDay())}
@@ -58,17 +58,17 @@ class DayRecord extends HTMLElement {
             </div>
         </div>
 
-        <div id='record-list' class="record-list"></div>
+        <div id='account-list' class="account-list"></div>
     `);
 
-    const $recordList = this.querySelector('#record-list');
-    this.records.forEach((recordInfo) => {
-      const record = new Record(recordInfo);
-      $recordList.appendChild(record);
+    const $accountList = this.querySelector('#account-list');
+    this.accounts.forEach((accountInfo) => {
+      const $account = new Account(accountInfo);
+      $accountList.appendChild($account);
     });
   };
 }
 
-customElements.define('day-record', DayRecord);
+customElements.define('day-account', DayAccount);
 
-export default customElements.get('day-record');
+export default customElements.get('day-account');

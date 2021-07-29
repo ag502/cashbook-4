@@ -1,6 +1,6 @@
 import historyContainerController from './controller';
 import observer from '@/common/utils/observer';
-import DayRecord from '@/views/components/dayRecord';
+import DayAccount from '@/views/components/dayAccount';
 import notifyTypes from '@/common/utils/notifyTypes';
 
 class HistoryContent extends HTMLElement {
@@ -8,7 +8,7 @@ class HistoryContent extends HTMLElement {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
-    this.dayRecords = this.controller.getDayRecords();
+    this.dayAccounts = this.controller.getDayAccounts();
   }
 
   connectedCallback() {
@@ -16,42 +16,38 @@ class HistoryContent extends HTMLElement {
     this.observer.subscribe(
       notifyTypes.FETCHED_DATA,
       this,
-      this.handleModelInit
+      this.handleDataLoad
     );
     this.observer.subscribe(
-      notifyTypes.CHANGED_RECORD_DATA,
+      notifyTypes.CHANGED_DATA_FILTER,
       this,
-      this.handleDataChanged
+      this.handleDataLoad
     );
   }
   disconnectedCallback() {
     this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
-    this.observer.unsubscribe(notifyTypes.CHANGED_RECORD_DATA, this);
+    this.observer.unsubscribe(notifyTypes.CHANGED_DATA_FILTER, this);
   }
 
-  handleModelInit = () => {
-    this.handleDataChanged();
-  };
-
-  handleDataChanged = () => {
-    this.dayRecords = this.controller.getDayRecords();
+  handleDataLoad = () => {
+    this.dayAccounts = this.controller.getDayAccounts();
     this.render();
   };
 
   render = () => {
     this.setHTML('');
     // 내림차순 정렬
-    const dayRecordKeys = Object.keys(this.dayRecords).sort((a, b) => {
+    const dayAccountKeys = Object.keys(this.dayAccounts).sort((a, b) => {
       return b - a;
     });
 
-    dayRecordKeys.forEach((dayRecordKey) => {
-      const $dayRecord = new DayRecord({
-        date: dayRecordKey,
-        records: this.dayRecords[dayRecordKey],
+    dayAccountKeys.forEach((dayAccountKey) => {
+      const $dayAccount = new DayAccount({
+        date: dayAccountKey,
+        accounts: this.dayAccounts[dayAccountKey],
       });
 
-      this.appendChild($dayRecord);
+      this.appendChild($dayAccount);
     });
   };
 }
