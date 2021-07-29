@@ -18,9 +18,8 @@ class HistoryContainer extends HTMLElement {
     this.innerHTML = /*html*/ `
       <div class="history-statics-fixer">
         <history-statics></history-statics>
-        <history-content></history-content>
       </div>
-      
+      <history-content></history-content>
     `;
     this.classList.add('history-container');
   };

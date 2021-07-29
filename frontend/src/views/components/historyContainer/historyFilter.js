@@ -1,5 +1,6 @@
 import historyContainerController from './controller';
 import observer from '@/common/utils/observer';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class HistoryFilter extends HTMLElement {
   constructor() {
@@ -12,7 +13,11 @@ class HistoryFilter extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.observer.subscribe('model-init', this, this.handleModelInit);
+    this.observer.subscribe(
+      notifyTypes.FETCHED_DATA,
+      this,
+      this.handleModelInit
+    );
   }
 
   handleModelInit = () => {

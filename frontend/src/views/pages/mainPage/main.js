@@ -1,5 +1,6 @@
 import Header from '@/views/components/header/header';
 import HistoryContainer from '@/views/components/historyContainer';
+import Calendar from '@/views/components/calendar/index.js';
 
 class MainPage extends HTMLElement {
   constructor() {
@@ -13,10 +14,11 @@ class MainPage extends HTMLElement {
 
     const header = new Header();
     const historyContainer = new HistoryContainer();
+    // const calendar = new Calendar();
 
     this.appendChild(header);
     this.appendChild(historyContainer);
-    // content
+    // this.appendChild(calendar);
   }
 }
 

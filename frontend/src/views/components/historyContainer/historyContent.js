@@ -1,6 +1,7 @@
 import historyContainerController from './controller';
 import observer from '@/common/utils/observer';
 import DayRecord from '@/views/components/DayRecord';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class HistoryContent extends HTMLElement {
   constructor() {
@@ -12,7 +13,11 @@ class HistoryContent extends HTMLElement {
 
   connectedCallback() {
     this.render();
-    this.observer.subscribe('model-init', this, this.handleModelInit);
+    this.observer.subscribe(
+      notifyTypes.FETCHED_DATA,
+      this,
+      this.handleModelInit
+    );
   }
 
   handleModelInit = () => {
@@ -21,6 +26,7 @@ class HistoryContent extends HTMLElement {
   };
 
   render = () => {
+    this.innerHTML = '';
     // 내림차순 정렬
     const dayRecordKeys = Object.keys(this.dayRecords).sort((a, b) => {
       return b - a;
