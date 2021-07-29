@@ -4,13 +4,13 @@ import notifyTypes from '@/common/utils/notifyTypes';
 
 import { saveButtonSmall, saveActiveButtonSmall } from '../icons';
 
-class HistoryStatics extends HTMLElement {
+class HistoryStatistics extends HTMLElement {
   constructor() {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
 
-    this.initStaticsInfo();
+    this.initStatisticsInfo();
     this.isIncomeChecked = true;
     this.isExpenditureChecked = true;
   }
@@ -20,22 +20,22 @@ class HistoryStatics extends HTMLElement {
     this.observer.subscribe(
       notifyTypes.FETCHED_DATA,
       this,
-      this.initStaticsInfo
+      this.initStatisticsInfo
     );
     this.observer.subscribe(
-      notifyTypes.CHANGED_RECORD_DATA,
+      notifyTypes.CHANGED_DATA_FILTER,
       this,
       this.handleDataChanged
     );
   }
   disconnectedCallback() {
     this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
-    this.observer.unsubscribe(notifyTypes.CHANGED_RECORD_DATA, this);
+    this.observer.unsubscribe(notifyTypes.CHANGED_DATA_FILTER, this);
   }
 
-  initStaticsInfo = () => {
+  initStatisticsInfo = () => {
     const { totalCount, totalIncome, totalExpenditure } =
-      this.controller.getRecordsStatistics();
+      this.controller.getAccountsStatistics();
     this.totalCount = totalCount;
     this.totalIncome = totalIncome;
     this.totalExpenditure = totalExpenditure;
@@ -44,7 +44,7 @@ class HistoryStatics extends HTMLElement {
   };
 
   handleDataChanged = () => {
-    const { totalCount } = this.controller.getRecordsStatistics();
+    const { totalCount } = this.controller.getAccountsStatistics();
     this.totalCount = totalCount;
 
     this.render();
@@ -52,15 +52,16 @@ class HistoryStatics extends HTMLElement {
 
   handleIncomeDisplayToggle = () => {
     this.isIncomeChecked = !this.isIncomeChecked;
-    const currentOptions = this.controller.getRecordIncludeOptions();
+    const currentOptions = this.controller.getAccountIncludeOptions();
     currentOptions.income = this.isIncomeChecked;
-    this.controller.setRecordIncludeOptions(currentOptions);
+    this.controller.setAccountIncludeOptions(currentOptions);
   };
+
   handleExpenditureDisplayToggle = () => {
     this.isExpenditureChecked = !this.isExpenditureChecked;
-    const currentOptions = this.controller.getRecordIncludeOptions();
+    const currentOptions = this.controller.getAccountIncludeOptions();
     currentOptions.expenditure = this.isExpenditureChecked;
-    this.controller.setRecordIncludeOptions(currentOptions);
+    this.controller.setAccountIncludeOptions(currentOptions);
   };
 
   addEvents = () => {
@@ -114,6 +115,6 @@ class HistoryStatics extends HTMLElement {
   };
 }
 
-customElements.define('history-statics', HistoryStatics);
+customElements.define('history-statistics', HistoryStatistics);
 
-export default customElements.get('history-statics');
+export default customElements.get('history-statistics');

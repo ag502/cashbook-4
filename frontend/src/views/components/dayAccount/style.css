@@ -1,4 +1,4 @@
-day-record {
+day-account {
   width: 100%;
   max-width: 848px;
   display: flex;
@@ -6,7 +6,7 @@ day-record {
   margin-top: 32px;
 }
 
-day-record .info {
+day-account .info {
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -16,18 +16,18 @@ day-record .info {
   border-bottom: 1px solid var(--line);
 }
 
-day-record .info .date {
+day-account .info .date {
   color: var(--title-active);
 }
 
-.record-list {
+.account-list {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   width: 100%;
 }
 
-record-item {
+account-item {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -37,14 +37,14 @@ record-item {
   cursor: pointer;
 }
 
-record-item > div {
+account-item > div {
   width: 100%;
   display: flex;
   padding: 0 5px;
   justify-content: space-between;
 }
 
-record-item .category {
+account-item .category {
   display: flex;
   width: 92px;
   height: 30px;
@@ -55,38 +55,38 @@ record-item .category {
   color: white;
 }
 
-record-item .category.category1 {
+account-item .category.category1 {
   background-color: var(--category1);
 }
-record-item .category.category2 {
+account-item .category.category2 {
   background-color: var(--category2);
 }
-record-item .category.category3 {
+account-item .category.category3 {
   background-color: var(--category3);
 }
-record-item .category.category4 {
+account-item .category.category4 {
   background-color: var(--category4);
 }
-record-item .category.category5 {
+account-item .category.category5 {
   background-color: var(--category5);
 }
-record-item .category.category6 {
+account-item .category.category6 {
   background-color: var(--category6);
 }
-record-item .category.category7 {
+account-item .category.category7 {
   background-color: var(--category7);
 }
-record-item .category.category8 {
+account-item .category.category8 {
   background-color: var(--category8);
 }
-record-item .category.category9 {
+account-item .category.category9 {
   background-color: var(--category9);
 }
-record-item .category.category10 {
+account-item .category.category10 {
   background-color: var(--category10);
 }
 
-record-item .context {
+account-item .context {
   width: 100%;
   padding-left: 10px;
   display: flex;
@@ -97,13 +97,13 @@ record-item .context {
   height: fit-content;
 }
 
-.record .payment {
+.account .payment {
   color: var(--body);
   font: var(--body-medium);
   height: fit-content;
 }
 
-.record .price {
+.account .price {
   color: var(--title-active);
   font: var(--body-medium);
   height: fit-content;

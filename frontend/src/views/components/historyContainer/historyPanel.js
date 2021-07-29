@@ -32,24 +32,21 @@ class HistoryPanel extends HTMLElement {
     this.currentDate = this.currentDate.getDate();
 
     this.dateString = parsingDate(new Date());
-
-    this.date = this.dateString;
   }
 
   connectedCallback() {
     this.observer.subscribe(
-      notifyTypes.CLICK_RECORD,
+      notifyTypes.CLICK_ACCOUNT,
       this,
-      this.handleRecordClick
+      this.handleAccountClick
     );
 
     this.render();
   }
 
-  handleRecordClick = (recordInfo) => {
-    const { date, category, content, paymentMethod, price } = recordInfo;
-    this.date = date;
-    this.dateString = parsingDate(this.date);
+  handleAccountClick = (accountInfo) => {
+    const { date, category, content, paymentMethod, price } = accountInfo;
+    this.dateString = parsingDate(date);
     this.category = category;
     this.content = content;
     this.paymentMethod = paymentMethod;

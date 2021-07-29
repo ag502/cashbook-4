@@ -1,6 +1,6 @@
-import HistoryPanel from './historyPanel'; // this can use history-statics tag in inner html
+import HistoryPanel from './historyPanel'; // this can use history-statistics tag in inner html
 import HistoryContent from './historyContent'; // this can use history-content tag in inner html
-import historyStatics from './historyStatics';
+import historyStatistics from './historyStatistics';
 
 import historyContainerController from './controller';
 
@@ -23,7 +23,7 @@ class HistoryContainer extends HTMLElement {
       <div class="history-panel-fixer">
         <history-panel></history-panel>
       </div>
-      <history-statics></history-statics>
+      <history-statistics></history-statistics>
       <history-content></history-content>
     `
     ).addClass('history-controller');

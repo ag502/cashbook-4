@@ -1,79 +1,73 @@
-import cashBookModel from '@/models/cashBookModel';
-import observer from '@/common/utils/observer';
+import BaseController from '@/common/utils/baseController';
 import notifyTypes from '@/common/utils/notifyTypes';
 
-class HistoryContainerController {
+const initalIncludeOptions = {
+  income: true,
+  expenditure: true,
+};
+
+class HistoryContainerController extends BaseController {
   constructor() {
-    this.cashBookModel = cashBookModel;
-    this.observer = observer;
-    this.recordIncludeOptions = {
-      income: true,
-      expenditure: true,
-    };
+    super();
+    this.accountsIncludeOptions = initalIncludeOptions;
   }
 
-  init() {
-    const currentOptions = this.getRecordIncludeOptions();
-    currentOptions.income = true;
-    currentOptions.expenditure = true;
-    this.recordIncludeOptions = currentOptions;
-  }
-
-  getCurrentDate() {
-    return this.cashBookModel.getCurrentDate();
-  }
-
-  getRecords() {
-    const records = this.cashBookModel.getRecords();
-    const filteredRecords = records.filter((record) => {
-      if (record.price >= 0) {
-        return this.recordIncludeOptions.income ? true : false;
-      }
-      return this.recordIncludeOptions.expenditure ? true : false;
-    });
-    return filteredRecords;
-  }
-
-  getDayRecords = () => {
-    const records = this.getRecords();
-    const dayRecords = {};
-
-    records.forEach((record) => {
-      const time = record.date.getTime();
-      if (!dayRecords[time]) {
-        dayRecords[time] = [];
-      }
-
-      dayRecords[time].push(record);
-    });
-
-    return dayRecords;
+  init = () => {
+    this.accountsIncludeOptions = initalIncludeOptions;
   };
 
-  getRecordsStatistics = () => {
-    const records = this.getRecords();
+  getAccounts = () => {
+    const accounts = this.cashBookModel.getAccounts();
+    const filteredAccounts = accounts.filter((account) => {
+      if (account.price >= 0) {
+        return this.accountsIncludeOptions.income ? true : false;
+      }
+      return this.accountsIncludeOptions.expenditure ? true : false;
+    });
+    return filteredAccounts;
+  };
+
+  getDayAccounts = () => {
+    const accounts = this.getAccounts();
+    const dayAccounts = {};
+
+    accounts.forEach((account) => {
+      const time = account.date.getTime();
+      if (!dayAccounts[time]) {
+        dayAccounts[time] = [];
+      }
+
+      dayAccounts[time].push(account);
+    });
+
+    return dayAccounts;
+  };
+
+  getAccountsStatistics = () => {
+    const accounts = this.getAccounts();
 
     let totalCount = 0;
     let totalIncome = 0;
     let totalExpenditure = 0;
 
-    records.forEach((record) => {
+    accounts.forEach((account) => {
       totalCount += 1;
-      if (record.price >= 0) {
-        return (totalIncome += record.price);
+      if (account.price >= 0) {
+        return (totalIncome += account.price);
       }
-      return (totalExpenditure -= record.price);
+      return (totalExpenditure -= account.price);
     });
 
     return { totalCount, totalIncome, totalExpenditure };
   };
 
-  getRecordIncludeOptions = () => {
-    return this.recordIncludeOptions;
+  getAccountIncludeOptions = () => {
+    return this.accountsIncludeOptions;
   };
-  setRecordIncludeOptions = (recordIncludeOptions) => {
-    this.recordIncludeOptions = recordIncludeOptions;
-    this.observer.notify(notifyTypes.CHANGED_RECORD_DATA);
+
+  setAccountIncludeOptions = (accountsIncludeOptions) => {
+    this.accountsIncludeOptions = accountsIncludeOptions;
+    this.observer.notify(notifyTypes.CHANGED_DATA_FILTER);
   };
 }
 
