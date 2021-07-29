@@ -32,17 +32,19 @@ class HistoryContainerController {
   getRecordsStatistics = () => {
     const records = this.getRecords();
 
+    let totalCount = 0;
     let totalIncome = 0;
     let totalExpenditure = 0;
 
     records.forEach((record) => {
+      totalCount += 1;
       if (record.price >= 0) {
         return (totalIncome += record.price);
       }
       return (totalExpenditure -= record.price);
     });
 
-    return { totalIncome, totalExpenditure };
+    return { totalCount, totalIncome, totalExpenditure };
   };
 }
 

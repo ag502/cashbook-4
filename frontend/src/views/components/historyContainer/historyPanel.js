@@ -1,7 +1,7 @@
 import { check, iconButton } from '../icons';
 import historyContainerController from './controller';
 
-class HistoryStatics extends HTMLElement {
+class HistoryPanel extends HTMLElement {
   constructor() {
     super();
     this.controller = historyContainerController;
@@ -67,6 +67,6 @@ class HistoryStatics extends HTMLElement {
   };
 }
 
-customElements.define('history-statics', HistoryStatics);
+customElements.define('history-panel', HistoryPanel);
 
-export default customElements.get('history-statics');
+export default customElements.get('history-panel');

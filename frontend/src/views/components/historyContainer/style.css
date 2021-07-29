@@ -7,7 +7,7 @@ history-container {
   position: relative;
 }
 
-.history-statics-fixer {
+.history-panel-fixer {
   position: absolute;
   top: 0;
   width: 100%;
@@ -16,7 +16,7 @@ history-container {
   left: 0;
 }
 
-history-statics {
+history-panel {
   display: flex;
   top: 0;
   width: 904px;
@@ -29,7 +29,7 @@ history-statics {
   margin: 0 auto;
 }
 
-history-statics > form {
+history-panel > form {
   display: flex;
   width: 100%;
   padding-left: 8px;
@@ -56,7 +56,7 @@ history-statics > form {
   width: 220px;
 }
 
-history-statics .check-box {
+history-panel .check-box {
   width: 40px;
   height: 40px;
   display: flex;
@@ -66,7 +66,7 @@ history-statics .check-box {
   border-radius: 10px;
 }
 
-history-statics .check-box > svg > path {
+history-panel .check-box > svg > path {
   stroke: var(--primary1);
 }
 

@@ -7,6 +7,7 @@ class HistoryFilter extends HTMLElement {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
+    this.totalCount = 0;
     this.totalIncome = 0;
     this.totalExpenditure = 0;
   }
@@ -16,14 +17,14 @@ class HistoryFilter extends HTMLElement {
     this.observer.subscribe(
       notifyTypes.FETCHED_DATA,
       this,
-      this.handleModelInit
+      this.handleFetchedData
     );
   }
 
-  handleModelInit = () => {
-    const { totalIncome, totalExpenditure } =
+  handleFetchedData = () => {
+    const { totalCount, totalIncome, totalExpenditure } =
       this.controller.getRecordsStatistics();
-
+    this.totalCount = totalCount;
     this.totalIncome = totalIncome;
     this.totalExpenditure = totalExpenditure;
 
@@ -33,7 +34,7 @@ class HistoryFilter extends HTMLElement {
   render = () => {
     this.innerHTML = /*html*/ `
         <div class="left">
-
+            <strong>전체 내역 ${this.totalCount}</strong>
         </div>
 
         <div class="right">

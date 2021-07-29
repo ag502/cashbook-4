@@ -38,7 +38,7 @@ const data = [
     category: 5,
     paymentMethod: '롯데카드',
     content: '카레',
-    price: 10000,
+    price: -10000,
     date: new Date('2021/07/19'),
   },
   {

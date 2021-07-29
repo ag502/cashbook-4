@@ -1,6 +1,6 @@
 import Header from '@/views/components/header/header';
 import HistoryContainer from '@/views/components/historyContainer';
-import Calendar from '@/views/components/calendar/index.js';
+// import Calendar from '@/views/components/calendar/index.js';
 
 class MainPage extends HTMLElement {
   constructor() {
