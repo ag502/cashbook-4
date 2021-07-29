@@ -1,6 +1,6 @@
 import historyContainerController from './controller';
 import observer from '@/common/utils/observer';
-import DayRecord from '@/views/components/DayRecord';
+import DayRecord from '@/views/components/dayRecord';
 import notifyTypes from '@/common/utils/notifyTypes';
 
 class HistoryContent extends HTMLElement {
