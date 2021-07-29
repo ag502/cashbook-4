@@ -43,6 +43,7 @@ history-panel > form {
   justify-content: center;
   border-right: 2px solid var(--place-holder);
   padding: 0 24px;
+  position: relative;
 }
 .history-input-box:first-child {
   width: 124px;
@@ -68,6 +69,61 @@ history-panel .check-box {
 
 history-panel .check-box > svg > path {
   stroke: var(--primary1);
+}
+
+history-panel button {
+  color: var(--label);
+  font: var(--body-regular);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+history-panel button.selected {
+  color: var(--title-active);
+}
+
+history-panel .dropdown {
+  width: 148px;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: calc(100% + 24px);
+  background-color: var(--off-white);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+history-panel .dropdown > div {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  cursor: pointer;
+}
+
+history-panel .dropdown > div:hover {
+  background-color: var(--background);
+}
+
+history-panel .dropdown .content {
+  border-bottom: 1px solid var(--line);
+  width: 100px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+history-panel .dropdown > :last-child .content {
+  border: none;
 }
 
 .history-input-box label {

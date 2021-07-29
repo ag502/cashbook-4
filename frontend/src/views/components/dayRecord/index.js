@@ -1,6 +1,7 @@
 import './style.css';
 
 import Record from './record';
+import { parsingDate } from '../../../common/utils/functions';
 
 const getDayString = (dayNumber) => {
   const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -34,7 +35,7 @@ class DayRecord extends HTMLElement {
         <div class="info">
             <div class="left">
                 <span class="date">
-                  ${this.date.getMonth() + 1}월 ${this.date.getDate()}일
+                  ${parsingDate(this.date, 'record')}
                 </span>
                 <span class="day">
                   ${getDayString(this.date.getDay())}

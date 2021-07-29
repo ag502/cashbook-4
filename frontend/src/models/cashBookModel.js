@@ -56,8 +56,6 @@ class CashBookModel {
   };
 
   getRecords = () => {
-    console.log('getRecord called');
-    console.log(this.records);
     return this.records;
   };
   getCurrentPaymentInfo = () => {

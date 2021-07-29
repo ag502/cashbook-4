@@ -28,7 +28,7 @@ class Record extends HTMLElement {
   connectedCallback() {
     this.render();
     this.addEventListener('click', () => {
-      this.observer.notify(notifyTypes.RECORD_CLICK);
+      this.observer.notify(notifyTypes.CLICK_RECORD, this.recordInfo);
     });
   }
 

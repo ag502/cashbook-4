@@ -35,8 +35,6 @@ class HistoryContent extends HTMLElement {
 
   handleDataChanged = () => {
     this.dayRecords = this.controller.getDayRecords();
-    console.log('controller에서 받아온');
-    console.log(this.dayRecords);
     this.render();
   };
 
@@ -46,8 +44,7 @@ class HistoryContent extends HTMLElement {
     const dayRecordKeys = Object.keys(this.dayRecords).sort((a, b) => {
       return b - a;
     });
-    console.log('dayRecordKeys');
-    console.log(dayRecordKeys);
+
     dayRecordKeys.forEach((dayRecordKey) => {
       const $dayRecord = new DayRecord({
         date: dayRecordKey,
