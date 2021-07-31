@@ -2,8 +2,9 @@ import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
 import morgan from 'morgan';
+import routes from '../api/index.js';
 
-import env from '../config/env';
+import env from '../config/env.js';
 
 export default ({ app }) => {
   app.use(cors());
@@ -12,6 +13,5 @@ export default ({ app }) => {
   app.use(express.urlencoded({ extended: true }));
   app.set('jwt-secret', env.JWT_SECRET);
   app.use(morgan('combined'));
-
-  app.use(env.API_PREFIX);
+  app.use(env.API_PREFIX, routes());
 };
