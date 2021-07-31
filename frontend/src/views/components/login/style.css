@@ -1,4 +1,4 @@
-login-content {
+.auth-content {
   display: flex;
   flex-direction: column;
   min-width: 350px;
@@ -8,7 +8,7 @@ login-content {
   padding: 20px;
 }
 
-login-content h1 {
+.auth-content h1 {
   font: var(--display-large);
   display: flex;
   justify-content: center;
@@ -16,14 +16,14 @@ login-content h1 {
   padding: 20px 0 20px;
 }
 
-login-content .input-wrapper {
+.auth-content .input-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 
-login-content label {
+.auth-content label {
   width: 100%;
   padding: 10px 0 10px;
   margin-top: 20px;
@@ -31,7 +31,7 @@ login-content label {
   color: var(--label);
 }
 
-login-content input {
+.auth-content input {
   border: 1px solid var(--line);
   background: var(--off-white);
   height: 30px;
@@ -41,11 +41,11 @@ login-content input {
   outline: none;
 }
 
-login-content .submit-input {
+.auth-content .submit-input {
   padding: 20px 0 20px;
 }
 
-login-content button {
+.auth-content button {
   width: 100%;
   padding: 5px;
   height: fit-content;
@@ -56,17 +56,32 @@ login-content button {
   align-items: center;
 }
 
-login-content .social-logins {
+.auth-content .social-logins {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 220px;
 }
 
-login-content .social-logins button {
+.auth-content .social-logins button {
 }
 
-login-content .social-logins svg {
+.auth-content .social-logins svg {
   width: 30px;
   height: 30px;
+}
+
+.auth-content .register,
+.auth-content .login {
+  display: flex;
+  padding: 20px;
+  font: var(--bold-medium);
+  color: var(--title-active);
+}
+
+.auth-content .register #register-btn,
+.auth-content .login #login-btn {
+  cursor: pointer;
+  color: var(--primary3);
+  font-weight: bold;
 }

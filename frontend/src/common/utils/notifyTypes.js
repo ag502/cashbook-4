@@ -6,6 +6,7 @@ const notifyTypes = {
   CLICK_ACCOUNT: 'click-account',
   INIT_USER: 'init-user',
   SUBMIT_LOGIN: 'submit-login',
+  CHANGED_LOGIN_CONTENT: 'change-login-content',
 };
 
 export default notifyTypes;

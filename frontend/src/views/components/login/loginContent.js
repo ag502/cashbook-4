@@ -1,11 +1,13 @@
 import notifyTypes from '../../../common/utils/notifyTypes';
 import observer from '@/common/utils/observer';
+import loginController from './controller';
 import { github } from '../icons';
 
 class LoginContent extends HTMLElement {
   constructor() {
     super();
     this.observer = observer;
+    this.controller = loginController;
   }
 
   connectedCallback() {
@@ -17,16 +19,24 @@ class LoginContent extends HTMLElement {
     const $form = event.currentTarget;
     const email = $form.querySelector('#email').value;
     const password = $form.querySelector('#password').value;
-    this.observer.notify(notifyTypes.SUBMIT_LOGIN, { email, password });
+    this.controller.handleLogin({ email, password });
+  };
+
+  handleRegisterBtnClick = () => {
+    this.controller.showRegisterView();
   };
 
   addEvents = () => {
     const $loginForm = this.querySelector('#login-form');
     $loginForm.addEventListener('submit', this.submitHandler);
+
+    const $registerBtn = this.querySelector('#register-btn');
+    $registerBtn.addEventListener('click', this.handleRegisterBtnClick);
   };
 
   render = () => {
-    this.setHTML(/*html*/ `
+    this.setHTML(
+      /*html*/ `
       <form id="login-form">
         <h1>
           로그인
@@ -50,7 +60,11 @@ class LoginContent extends HTMLElement {
           ${github} Github으로 로그인하기!
         </button>
       </div>
-    `);
+      <div class="register">
+        <span>혹시 계정이 없으신가요? <strong id="register-btn">회원가입</strong></span>
+      </div>
+    `
+    ).addClass('auth-content');
 
     this.addEvents();
   };
