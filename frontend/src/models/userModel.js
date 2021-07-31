@@ -10,9 +10,10 @@ class UserModel {
 
   init = async () => {
     this.isLogin = await this.checkLogin();
-    if (this.isLogin === false) {
-      this.observer.notify(notifyTypes.INIT_USER);
-    }
+
+    this.observer.subscribe(notifyTypes.SUBMIT_LOGIN, this, this.login);
+
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
   };
 
   checkLogin = async () => {
@@ -24,12 +25,15 @@ class UserModel {
   };
 
   login = ({ email, password }) => {
-    return new Promise((resolve) => {
+    new Promise((resolve) => {
       setTimeout(() => {
         resolve({
           success: true,
         });
       }, 300);
+    }).then((result) => {
+      this.isLogin = result.success;
+      location.hash = '#/';
     });
   };
 

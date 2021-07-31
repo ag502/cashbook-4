@@ -1,6 +1,8 @@
 import MainPage from '@/views/pages/mainPage';
 import CalenderPage from './views/pages/calenderPage';
 
+import Login from '@/views/components/login';
+
 import observer from '@/common/utils/observer';
 
 import '@/common/styles/normalize.css';
@@ -33,3 +35,13 @@ const render = () => {
 window.addEventListener('hashchange', render);
 
 window.addEventListener('DOMContentLoaded', render);
+
+const handleInitUser = (isLogin) => {
+  if (isLogin) {
+    return;
+  }
+  const $app = document.querySelector('#app');
+  const $login = new Login();
+  $app.appendChild($login);
+};
+observer.subscribe(notifyTypes.INIT_USER, $app, handleInitUser);

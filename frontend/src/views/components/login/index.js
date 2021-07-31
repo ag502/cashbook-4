@@ -1,6 +1,8 @@
 import Modal from '@/views/components/modal';
 import LoginContent from './loginContent';
 
+import './style.css';
+
 class Login extends HTMLElement {
   constructor() {
     super();

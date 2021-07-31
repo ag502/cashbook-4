@@ -5,6 +5,7 @@ const notifyTypes = {
   CHANGED_ROUTE: 'changed-route',
   CLICK_ACCOUNT: 'click-account',
   INIT_USER: 'init-user',
+  SUBMIT_LOGIN: 'submit-login',
 };
 
 export default notifyTypes;

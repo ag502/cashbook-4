@@ -11,9 +11,7 @@ class Modal extends HTMLElement {
   }
 
   render = () => {
-    this.setHTML(/*html*/ `
-    
-    `);
+    this.setHTML(/*html*/ ``);
 
     this.appendChild(this.$contentElement);
   };
