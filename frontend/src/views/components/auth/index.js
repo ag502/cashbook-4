@@ -8,7 +8,7 @@ import './style.css';
 import controller from './controller';
 import notifyTypes from '@/common/utils/notifyTypes';
 
-class Login extends HTMLElement {
+class Auth extends HTMLElement {
   constructor() {
     super();
     this.observer = observer;
@@ -51,6 +51,6 @@ class Login extends HTMLElement {
   };
 }
 
-customElements.define('login-view', Login);
+customElements.define('auth-view', Auth);
 
-export default customElements.get('login-view');
+export default customElements.get('auth-view');
