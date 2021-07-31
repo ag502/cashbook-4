@@ -4,10 +4,7 @@ class Observer {
   }
 
   subscribe = (name, context, cb) => {
-    if (!this.subscribers[name]) {
-      this.subscribers[name] = [];
-    }
-
+    this.subscribers[name] = this.subscribers[name] || [];
     this.subscribers[name].push({
       context,
       cb,
