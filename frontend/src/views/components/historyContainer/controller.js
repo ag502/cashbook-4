@@ -13,6 +13,10 @@ class HistoryContainerController extends BaseController {
   }
 
   init = () => {
+    this.resetIncludeOptions();
+  };
+
+  resetIncludeOptions = () => {
     this.accountsIncludeOptions = { ...initalIncludeOptions };
   };
 

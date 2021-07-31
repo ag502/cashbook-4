@@ -4,6 +4,8 @@ const notifyTypes = {
   CHANGED_DATA_FILTER: 'changed-data-filter',
   CHANGED_ROUTE: 'changed-route',
   CLICK_ACCOUNT: 'click-account',
+  INIT_USER: 'init-user',
+  CHANGED_LOGIN_CONTENT: 'change-login-content',
 };
 
 export default notifyTypes;
