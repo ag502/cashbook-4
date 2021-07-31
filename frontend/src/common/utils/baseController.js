@@ -1,9 +1,6 @@
 import cashBookModel from '@/models/cashBookModel';
 import userModel from '@/models/userModel';
 import observer from '@/common/utils/observer';
-import notifyTypes from './notifyTypes';
-
-import Login from '@/views/components/login';
 
 class BaseController {
   constructor() {

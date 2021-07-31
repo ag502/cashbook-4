@@ -1,7 +1,7 @@
 import MainPage from '@/views/pages/mainPage';
 import CalenderPage from './views/pages/calenderPage';
 
-import Login from '@/views/components/login';
+import Auth from '@/views/components/auth';
 
 import observer from '@/common/utils/observer';
 
@@ -42,7 +42,7 @@ const handleInitUser = (isLogin) => {
     return;
   }
   const $app = document.querySelector('#app');
-  const $login = new Login();
-  $app.appendChild($login);
+  const $auth = new Auth();
+  $app.appendChild($auth);
 };
 observer.subscribe(notifyTypes.INIT_USER, $app, handleInitUser);
