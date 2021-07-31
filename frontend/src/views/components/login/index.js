@@ -27,6 +27,10 @@ class Login extends HTMLElement {
     );
   }
 
+  disconnectedCallback() {
+    this.observer.unsubscribe(notifyTypes.CHANGED_LOGIN_CONTENT, this);
+  }
+
   handleChangedContent = (type) => {
     if (type === 'register') {
       this.$currentContent = this.$registerContent;

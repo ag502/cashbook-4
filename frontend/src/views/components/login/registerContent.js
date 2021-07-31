@@ -1,11 +1,8 @@
-import notifyTypes from '../../../common/utils/notifyTypes';
-import observer from '@/common/utils/observer';
 import loginController from './controller';
 
 class RegisterContent extends HTMLElement {
   constructor() {
     super();
-    this.observer = observer;
     this.controller = loginController;
   }
 

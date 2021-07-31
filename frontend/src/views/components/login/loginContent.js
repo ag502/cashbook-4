@@ -1,12 +1,9 @@
-import notifyTypes from '../../../common/utils/notifyTypes';
-import observer from '@/common/utils/observer';
 import loginController from './controller';
 import { github } from '../icons';
 
 class LoginContent extends HTMLElement {
   constructor() {
     super();
-    this.observer = observer;
     this.controller = loginController;
   }
 
