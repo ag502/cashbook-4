@@ -2,7 +2,7 @@ import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
 import userModel from '@/models/userModel';
 
-class LoginController {
+class AuthController {
   constructor() {
     this.observer = observer;
     this.userModel = userModel;
@@ -24,10 +24,11 @@ class LoginController {
       return false;
     }
   };
+
   handleRegister = async ({ email, password }) => {
     const result = await this.userModel.register({ email, password });
     return result.success;
   };
 }
 
-export default new LoginController();
+export default new AuthController();
