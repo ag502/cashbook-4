@@ -16,6 +16,7 @@ class Auth extends HTMLElement {
     this.$loginContent = new LoginContent();
     this.$registerContent = new RegisterContent();
     this.$currentContent = this.$loginContent;
+    this.contentTypes = this.controller.getContentTypes();
   }
 
   connectedCallback() {
@@ -32,7 +33,7 @@ class Auth extends HTMLElement {
   }
 
   handleChangedContent = (type) => {
-    if (type === 'register') {
+    if (type === this.contentTypes.REGISTER) {
       this.$currentContent = this.$registerContent;
     } else {
       this.$currentContent = this.$loginContent;

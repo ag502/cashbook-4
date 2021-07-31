@@ -6,14 +6,24 @@ class AuthController {
   constructor() {
     this.observer = observer;
     this.userModel = userModel;
+    this.contentTypes = {
+      REGISTER: 'register',
+      LOGIN: 'LOGIN',
+    };
   }
 
   showRegisterView = () => {
-    this.observer.notify(notifyTypes.CHANGED_LOGIN_CONTENT, 'register');
+    this.observer.notify(
+      notifyTypes.CHANGED_LOGIN_CONTENT,
+      this.contentTypes.REGISTER
+    );
   };
 
   showLoginView = () => {
-    this.observer.notify(notifyTypes.CHANGED_LOGIN_CONTENT, 'login');
+    this.observer.notify(
+      notifyTypes.CHANGED_LOGIN_CONTENT,
+      this.contentTypes.LOGIN
+    );
   };
 
   handleLogin = async ({ email, password }) => {
@@ -28,6 +38,10 @@ class AuthController {
   handleRegister = async ({ email, password }) => {
     const result = await this.userModel.register({ email, password });
     return result.success;
+  };
+
+  getContentTypes = () => {
+    return this.contentTypes;
   };
 }
 
