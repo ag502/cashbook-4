@@ -46,6 +46,8 @@ class LineChart extends HTMLElement {
   }
 
   connectedCallback() {
+    console.log(this.parentElement);
+    console.log(this.parentElement.clientWidth);
     this.render();
   }
 

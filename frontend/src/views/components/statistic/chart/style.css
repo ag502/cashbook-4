@@ -3,6 +3,11 @@ pie-chart {
   text-align: center;
 }
 
+line-chart {
+  width: 100%;
+  text-align: center;
+}
+
 .partial-pie:hover {
   transform: scale(1.2);
   transition: transform 0.5s;
