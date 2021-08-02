@@ -22,7 +22,7 @@ class PieChart extends HTMLElement {
     this.svgW = parseInt(this.getAttr('width')) || 300;
     this.svgH = parseInt(this.getAttr('height')) || 300;
 
-    this.style.display = 'block';
+    this.style.display = 'inline-block';
 
     this.radius = this.svgW * 0.25;
     this.circleLength = 2 * PI * this.radius;
@@ -53,18 +53,18 @@ class PieChart extends HTMLElement {
       .createElementNS(SVG_URL, 'mask')
       .setAttr('id', MASK_ID)
       .setAttr('maskUnits', 'userSpaceOnUse').setHTML(/*html*/ `
-        <rect x='-1' y='-1' height='100%' width='100%' fill='#000000'/>
-        <circle
-          r=${this.radius}
-          cx=${this.centerX}
-          cy=${this.centerY}
-          fill='transparent'
-          stroke='#ffffff'
-          stroke-width=${this.radius}
-          stroke-dasharray=${this.circleLength}
-          stroke-dashoffset=${this.circleLength}
-          transform='rotate(-90 ${this.centerX} ${this.centerY})'
-        />
+          <rect x='-1' y='-1' height='100%' width='100%' fill='#000000'/>
+          <circle
+            r=${this.radius}
+            cx=${this.centerX}
+            cy=${this.centerY}
+            fill='transparent'
+            stroke='#ffffff'
+            stroke-width=${this.radius}
+            stroke-dasharray=${this.circleLength}
+            stroke-dashoffset=${this.circleLength}
+            transform='rotate(-90 ${this.centerX} ${this.centerY})'
+          />
       `);
     this.makeMaskAni($progressMask.querySelector('circle'));
     return $progressMask;
@@ -82,6 +82,7 @@ class PieChart extends HTMLElement {
   createPartialPie = (pathAttr, color) => {
     return document
       .createElementNS(SVG_URL, 'path')
+      .addClass('partial-pie')
       .setAttr('d', pathAttr)
       .setAttr('stroke', color)
       .setAttr('stroke-width', `${this.radius}`)
