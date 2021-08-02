@@ -10,28 +10,18 @@ import qs from 'querystring';
 import rs from 'randomstring';
 
 const { user } = sequelize.models;
-const loginState = [];
 
 class GithubOauthService {
   constructor(userModel) {
     this.userModel = userModel;
-    this.authTypes = {
-      local: 'local',
-      oauth: {
-        github: 'github',
-      },
-    };
+    this.authType = 'github';
   }
 
   getGithubAuthUrl() {
-    const currentState = rs.generate();
-    loginState.push(currentState);
-
     const url = `${env.OAUTH_GITHUB_AUTH_URL}/authorize?`;
     const query = qs.stringify({
       client_id: env.OAUTH_GITHUB_CLIENT_ID,
       redirect_uri: env.FRONTEND_HOST + '/',
-      state: currentState,
       scope: 'user:email',
     });
 
@@ -85,11 +75,7 @@ class GithubOauthService {
     }
   }
 
-  async githubLogin({ code, state }) {
-    if (!loginState.includes(state)) {
-      return { success: false, error: getError(errorTypes.LoginFailed) };
-    }
-
+  async githubLogin({ code }) {
     const accessTokenResult = await this._getGithubOauthAccessToken(code);
     if (!accessTokenResult.success) {
       return accessTokenResult;
@@ -102,7 +88,44 @@ class GithubOauthService {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
-    console.log(userInfo);
+    const { login } = userInfo;
+    let user;
+    try {
+      user = this.userModel.findOne({
+        where: { nickname: login, provider: this.authType },
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (user !== null) {
+      const token = this.generateToken({
+        id: user.id,
+        nickname: user.nickname,
+        provider: user.provider,
+      });
+
+      return { success: true, token };
+    }
+
+    let newUser;
+    try {
+      newUser = (
+        await this.userModel.create({
+          nickname: login,
+          provider: this.authType,
+        })
+      ).get({ plain: true });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+    const token = this.generateToken({
+      id: user.id,
+      nickname: user.nickname,
+      provider: user.provider,
+    });
+    return { succes: true, token };
   }
 }
 

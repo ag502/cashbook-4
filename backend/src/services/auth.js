@@ -11,17 +11,12 @@ const { user } = sequelize.models;
 class AuthService {
   constructor(userModel) {
     this.userModel = userModel;
-    this.authTypes = {
-      local: 'local',
-      oauth: {
-        github: 'github',
-      },
-    };
+    this.authType = 'local';
   }
 
   async register({ nickname, password }) {
     const isExistUser = await this.userModel.findOne({
-      where: { nickname },
+      where: { nickname, provider: this.authType },
       raw: true,
     }); // null or user object
 
@@ -54,7 +49,7 @@ class AuthService {
 
   async login({ nickname, password }) {
     const user = await this.userModel.findOne({
-      where: { nickname },
+      where: { nickname, provider: this.authType },
       raw: true,
     });
 
@@ -63,15 +58,19 @@ class AuthService {
     }
 
     if (await checkPassword(password, user.password)) {
-      const token = jwt.sign(
-        { id: user.id, nickname: user.nickname, provider: user.provider },
-        env.JWT_SECRET
-      );
+      const token = this.generateToken({
+        id: user.id,
+        nickname: user.nickname,
+        provider: user.provider,
+      });
 
       return { success: true, token };
     }
 
     return { success: false, error: getError(errorTypes.LoginFailed) };
+  }
+  generateToken(content) {
+    return jwt.sign(content, env.JWT_SECRET);
   }
 }
 

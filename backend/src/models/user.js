@@ -11,12 +11,10 @@ const user = (sequelize) => {
       },
       nickname: {
         type: DataTypes.STRING,
-        unique: false,
         allowNull: false,
       },
       password: {
         type: DataTypes.STRING(80),
-        allowNull: false,
       },
       provider: {
         type: DataTypes.STRING(20),
@@ -26,6 +24,12 @@ const user = (sequelize) => {
     },
     {
       tableName: 'user',
+      indexes: [
+        {
+          unique: true,
+          fields: ['nickname', 'provider'],
+        },
+      ],
     }
   );
 

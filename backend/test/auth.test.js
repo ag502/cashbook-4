@@ -10,11 +10,17 @@ const user1 = {
   password: 'secretjuju1',
 };
 
+const githubUser = {
+  nickname: 'SecretJuJu',
+  provider: 'github',
+};
+
 describe('user_test', () => {
   before(async () => {
     console.log('user 테이블 초기화');
     const userModel = sequelize.models.user;
     await userModel.destroy({ where: {}, truncate: { cascade: true } });
+    await userModel.create(githubUser);
   });
   describe('register 테스트', () => {
     it('basic 회원가입 테스트(user1)', (done) => {
@@ -52,6 +58,26 @@ describe('user_test', () => {
           } else {
             assert(false);
           }
+          done();
+        }
+      );
+    });
+    it('존재하는 github유저와 같은 nickname으로 회원가입', (done) => {
+      githubUser.password = 'impassword';
+      request.post(
+        BASEURL + '/api/auth/register',
+        {
+          body: githubUser,
+          json: true,
+        },
+        (err, res, body) => {
+          if (err) {
+            console.log(err);
+          }
+          if (!body.success) {
+            console.log(body);
+          }
+          assert(body.success);
           done();
         }
       );
