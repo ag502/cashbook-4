@@ -9,7 +9,18 @@ export default (app) => {
   routes.get('/check', async (req, res) => {
     console.log(authService);
   });
-  routes.post('/login', async (req, res) => {});
+  routes.post('/login', async (req, res) => {
+    const { nickname, password } = req.body;
+    const result = await authService.login({ nickname, password });
+    if (result.success) {
+      return res.status(200).json(result);
+    }
+    if (result.error.errorType === errorTypes.LoginFailed) {
+      return res.status(401).json(result); // unauthorized
+    }
+    return res.status(500).json(result);
+  });
+
   routes.post('/register', async (req, res) => {
     const { nickname, password } = req.body;
     const result = await authService.register({ nickname, password });

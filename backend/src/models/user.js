@@ -18,6 +18,11 @@ const user = (sequelize) => {
         type: DataTypes.STRING(80),
         allowNull: false,
       },
+      provider: {
+        type: DataTypes.STRING(20),
+        allowNull: false,
+        defaultValue: 'local',
+      },
     },
     {
       tableName: 'user',
