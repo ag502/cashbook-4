@@ -42,7 +42,7 @@ export default (app) => {
     const redirectUrl = githubOauthService.getGithubAuthUrl();
     res.status(STATUS_CODES.OK).json(redirectUrl);
   });
-  routes.post('/github-callback', async (req, res) => {
+  routes.post('/github', async (req, res) => {
     const { code } = req.body;
     const result = await githubOauthService.githubLogin({ code });
     if (result.success) {
