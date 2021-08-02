@@ -21,7 +21,7 @@ export default (app) => {
       return res.status(STATUS_CODES.OK).json(result);
     }
     if (result.error.errorType === errorTypes.LoginFailed) {
-      return res.status(STATUS_CODES.UNAUTHORIZED).json(result); // unauthorized
+      return res.status(STATUS_CODES.UNAUTHORIZED).json(result);
     }
     return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
   });
@@ -30,12 +30,12 @@ export default (app) => {
     const { nickname, password } = req.body;
     const result = await authService.register({ nickname, password });
     if (result.success) {
-      return res.status(STATUS_CODES.OK).json(result); // TODO: Status code 상수 처리 필요
+      return res.status(STATUS_CODES.OK).json(result);
     }
     if (result.error.errorType === errorTypes.AlreadyExist) {
-      return res.status(STATUS_CODES.CONFLICT).json(result); // 409 conflict
+      return res.status(STATUS_CODES.CONFLICT).json(result);
     }
-    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result); // 500 unexpect
+    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
   });
 
   routes.get('/github', (req, res) => {
