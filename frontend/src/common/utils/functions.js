@@ -17,3 +17,19 @@ export const parsingDate = (date, type = 'calender') => {
     return `${curDate.getMonth() + 1}월 ${curDate.getDate()}일`;
   }
 };
+
+export const getCategoryString = (category) => {
+  const categories = [
+    '월급',
+    '용돈',
+    '기타수입',
+    '생활',
+    '식비',
+    '교통',
+    '쇼핑/뷰티',
+    '의료/건강',
+    '문화/여가',
+    '미분류',
+  ];
+  return categories[Number(category) - 1];
+};
