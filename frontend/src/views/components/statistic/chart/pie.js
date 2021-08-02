@@ -1,4 +1,5 @@
 import { PI, SVG_URL } from '@/common/utils/constant';
+import './style.css';
 
 const MASK_ID = 'progress';
 
@@ -24,8 +25,19 @@ class PieChart extends HTMLElement {
     this.style.display = 'block';
 
     this.radius = this.svgW * 0.25;
+    this.circleLength = 2 * PI * this.radius;
     [this.centerX, this.centerY] = [this.svgW / 2, this.svgH / 2];
     [this.startX, this.startY] = [this.centerX, this.centerY - this.radius];
+  };
+
+  makeMaskAni = ($mask) => {
+    $mask.animate(
+      [{ strokeDashoffset: this.circleLength }, { strokeDashoffset: 0 }],
+      {
+        duration: 1000,
+        fill: 'forwards',
+      }
+    );
   };
 
   getFinishCoor = (degree) => {
@@ -37,7 +49,7 @@ class PieChart extends HTMLElement {
   };
 
   createProgressMask = () => {
-    return document
+    const $progressMask = document
       .createElementNS(SVG_URL, 'mask')
       .setAttr('id', MASK_ID)
       .setAttr('maskUnits', 'userSpaceOnUse').setHTML(/*html*/ `
@@ -46,12 +58,16 @@ class PieChart extends HTMLElement {
           r=${this.radius}
           cx=${this.centerX}
           cy=${this.centerY}
-          fill='none'
+          fill='transparent'
           stroke='#ffffff'
           stroke-width=${this.radius}
+          stroke-dasharray=${this.circleLength}
+          stroke-dashoffset=${this.circleLength}
           transform='rotate(-90 ${this.centerX} ${this.centerY})'
         />
       `);
+    this.makeMaskAni($progressMask.querySelector('circle'));
+    return $progressMask;
   };
 
   composePathAttr = (startX, startY, finishX, finishY, isLargeArc) => {
@@ -70,7 +86,11 @@ class PieChart extends HTMLElement {
       .setAttr('stroke', color)
       .setAttr('stroke-width', `${this.radius}`)
       .setAttr('fill', 'transparent')
-      .setAttr('mask', `url(#${MASK_ID})`);
+      .setAttr('mask', `url(#${MASK_ID})`)
+      .setAttr(
+        'style',
+        `transform-origin: ${this.centerX}px ${this.centerY}px;`
+      );
   };
 
   render = () => {
