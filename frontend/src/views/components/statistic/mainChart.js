@@ -28,7 +28,7 @@ class MainChart extends HTMLElement {
 
   render = () => {
     this.setHTML(/*html*/ `
-      <div class='main-chart--container'>
+      <div class='chart--container'>
         <pie-chart 
           width='300' 
           height='300' 
