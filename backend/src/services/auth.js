@@ -10,7 +10,7 @@ const { user } = sequelize.models;
 
 class AuthService {
   constructor(userModel) {
-    this.user = userModel;
+    this.userModel = userModel;
     this.authTypes = {
       local: 'local',
       oauth: {
@@ -20,7 +20,7 @@ class AuthService {
   }
 
   async register({ nickname, password }) {
-    const isExistUser = await this.user.findOne({
+    const isExistUser = await this.userModel.findOne({
       where: { nickname },
       raw: true,
     }); // null or user object
@@ -33,7 +33,7 @@ class AuthService {
     let flag = false;
     try {
       const result = (
-        await this.user.create({
+        await this.userModel.create({
           nickname,
           password: hashedPassword,
         })
@@ -53,7 +53,10 @@ class AuthService {
   }
 
   async login({ nickname, password }) {
-    const user = await this.user.findOne({ where: { nickname }, raw: true });
+    const user = await this.userModel.findOne({
+      where: { nickname },
+      raw: true,
+    });
 
     if (user === null) {
       return { success: false, error: getError(errorTypes.LoginFailed) };
