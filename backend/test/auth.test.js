@@ -99,7 +99,7 @@ describe('user_test', () => {
           if (!body.success) {
             console.log(body);
           } else {
-            user1.token = body.token;
+            user1.token = body.accessToken;
           }
           assert(body.success);
           done();
