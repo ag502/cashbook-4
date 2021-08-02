@@ -1,5 +1,5 @@
 import sequelize from '../models/index.js';
-import { errorType } from '../errors/index.js';
+import { errorTypes } from '../errors/index.js';
 import getError from '../utils/error.js';
 import { createHashedPassword, checkPassword } from '../utils/user.js';
 
@@ -17,7 +17,7 @@ class AuthService {
     }); // null or user object
 
     if (isExistUser !== null) {
-      return { success: false, error: getError(errorType.AlreadyExist) };
+      return { success: false, error: getError(errorTypes.AlreadyExist) };
     }
 
     const hashedPassword = createHashedPassword(password);
@@ -34,13 +34,13 @@ class AuthService {
         flag = true;
       }
     } catch (err) {
-      return { success: false, error: getError(errorType.UnexpectError) };
+      return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
     if (flag) {
       return { success: true };
     }
-    return { success: false, error: getError(errorType.UnexpectError) };
+    return { success: false, error: getError(errorTypes.UnexpectError) };
   }
 }
 

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import authService from '../../services/auth.js';
-import { errorType } from '../../errors/index.js';
+import { errorTypes } from '../../errors/index.js';
 
 export default (app) => {
   const routes = Router();
@@ -16,7 +16,7 @@ export default (app) => {
     if (result.success) {
       return res.status(200).json(result); // TODO: Status code 상수 처리 필요
     }
-    if (result.error.errorType === errorType.AlreadyExist) {
+    if (result.error.errorType === errorTypes.AlreadyExist) {
       return res.status(409).json(result); // 409 conflict
     }
     return res.status(500).json(result); // 500 unexpect
