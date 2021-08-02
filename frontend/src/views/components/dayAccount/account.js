@@ -20,7 +20,7 @@ class Account extends HTMLElement {
     this.setHTML(/*html*/ `
         <div class="left">
             <div class="category category${this.accountInfo.category}">
-                ${getCategoryString(this.accountInfo.category)}
+                ${getCategoryString(this.accountInfo.category).name}
             </div>
 
             <p class="context">

@@ -20,16 +20,16 @@ export const parsingDate = (date, type = 'calender') => {
 
 export const getCategoryString = (category) => {
   const categories = [
-    '월급',
-    '용돈',
-    '기타수입',
-    '생활',
-    '식비',
-    '교통',
-    '쇼핑/뷰티',
-    '의료/건강',
-    '문화/여가',
-    '미분류',
+    { name: '월급', color: '#6ed5eb' },
+    { name: '용돈', color: '#4cb8b8' },
+    { name: '기타수입', color: '#94d3cc' },
+    { name: '생활', color: '#4ca1de' },
+    { name: '식비', color: '#d092e2' },
+    { name: '교통', color: '#817dce' },
+    { name: '쇼핑/뷰티', color: '#4a6cc3' },
+    { name: '의료/건강', color: '#b9d58' },
+    { name: '문화/여가', color: '#e6d267' },
+    { name: '미분류', color: '#e2b765' },
   ];
   return categories[Number(category) - 1];
 };
