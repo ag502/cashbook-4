@@ -1,4 +1,6 @@
 .main-chart--container {
+  display: flex;
+  align-items: center;
   width: 848px;
   height: 565px;
   background-color: #ffffff;

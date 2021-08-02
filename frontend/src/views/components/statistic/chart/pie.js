@@ -1,3 +1,4 @@
+import { getCategoryString } from '@/common/utils/functions';
 import { PI, SVG_URL } from '@/common/utils/constant';
 import './style.css';
 
@@ -105,8 +106,8 @@ class PieChart extends HTMLElement {
 
     let accAngle = 0;
     let [curX, curY] = [this.startX, this.startY];
-    datasets.data.forEach((data, idx) => {
-      const curAngle = (360 * data) / 100;
+    this.config.forEach(({ categoryId, percent }) => {
+      const curAngle = (360 * percent) / 100;
       accAngle += curAngle;
       const [finishX, finishY] = this.getFinishCoor(accAngle);
 
@@ -120,7 +121,7 @@ class PieChart extends HTMLElement {
       [curX, curY] = [finishX, finishY];
 
       $svg.addElement(
-        this.createPartialPie(pathAttr, datasets.backgroundColor[idx])
+        this.createPartialPie(pathAttr, getCategoryString(categoryId).color)
       );
     });
 
