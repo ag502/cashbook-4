@@ -3,9 +3,39 @@
   align-items: center;
   width: 848px;
   height: 565px;
+  padding: 35px 42px 32px;
   background-color: #ffffff;
   margin: -25px auto 16px;
   border: 1px solid #d7d7d7;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1), 0px 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.main-chart--info {
+  width: 50%;
+}
+
+.main-chart--info-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.main-chart--info-item category-badge {
+  margin-right: 24px;
+}
+
+.price-info {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.price-percent {
+  font: var(--body-regular);
+}
+
+.price-price {
+  font: var(--bold-large);
 }
