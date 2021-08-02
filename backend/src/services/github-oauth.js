@@ -1,5 +1,4 @@
 import sequelize from '../models/index.js';
-import jwt from 'jsonwebtoken';
 
 import { errorTypes } from '../errors/index.js';
 import getError from '../utils/error.js';
@@ -7,13 +6,15 @@ import request from '../utils/await-request.js';
 import env from '../config/env.js';
 
 import qs from 'querystring';
-import rs from 'randomstring';
+
+import authTokenService from './auth-token.js';
 
 const { user } = sequelize.models;
 
 class GithubOauthService {
   constructor(userModel) {
     this.userModel = userModel;
+    this.authTokenService = authTokenService;
     this.authType = 'github';
   }
 
@@ -81,8 +82,8 @@ class GithubOauthService {
       return accessTokenResult;
     }
 
-    const { accessToken } = accessTokenResult;
-    const userInfo = await this.getGithubUserInfo(accessToken);
+    const githubAccessToken = accessTokenResult.accessToken;
+    const userInfo = await this.getGithubUserInfo(githubAccessToken);
 
     if (userInfo === null) {
       return { success: false, error: getError(errorTypes.UnexpectError) };
@@ -100,13 +101,10 @@ class GithubOauthService {
     }
 
     if (user !== null) {
-      const token = this.generateToken({
-        id: user.id,
-        nickname: user.nickname,
-        provider: user.provider,
-      });
+      const accessToken = this.authTokenService.createAccessToken(user);
+      const refreshToken = this.authTokenService.createRefreshToken(user);
 
-      return { success: true, token };
+      return { success: true, accessToken, refreshToken };
     }
 
     let newUser;
@@ -120,55 +118,11 @@ class GithubOauthService {
     } catch (err) {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
-    const token = this.generateToken({
-      id: user.id,
-      nickname: user.nickname,
-      provider: user.provider,
-    });
-    return { succes: true, token };
-  }
-  generateToken(content) {
-    return jwt.sign(content, env.JWT_SECRET);
+
+    const accessToken = this.authTokenService.createAccessToken(user);
+    const refreshToken = this.authTokenService.createRefreshToken(user);
+    return { succes: true, accessToken, refreshToken };
   }
 }
 
 export default new GithubOauthService(user);
-
-/*
-{
-  login: 'SecretJuJu',
-  id: 47034129,
-  node_id: 'MDQ6VXNlcjQ3MDM0MTI5',
-  avatar_url: 'https://avatars.githubusercontent.com/u/47034129?v=4',
-  gravatar_id: '',
-  url: 'https://api.github.com/users/SecretJuJu',
-  html_url: 'https://github.com/SecretJuJu',
-  followers_url: 'https://api.github.com/users/SecretJuJu/followers',
-  following_url:
-    'https://api.github.com/users/SecretJuJu/following{/other_user}',
-  gists_url: 'https://api.github.com/users/SecretJuJu/gists{/gist_id}',
-  starred_url: 'https://api.github.com/users/SecretJuJu/starred{/owner}{/repo}',
-  subscriptions_url: 'https://api.github.com/users/SecretJuJu/subscriptions',
-  organizations_url: 'https://api.github.com/users/SecretJuJu/orgs',
-  repos_url: 'https://api.github.com/users/SecretJuJu/repos',
-  events_url: 'https://api.github.com/users/SecretJuJu/events{/privacy}',
-  received_events_url:
-    'https://api.github.com/users/SecretJuJu/received_events',
-  type: 'User',
-  site_admin: false,
-  name: 'SeungBo',
-  company: null,
-  blog: '',
-  location: null,
-  email: null,
-  hireable: null,
-  bio: null,
-  twitter_username: null,
-  public_repos: 31,
-  public_gists: 0,
-  followers: 9,
-  following: 8,
-  created_at: '2019-01-25T14:55:17Z',
-  updated_at: '2021-08-02T04:37:26Z',
-};
-*/

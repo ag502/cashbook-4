@@ -18,7 +18,11 @@ export default (app) => {
     const { nickname, password } = req.body;
     const result = await authService.login({ nickname, password });
     if (result.success) {
-      return res.status(STATUS_CODES.OK).json(result);
+      const { accessToken, refreshToken } = result;
+      res.cookie('refreshToken', refreshToken, { httpOnly: true });
+      return res
+        .status(STATUS_CODES.OK)
+        .json({ success: result.success, accessToken });
     }
     if (result.error.errorType === errorTypes.LoginFailed) {
       return res.status(STATUS_CODES.UNAUTHORIZED).json(result);
@@ -46,7 +50,11 @@ export default (app) => {
     const { code } = req.body;
     const result = await githubOauthService.githubLogin({ code });
     if (result.success) {
-      return res.status(STATUS_CODES.OK).json(result);
+      const { accessToken, refreshToken } = result;
+      res.cookie('refreshToken', refreshToken, { httpOnly: true });
+      return res
+        .status(STATUS_CODES.OK)
+        .json({ success: result.success, accessToken });
     }
     if (result.error.errorType === errorTypes.LoginFailed) {
       return res.status(STATUS_CODES.UNAUTHORIZED).json(result);

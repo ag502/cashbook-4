@@ -1,16 +1,17 @@
 import sequelize from '../models/index.js';
-import jwt from 'jsonwebtoken';
+
+import authTokenService from './auth-token.js';
 
 import { errorTypes } from '../errors/index.js';
 import getError from '../utils/error.js';
 import { createHashedPassword, checkPassword } from '../utils/user.js';
-import env from '../config/env.js';
 
 const { user } = sequelize.models;
 
 class AuthService {
   constructor(userModel) {
     this.userModel = userModel;
+    this.authTokenService = authTokenService;
     this.authType = 'local';
   }
 
@@ -58,19 +59,12 @@ class AuthService {
     }
 
     if (await checkPassword(password, user.password)) {
-      const token = this.generateToken({
-        id: user.id,
-        nickname: user.nickname,
-        provider: user.provider,
-      });
-
-      return { success: true, token };
+      const accessToken = this.authTokenService.createAccessToken(user);
+      const refreshToken = this.authTokenService.createRefreshToken(user);
+      return { success: true, accessToken, refreshToken };
     }
 
     return { success: false, error: getError(errorTypes.LoginFailed) };
-  }
-  generateToken(content) {
-    return jwt.sign(content, env.JWT_SECRET);
   }
 }
 

@@ -12,6 +12,8 @@ const env = {
   OAUTH_GITHUB_AUTH_URL: loadEnvironment('OAUTH_GITHUB_AUTH_URL'),
   OAUTH_GITHUB_API_URL: loadEnvironment('OAUTH_GITHUB_API_URL'),
   FRONTEND_HOST: loadEnvironment('FRONTEND_HOST'),
+  ACCESS_TOKEN_EXPIRE_TIME: Number(loadEnvironment('ACCESS_TOKEN_EXPIRE_TIME')),
+  REFRESH_TOKEN_EXPIRE_TIME: loadEnvironment('REFRESH_TOKEN_EXPIRE_TIME'),
 };
 
 export default env;
