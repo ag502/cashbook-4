@@ -10,7 +10,7 @@ import qs from 'querystring';
 import rs from 'randomstring';
 
 const { user } = sequelize.models;
-let state;
+const loginState = [];
 
 class GithubOauthService {
   constructor(userModel) {
@@ -24,13 +24,14 @@ class GithubOauthService {
   }
 
   getGithubAuthUrl() {
-    state = rs.generate();
+    const currentState = rs.generate();
+    loginState.push(currentState);
 
     const url = `${env.OAUTH_GITHUB_AUTH_URL}/authorize?`;
     const query = qs.stringify({
       client_id: env.OAUTH_GITHUB_CLIENT_ID,
       redirect_uri: env.FRONTEND_HOST + '/',
-      state: state,
+      state: currentState,
       scope: 'user:email',
     });
 
@@ -63,19 +64,29 @@ class GithubOauthService {
     if (result.error === BAD_VERIFICATION_CODE) {
       return { success: false, error: getError(errorTypes.LoginFailed) };
     }
-    return { success: true, token: result.access_token };
+    return { success: true, accessToken: result.access_token };
   }
 
   async getGithubUserInfo(accessToken) {
     const options = {
       uri: env.OAUTH_GITHUB_API_URL,
-      headers: {},
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        accept: `application/vnd.github.v3+json`,
+        'User-Agent': 'cashbook-4',
+      },
+      json: true,
     };
-    const userInfo = request(options);
+    try {
+      const userInfo = await request(options);
+      return userInfo;
+    } catch (err) {
+      return null;
+    }
   }
 
   async githubLogin({ code, state }) {
-    if (state !== state) {
+    if (!loginState.includes(state)) {
       return { success: false, error: getError(errorTypes.LoginFailed) };
     }
 
@@ -86,7 +97,52 @@ class GithubOauthService {
 
     const { accessToken } = accessTokenResult;
     const userInfo = await this.getGithubUserInfo(accessToken);
+
+    if (userInfo === null) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    console.log(userInfo);
   }
 }
 
 export default new GithubOauthService(user);
+
+/*
+{
+  login: 'SecretJuJu',
+  id: 47034129,
+  node_id: 'MDQ6VXNlcjQ3MDM0MTI5',
+  avatar_url: 'https://avatars.githubusercontent.com/u/47034129?v=4',
+  gravatar_id: '',
+  url: 'https://api.github.com/users/SecretJuJu',
+  html_url: 'https://github.com/SecretJuJu',
+  followers_url: 'https://api.github.com/users/SecretJuJu/followers',
+  following_url:
+    'https://api.github.com/users/SecretJuJu/following{/other_user}',
+  gists_url: 'https://api.github.com/users/SecretJuJu/gists{/gist_id}',
+  starred_url: 'https://api.github.com/users/SecretJuJu/starred{/owner}{/repo}',
+  subscriptions_url: 'https://api.github.com/users/SecretJuJu/subscriptions',
+  organizations_url: 'https://api.github.com/users/SecretJuJu/orgs',
+  repos_url: 'https://api.github.com/users/SecretJuJu/repos',
+  events_url: 'https://api.github.com/users/SecretJuJu/events{/privacy}',
+  received_events_url:
+    'https://api.github.com/users/SecretJuJu/received_events',
+  type: 'User',
+  site_admin: false,
+  name: 'SeungBo',
+  company: null,
+  blog: '',
+  location: null,
+  email: null,
+  hireable: null,
+  bio: null,
+  twitter_username: null,
+  public_repos: 31,
+  public_gists: 0,
+  followers: 9,
+  following: 8,
+  created_at: '2019-01-25T14:55:17Z',
+  updated_at: '2021-08-02T04:37:26Z',
+};
+*/
