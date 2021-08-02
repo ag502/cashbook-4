@@ -43,8 +43,8 @@ export default (app) => {
     res.json(redirectUrl);
   });
   routes.post('/github-callback', async (req, res) => {
-    const { code, state } = req.body;
-    const result = await githubOauthService.githubLogin({ code, state });
+    const { code } = req.body;
+    const result = await githubOauthService.githubLogin({ code });
     if (result.success) {
       return res.status(200).json(result);
     }

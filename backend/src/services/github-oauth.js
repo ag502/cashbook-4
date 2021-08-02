@@ -91,7 +91,7 @@ class GithubOauthService {
     const { login } = userInfo;
     let user;
     try {
-      user = this.userModel.findOne({
+      user = await this.userModel.findOne({
         where: { nickname: login, provider: this.authType },
         raw: true,
       });
@@ -126,6 +126,9 @@ class GithubOauthService {
       provider: user.provider,
     });
     return { succes: true, token };
+  }
+  generateToken(content) {
+    return jwt.sign(content, env.JWT_SECRET);
   }
 }
 
