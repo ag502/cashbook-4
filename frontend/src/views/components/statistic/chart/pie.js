@@ -19,9 +19,9 @@ class PieChart extends HTMLElement {
 
   initBasicData = () => {
     this.config = JSON.parse(this.getAttr('config'));
+
     this.svgW = parseInt(this.getAttr('width')) || 300;
     this.svgH = parseInt(this.getAttr('height')) || 300;
-
     this.style.display = 'inline-block';
 
     this.radius = this.svgW * 0.25;
