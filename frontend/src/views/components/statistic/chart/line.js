@@ -73,6 +73,20 @@ class LineChart extends HTMLElement {
     return this.svgH - y + SVG_PADDING / 2;
   };
 
+  makeAnimation = ($element) => {
+    if ($element.tagName === 'path') {
+      $element.animate([{ strokeDashoffset: 2000 }, { strokeDashoffset: 0 }], {
+        duration: 2000,
+        fill: 'forwards',
+      });
+    } else if ($element.tagName === 'g') {
+      $element.animate([{ opacity: 0 }, { opacity: 1 }], {
+        duration: 2000,
+        fill: 'forwards',
+      });
+    }
+  };
+
   makeXAxis = () => {
     const numOfLines = (this.finish - this.start) / this.spacing;
     const interval = this.svgH / numOfLines;
@@ -155,32 +169,39 @@ class LineChart extends HTMLElement {
 
   makeLine = () => {
     const pathAttr = this.composePathAttr();
-    console.log(pathAttr);
-    return document
+    const $line = document
       .createElementNS(SVG_URL, 'path')
       .setAttr('d', pathAttr)
       .setAttr('stroke', 'purple')
       .setAttr('stroke-width', 2)
+      .setAttr('stroke-dasharray', 2000)
       .setAttr('fill', 'transparent');
+
+    this.makeAnimation($line);
+    return $line;
   };
 
   makePoint = () => {
     const { datasets } = this.config;
-    const $point = datasets.data
-      .map(
-        (data, idx, arr) => /*html*/ `
-      <circle
-        cx=${this.xCoor[idx]}
-        cy=${this.convertY((data - this.start) * this.unitCalibration)}
-        r='3'
-        stroke='blue'
-      />
-    `
-      )
-      .join('');
-    return /*html*/ `
-        <g class='data-point'>${$point}</g>
-    `;
+    const $point = document
+      .createElementNS(SVG_URL, 'g')
+      .addClass('data-point')
+      .setHTML(
+        datasets.data
+          .map(
+            (data, idx, arr) => /*html*/ `
+              <circle
+                cx=${this.xCoor[idx]}
+                cy=${this.convertY((data - this.start) * this.unitCalibration)}
+                r='3'
+                stroke='blue'
+              />
+            `
+          )
+          .join('')
+      );
+    this.makeAnimation($point);
+    return $point;
   };
 
   render = () => {
@@ -192,8 +213,6 @@ class LineChart extends HTMLElement {
         /*html*/ `
       ${xAxis}
       ${yAxis}
-      ${this.makePoint()}
-      $
       <text
         x=${this.convertX(this.svgW)}
         y=${this.convertY(this.svgH)}
@@ -204,7 +223,8 @@ class LineChart extends HTMLElement {
       </text>
     `
       )
-      .addElement(this.makeLine());
+      .addElement(this.makeLine())
+      .addElement(this.makePoint());
 
     $svg.style.width = `${this.getAttr('width')}px`;
     $svg.style.height = `${this.getAttr('height')}px`;
