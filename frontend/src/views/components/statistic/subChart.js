@@ -11,12 +11,7 @@ class SubChart extends HTMLElement {
     this.chartController = chartController;
     this.observer = observer;
     this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
-    this.lineData = {
-      datasets: {
-        data: [20, 100, 1000, 10000, 23453, 53533, 123213, 99999],
-        backgroundColor: ['blue'],
-      },
-    };
+    this.lineData = {};
   }
 
   connectedCallback() {
@@ -41,7 +36,7 @@ class SubChart extends HTMLElement {
         this.chartController.getMonthExpByCategory(category);
       this.isShow = true;
     }
-    this.lineData = this.chartController.getLineChartData();
+    this.lineData = this.chartController.getLineChartData(category);
     this.render();
   };
 

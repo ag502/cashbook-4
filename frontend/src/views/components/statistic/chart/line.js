@@ -54,6 +54,7 @@ class LineChart extends HTMLElement {
 
   initBaseData = () => {
     this.config = JSON.parse(this.getAttr('config'));
+    console.log(this.config);
     this.svgW = parseInt(this.getAttr('width')) - SVG_PADDING || 300;
     this.svgH = parseInt(this.getAttr('height')) - SVG_PADDING || 300;
 
@@ -173,11 +174,12 @@ class LineChart extends HTMLElement {
   };
 
   makeLine = () => {
+    const { datasets } = this.config;
     const pathAttr = this.composePathAttr();
     const $line = document
       .createElementNS(SVG_URL, 'path')
       .setAttr('d', pathAttr)
-      .setAttr('stroke', 'purple')
+      .setAttr('stroke', `${datasets.backgroundColor}`)
       .setAttr('stroke-width', 2)
       .setAttr('stroke-dasharray', 5000)
       .setAttr('fill', 'transparent');
@@ -198,8 +200,8 @@ class LineChart extends HTMLElement {
               <circle
                 cx=${this.xCoor[idx]}
                 cy=${this.convertY((data - this.start) * this.unitCalibration)}
-                r='3'
-                stroke='blue'
+                r='4'
+                fill=${datasets.backgroundColor}
               />
             `
           )
