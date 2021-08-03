@@ -7,6 +7,7 @@ import notifyTypes from '@/common/utils/notifyTypes';
 class SubChart extends HTMLElement {
   constructor() {
     super();
+    this.isShow = false;
     this.chartController = chartController;
     this.observer = observer;
     this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
@@ -28,8 +29,13 @@ class SubChart extends HTMLElement {
   }
 
   handleFetchedData = (category) => {
-    this.monthExpByCategory =
-      this.chartController.getMonthExpByCategory(category);
+    if (category === 0) {
+      this.isShow = false;
+    } else {
+      this.monthExpByCategory =
+        this.chartController.getMonthExpByCategory(category);
+      this.isShow = true;
+    }
     this.render();
   };
 
@@ -38,7 +44,8 @@ class SubChart extends HTMLElement {
       (a, b) => b - a
     );
 
-    this.setHTML(/*html*/ `
+    if (this.isShow) {
+      this.setHTML(/*html*/ `
       <div class='chart--container sub'>
         <line-chart 
           width='750'
@@ -48,15 +55,17 @@ class SubChart extends HTMLElement {
         >
         </line-chart>
       </div>
-    `);
-
-    dayAccountKeys.forEach((key) => {
-      const $dayAccount = new DayAccount({
-        date: key,
-        accounts: this.monthExpByCategory[key],
+    }`);
+      dayAccountKeys.forEach((key) => {
+        const $dayAccount = new DayAccount({
+          date: key,
+          accounts: this.monthExpByCategory[key],
+        });
+        this.appendChild($dayAccount);
       });
-      this.appendChild($dayAccount);
-    });
+    } else {
+      this.setHTML('');
+    }
   };
 }
 

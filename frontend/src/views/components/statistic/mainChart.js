@@ -34,13 +34,13 @@ class MainChart extends HTMLElement {
       if ($item) {
         if ($item === this.curSelected) {
           $item.toggleClass('active');
-          return;
+          this.curSelected = null;
+        } else {
+          this.curSelected && this.curSelected.removeClass('active');
+          $item.addClass('active');
+          this.curSelected = $item;
         }
-        this.curSelected && this.curSelected.removeClass('active');
-        $item.addClass('active');
-        this.curSelected = $item;
-
-        this.handleClickCategory($item.id);
+        this.handleClickCategory(this.curSelected ? $item.id : 0);
       }
     });
   };
