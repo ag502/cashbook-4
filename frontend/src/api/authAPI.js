@@ -53,6 +53,33 @@ class AuthAPI extends CommonAPI {
   logout = () => {
     this.setAccessToken();
   };
+
+  getGithubAuthURL = async () => {
+    const path = '/api/auth/github';
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
+  githubAuth = async (code) => {
+    const path = '/api/auth/github';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ code }),
+    };
+    const result = await this.request({ path, options });
+    if (result.success) {
+      this.setAccessToken(result.accessToken);
+    }
+    return result;
+  };
 }
 
 export default new AuthAPI();

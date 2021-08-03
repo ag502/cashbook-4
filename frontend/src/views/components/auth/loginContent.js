@@ -1,10 +1,14 @@
+import observer from '@/common/utils/observer';
+
 import loginController from './controller';
 import { github } from '../icons';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class LoginContent extends HTMLElement {
   constructor() {
     super();
     this.controller = loginController;
+    this.observer = observer;
   }
 
   connectedCallback() {
@@ -76,6 +80,11 @@ class LoginContent extends HTMLElement {
     $passwordInput.addEventListener('keyup', ({ currentTarget }) => {
       this.validator(currentTarget);
     });
+
+    const $githubOauthBtn = this.querySelector('#github-oauth-btn');
+    $githubOauthBtn.addEventListener('click', () => {
+      this.observer.notify(notifyTypes.CLICK_GITHUB_OAUTH);
+    });
   };
 
   render = () => {
@@ -103,7 +112,7 @@ class LoginContent extends HTMLElement {
         </div>
       </form>
       <div class="social-logins">
-        <button>
+        <button id='github-oauth-btn'>
           ${github} Github으로 로그인하기!
         </button>
       </div>

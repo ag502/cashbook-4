@@ -12,6 +12,11 @@ class AuthController {
       REGISTER: 'register',
       LOGIN: 'LOGIN',
     };
+    this.observer.subscribe(
+      notifyTypes.FETCHED_GITHUB_AUTH_URL,
+      this,
+      this.redirectURL
+    );
   }
 
   showRegisterView = () => {
@@ -48,7 +53,6 @@ class AuthController {
     const result = await this.userModel.register({ nickname, password });
     if (!result.success) {
       const { error } = result;
-      console.log(error);
       if (error.errorType === errorTypes.AlreadyExist) {
         return { success: false, message: '이미 같은 유저가 존재합니다!' };
       } else {
@@ -63,6 +67,10 @@ class AuthController {
 
   getContentTypes = () => {
     return this.contentTypes;
+  };
+
+  redirectURL = (url) => {
+    location.href = url;
   };
 }
 
