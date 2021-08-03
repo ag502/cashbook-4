@@ -26,6 +26,11 @@ class UserModel {
 
   login = async ({ nickname, password }) => {
     const result = await authAPI.loginAPI({ nickname, password });
+    if (result.success) {
+      console.log('notify success');
+      this.isLogin = true;
+      this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    }
     return result;
   };
 

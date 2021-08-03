@@ -16,7 +16,7 @@ class AuthAPI extends CommonAPI {
     };
     const result = await this.request({ path, options });
     if (!result.success) {
-      return result; // { success: false, error:{} }
+      return result;
     }
     this.setAccessToken(result.accessToken);
     return { success: result.success };
