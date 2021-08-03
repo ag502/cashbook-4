@@ -4,5 +4,6 @@ const errorTypes = {
   LoginFailed: 'loginFailed',
   TokenExpired: 'tokenExpired',
   UnValidToken: 'unvalidToken',
+  BadRequest: 'badRequest',
 };
 export default errorTypes;
