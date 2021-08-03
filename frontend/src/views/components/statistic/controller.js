@@ -34,7 +34,7 @@ class ChartController extends BaseController {
       });
   };
 
-  getAccountsByCateogroy = () => {
+  _getMonthExpenditurByCateogroy = () => {
     const accountsByCategory = {};
     let totalExpenditure = 0;
 
@@ -47,7 +47,17 @@ class ChartController extends BaseController {
         accountsByCategory[category].price += -price;
       }
     });
-    return this._getExpenditurePercentage(totalExpenditure, accountsByCategory);
+    return [totalExpenditure, accountsByCategory];
+  };
+
+  getPieCharData = () => {
+    const [totalExpenditure, accountsByCategory] =
+      this._getMonthExpenditurByCateogroy();
+
+    return [
+      totalExpenditure,
+      this._getExpenditurePercentage(totalExpenditure, accountsByCategory),
+    ];
   };
 }
 
