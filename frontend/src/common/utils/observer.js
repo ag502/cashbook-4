@@ -13,7 +13,7 @@ class Observer {
 
   unsubscribe = (name, context) => {
     this.subscribers[name] = this.subscribers[name].filter(
-      ({ context: ctx }) => ctx === context
+      ({ context: ctx }) => ctx !== context
     );
   };
 

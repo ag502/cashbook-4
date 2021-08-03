@@ -51,7 +51,7 @@ class Header extends HTMLElement {
     });
     const $chartBtn = this.querySelector('#chart-btn');
     $chartBtn.addEventListener('click', () => {
-      location.hash = '#/chat';
+      location.hash = '#/chart';
     });
   };
 

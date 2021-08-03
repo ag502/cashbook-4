@@ -1,5 +1,6 @@
 import MainPage from '@/views/pages/mainPage';
-import CalenderPage from './views/pages/calenderPage';
+import CalenderPage from '@/views/pages/calenderPage';
+import StatisticPage from '@/views/pages/statisticPage';
 
 import Auth from '@/views/components/auth';
 
@@ -17,7 +18,7 @@ const $app = document.querySelector('#app');
 const routes = {
   '': new MainPage(),
   '/calender': new CalenderPage(),
-  '/chart': new MainPage(),
+  '/chart': new StatisticPage(),
 };
 
 const render = () => {

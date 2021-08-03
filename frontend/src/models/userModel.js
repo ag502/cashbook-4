@@ -5,7 +5,7 @@ class UserModel {
   constructor() {
     this.isLogin = null;
     this.observer = observer;
-    this.init();
+    // this.init();
   }
 
   init = async () => {

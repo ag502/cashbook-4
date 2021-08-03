@@ -41,3 +41,12 @@ Element.prototype.setHTML = function (html) {
   this.innerHTML = html;
   return this;
 };
+
+Element.prototype.setAttr = function (attrType, attr) {
+  this.setAttribute(attrType, attr);
+  return this;
+};
+
+Element.prototype.getAttr = function (attrType) {
+  return this.getAttribute(attrType);
+};
