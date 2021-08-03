@@ -14,6 +14,7 @@ class UserModel {
   init = async () => {
     this.isLogin = await this.checkLogin();
     this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    this.observer.subscribe(notifyTypes.CLICK_LOGOUT, this, this.logout);
   };
 
   checkLogin = async () => {
@@ -28,6 +29,12 @@ class UserModel {
       this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
     }
     return result;
+  };
+
+  logout = () => {
+    authAPI.logout();
+    this.isLogin = false;
+    this.observer.notify(notifyTypes.INIT_USER);
   };
 
   register = async ({ nickname, password }) => {

@@ -36,6 +36,10 @@ class AuthAPI extends CommonAPI {
     this.setAccessToken(result.accessToken);
     return { success: result.success };
   };
+
+  logout = () => {
+    this.setAccessToken();
+  };
 }
 
 export default new AuthAPI();

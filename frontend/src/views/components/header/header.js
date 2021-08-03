@@ -1,4 +1,11 @@
-import { prevArrow, nextArrow, fileText, calender, chart } from '../icons';
+import {
+  prevArrow,
+  nextArrow,
+  fileText,
+  calender,
+  chart,
+  logoutButton,
+} from '../icons';
 import headerController from './controller';
 import observer from '@/common/utils/observer';
 
@@ -53,6 +60,10 @@ class Header extends HTMLElement {
     $chartBtn.addEventListener('click', () => {
       location.hash = '#/chart';
     });
+    const $logoutBtn = this.querySelector('#logout-btn');
+    $logoutBtn.addEventListener('click', () => {
+      this.observer.notify(notifyTypes.CLICK_LOGOUT);
+    });
   };
 
   render = () => {
@@ -78,6 +89,7 @@ class Header extends HTMLElement {
         <button class='active' id='file-text-btn'>${fileText}</button>
         <button id='calender-btn'>${calender}</button>
         <button id='chart-btn'>${chart}</button>
+        <button id='logout-btn'>${logoutButton}</button>
       </div>
     `);
 
