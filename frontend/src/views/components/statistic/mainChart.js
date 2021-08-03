@@ -9,7 +9,7 @@ class MainChart extends HTMLElement {
     super();
     this.chartController = chartController;
     this.observer = observer;
-    [this.total, this.data] = this.chartController.getPieCharData();
+    [this.total, this.data] = this.chartController.getPieChartData();
   }
 
   connectedCallback() {
@@ -22,7 +22,7 @@ class MainChart extends HTMLElement {
   }
 
   handleFetchedData = () => {
-    [this.total, this.data] = this.chartController.getPieCharData();
+    [this.total, this.data] = this.chartController.getPieChartData();
     this.render();
   };
 

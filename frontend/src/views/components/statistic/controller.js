@@ -51,7 +51,7 @@ class ChartController extends BaseController {
     return [totalExpenditure, accountsByCategory];
   };
 
-  getPieCharData = () => {
+  getPieChartData = () => {
     const [totalExpenditure, accountsByCategory] =
       this._getMonthExpenditurByCateogroy();
 
