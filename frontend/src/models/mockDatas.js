@@ -28,6 +28,13 @@ const data = [
     date: new Date('2021/08/9'),
   },
   {
+    category: 5,
+    paymentMethod: '롯데카드',
+    content: '국밥',
+    price: -9500,
+    date: new Date('2021/08/9'),
+  },
+  {
     category: 1,
     paymentMethod: '삼성카드',
     content: '7월 급여',
