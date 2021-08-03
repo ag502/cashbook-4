@@ -49,10 +49,15 @@ class AuthService {
   }
 
   async login({ nickname, password }) {
-    const user = await this.userModel.findOne({
-      where: { nickname, provider: this.authType },
-      raw: true,
-    });
+    let user;
+    try {
+      user = await this.userModel.findOne({
+        where: { nickname, provider: this.authType },
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
 
     if (user === null) {
       return { success: false, error: getError(errorTypes.LoginFailed) };
