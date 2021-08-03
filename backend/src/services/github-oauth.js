@@ -85,7 +85,7 @@ class GithubOauthService {
     const githubAccessToken = accessTokenResult.accessToken;
     const userInfo = await this.getGithubUserInfo(githubAccessToken);
 
-    if (userInfo === null) {
+    if (!userInfo) {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
@@ -100,7 +100,7 @@ class GithubOauthService {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
-    if (user !== null) {
+    if (user) {
       const accessToken = this.authTokenService.createAccessToken(user);
       const refreshToken = this.authTokenService.createRefreshToken(user);
 
