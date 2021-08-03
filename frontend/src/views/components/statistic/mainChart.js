@@ -29,7 +29,7 @@ class MainChart extends HTMLElement {
   };
 
   addEvents = () => {
-    this.addEventListener('click', ({ target }) => {
+    this.addEventListener('click', async ({ target }) => {
       const $item = target.closest('.main-chart--info-item');
       if ($item) {
         if ($item === this.curSelected) {
@@ -40,13 +40,11 @@ class MainChart extends HTMLElement {
           $item.addClass('active');
           this.curSelected = $item;
         }
-        this.handleClickCategory(this.curSelected ? $item.id : 0);
+        await this.chartController.handleCategoryClick(
+          this.curSelected ? $item.id : 0
+        );
       }
     });
-  };
-
-  handleClickCategory = (id) => {
-    this.observer.notify(notifyTypes.CLICK_CATEGORY, id);
   };
 
   render = () => {

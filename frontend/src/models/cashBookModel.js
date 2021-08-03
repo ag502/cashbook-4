@@ -9,6 +9,7 @@ class CashBookModel {
     this.observer = observer;
     this.currentDate = null;
     this.accounts = [];
+    this.yearCategoryAccount = {};
 
     this.init();
   }
@@ -24,6 +25,11 @@ class CashBookModel {
     return result;
   };
 
+  _fetchYearAccountByCategory = async (categoryId) => {
+    const result = await accountAPI.getYearAccountByCategory(categoryId);
+    return result;
+  };
+
   moveMonth = async (monthCount) => {
     this.currentDate.setMonth(this.currentDate.getMonth() + monthCount);
     this.observer.notify(notifyTypes.CHANGED_CURRENT_DATE, this.currentDate);
@@ -34,12 +40,21 @@ class CashBookModel {
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
+  changeCategory = async (id) => {
+    this.yearCategoryAccount = await this._fetchYearAccountByCategory(id);
+    this.observer.notify(notifyTypes.CLICK_CATEGORY, id);
+  };
+
   getCurrentDate = () => {
     return this.currentDate;
   };
 
   getAccounts = () => {
     return this.accounts;
+  };
+
+  getYearCategoryAccount = () => {
+    return this.yearCategoryAccount;
   };
 }
 

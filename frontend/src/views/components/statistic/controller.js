@@ -80,6 +80,24 @@ class ChartController extends BaseController {
 
     return monthExpByCategory;
   };
+
+  handleCategoryClick = async (categoryId) => {
+    await this.cashBookModel.changeCategory(categoryId);
+  };
+
+  getLineChartData = () => {
+    const yearCategoryAccount = this.cashBookModel.getYearCategoryAccount();
+    const data = Object.keys(yearCategoryAccount).reduce(
+      (acc, curMonth) => [...acc, yearCategoryAccount[curMonth]],
+      []
+    );
+    return {
+      datasets: {
+        data,
+        backgroundColor: ['blue'],
+      },
+    };
+  };
 }
 
 export default new ChartController();
