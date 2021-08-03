@@ -1,3 +1,5 @@
+import authAPI from '../api/authAPI.js';
+
 import observer from '@/common/utils/observer';
 import notifyTypes from '../common/utils/notifyTypes';
 
@@ -5,6 +7,7 @@ class UserModel {
   constructor() {
     this.isLogin = null;
     this.observer = observer;
+    this.authAPI = authAPI;
     this.init();
   }
 
@@ -21,17 +24,12 @@ class UserModel {
     });
   };
 
-  login = ({ email, password }) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          success: true,
-        });
-      }, 300);
-    });
+  login = async ({ nickname, password }) => {
+    const result = await authAPI.loginAPI({ nickname, password });
+    return result;
   };
 
-  register = async ({ email, password }) => {
+  register = async ({ nickname, password }) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
