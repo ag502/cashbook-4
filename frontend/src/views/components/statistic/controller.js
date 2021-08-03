@@ -1,4 +1,5 @@
 import BaseController from '@/common/utils/baseController';
+import { parsingDate } from '@/common/utils/functions';
 
 class ChartController extends BaseController {
   constructor() {
@@ -58,6 +59,26 @@ class ChartController extends BaseController {
       totalExpenditure,
       this._getExpenditurePercentage(totalExpenditure, accountsByCategory),
     ];
+  };
+
+  getMonthExpByCategory = (category) => {
+    const categoryId = parseInt(category);
+    const monthExpByCategory = {};
+    this.cashBookModel
+      .getAccounts()
+      .forEach(({ category, date, price, ...rest }) => {
+        if (price < 0 && category === categoryId) {
+          const curDate = date.getTime();
+          monthExpByCategory[curDate] = monthExpByCategory[curDate] || [];
+          monthExpByCategory[curDate].push({
+            category,
+            price,
+            ...rest,
+          });
+        }
+      });
+
+    return monthExpByCategory;
   };
 }
 
