@@ -28,7 +28,8 @@ class SubChart extends HTMLElement {
   }
 
   handleFetchedData = (category) => {
-    this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
+    this.monthExpByCategory =
+      this.chartController.getMonthExpByCategory(category);
     this.render();
   };
 
