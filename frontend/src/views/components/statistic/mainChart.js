@@ -32,6 +32,10 @@ class MainChart extends HTMLElement {
     this.addEventListener('click', ({ target }) => {
       const $item = target.closest('.main-chart--info-item');
       if ($item) {
+        if ($item === this.curSelected) {
+          $item.toggleClass('active');
+          return;
+        }
         this.curSelected && this.curSelected.removeClass('active');
         $item.addClass('active');
         this.curSelected = $item;
