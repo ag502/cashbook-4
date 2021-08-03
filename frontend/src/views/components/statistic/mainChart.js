@@ -9,7 +9,7 @@ class MainChart extends HTMLElement {
     super();
     this.chartController = chartController;
     this.observer = observer;
-    this.data = this.chartController.getAccountsByCateogroy();
+    [this.total, this.data] = this.chartController.getPieCharData();
   }
 
   connectedCallback() {
@@ -22,11 +22,12 @@ class MainChart extends HTMLElement {
   }
 
   handleFetchedData = () => {
-    this.data = this.chartController.getAccountsByCateogroy();
+    [this.total, this.data] = this.chartController.getPieCharData();
     this.render();
   };
 
   render = () => {
+    const curMonth = this.chartController.getCurrentDate().getMonth() + 1;
     this.setHTML(/*html*/ `
       <div class='chart--container'>
         <pie-chart 
@@ -35,6 +36,9 @@ class MainChart extends HTMLElement {
           config=${JSON.stringify(this.data)}>
         </pie-chart>
         <div class='main-chart--info'>
+          <div class='main-chart--info--header'>
+            ${curMonth}월 달 지출 금액 ${this.total.toLocaleString()}
+          </div>
           ${this.data
             .map(
               ({ categoryId, percent, price }) => /*html*/ `
