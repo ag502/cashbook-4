@@ -48,3 +48,9 @@
 .price-price {
   font: var(--bold-large);
 }
+
+sub-chart {
+  display: block;
+  width: 848px;
+  margin: 0 auto 0;
+}
