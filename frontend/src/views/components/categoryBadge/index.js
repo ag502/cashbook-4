@@ -10,7 +10,7 @@ class CategoryBadge extends HTMLElement {
     const categoryId = this.getAttribute('categoryId');
     const { name, color } = getCategoryString(categoryId);
     this.setHTML(/*html*/ `
-      <div class='category' style='background-color:${color};'>
+      <div class='category-badge' style='background-color:${color};'>
         ${name}
       </div>
     `);
