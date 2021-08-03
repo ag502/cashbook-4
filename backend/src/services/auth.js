@@ -21,7 +21,7 @@ class AuthService {
       raw: true,
     }); // null or user object
 
-    if (isExistUser !== null) {
+    if (isExistUser) {
       return { success: false, error: getError(errorTypes.AlreadyExist) };
     }
 
@@ -59,7 +59,7 @@ class AuthService {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
-    if (user === null) {
+    if (!user) {
       return { success: false, error: getError(errorTypes.LoginFailed) };
     }
 

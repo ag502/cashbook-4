@@ -1,22 +1,6 @@
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
-
-const getCategoryString = (category) => {
-  const categories = [
-    '월급',
-    '용돈',
-    '기타수입',
-    '생활',
-    '식비',
-    '교통',
-    '쇼핑/뷰티',
-    '의료/건강',
-    '문화/여가',
-    '미분류',
-  ];
-  const categoryNumber = Number(category);
-  return categories[categoryNumber - 1];
-};
+import { getCategoryString } from '@/common/utils/functions';
 
 class Account extends HTMLElement {
   constructor(accountInfo) {
@@ -36,7 +20,7 @@ class Account extends HTMLElement {
     this.setHTML(/*html*/ `
         <div class="left">
             <div class="category category${this.accountInfo.category}">
-                ${getCategoryString(this.accountInfo.category)}
+                ${getCategoryString(this.accountInfo.category).name}
             </div>
 
             <p class="context">

@@ -21,7 +21,7 @@ class CashBookModel {
   _fecthAccountsByMonth = (month = this.currentDate.getMonth() + 1) => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        if (month === 7) {
+        if (month === 8) {
           resolve(records);
         } else {
           resolve([]);
