@@ -75,7 +75,7 @@ class LineChart extends HTMLElement {
 
   makeAnimation = ($element) => {
     if ($element.tagName === 'path') {
-      $element.animate([{ strokeDashoffset: 2000 }, { strokeDashoffset: 0 }], {
+      $element.animate([{ strokeDashoffset: 5000 }, { strokeDashoffset: 0 }], {
         duration: 2000,
         fill: 'forwards',
       });
@@ -174,7 +174,7 @@ class LineChart extends HTMLElement {
       .setAttr('d', pathAttr)
       .setAttr('stroke', 'purple')
       .setAttr('stroke-width', 2)
-      .setAttr('stroke-dasharray', 2000)
+      .setAttr('stroke-dasharray', 5000)
       .setAttr('fill', 'transparent');
 
     this.makeAnimation($line);
