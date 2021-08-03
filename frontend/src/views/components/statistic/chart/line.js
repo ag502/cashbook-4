@@ -1,4 +1,6 @@
 import { SVG_URL } from '@/common/utils/constant';
+import chartController from '../controller';
+
 const SVG_PADDING = 60;
 const MAX_SPACE = 10;
 const UNIT = 1;
@@ -42,6 +44,7 @@ class LineChart extends HTMLElement {
   constructor() {
     super();
     this.xCoor = [];
+    this.chartController = chartController;
     this.initBaseData();
   }
 
@@ -118,6 +121,7 @@ class LineChart extends HTMLElement {
   };
 
   makeYAxis = () => {
+    const curMonth = this.chartController.getCurrentDate().getMonth() + 1;
     const interval = this.svgW / 11;
     const yAxis = [...Array(12).keys()]
       .map((nth) => {
@@ -128,13 +132,14 @@ class LineChart extends HTMLElement {
           x2=${this.convertX(interval * nth)}
           y1=${this.convertY(0)}
           y2=${this.convertY(this.svgH)}
-          stroke='#F5F5F5'
+          stroke=${nth + 1 === curMonth ? '#219A95' : '#F5F5F5'}
         />
         <text
           x=${this.convertX(interval * nth)}
           y=${this.convertY(0)}
           dy='5%'
           text-anchor='middle'
+          fill=${nth + 1 === curMonth ? '#219A95' : '#000000'}
         >
           ${MONTHS[nth]}
         </text>
