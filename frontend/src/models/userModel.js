@@ -38,13 +38,8 @@ class UserModel {
   };
 
   register = async ({ nickname, password }) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          success: true,
-        });
-      }, 300);
-    });
+    const result = await authAPI.registerAPI({ nickname, password });
+    return result;
   };
 
   getIsLogin = () => {

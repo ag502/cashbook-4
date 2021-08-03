@@ -16,6 +16,7 @@ class RegisterContent extends HTMLElement {
     const $nickname = $form.querySelector('#nickname');
     const $password = $form.querySelector('#password');
     const $confirmPassword = $form.querySelector('#confirm-password');
+    const $loginBtn = $form.querySelector('#login-btn');
     if (
       !this.validator($nickname) ||
       !this.validator($password) ||
@@ -34,10 +35,23 @@ class RegisterContent extends HTMLElement {
       );
     }
     const result = await this.controller.handleRegister({ nickname, password });
-    if (result) {
-      // TODO: 회원가입 성공 ()
-      this.controller.showLoginView();
+    if (result.success) {
+      this.displayResultMessage('회원가입에 성공하였습니다!', true);
+      return setTimeout(() => {
+        this.controller.showLoginView();
+      }, 1200);
     }
+    this.displayResultMessage(result.message, false);
+  };
+
+  displayResultMessage = (message, success) => {
+    const $loginBtn = this.querySelector('.submit-input button');
+    const $errorText = $loginBtn.parentNode.querySelector('.error-text');
+    $errorText.innerText = message;
+    if (success) {
+      $errorText.style.color = 'var(--primary1)';
+    }
+    $errorText.style.display = 'block';
   };
 
   popupErrorText = ($element, text) => {

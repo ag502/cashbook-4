@@ -37,6 +37,19 @@ class AuthAPI extends CommonAPI {
     return { success: result.success };
   };
 
+  registerAPI = async ({ nickname, password }) => {
+    const path = '/api/auth/register';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ nickname, password }),
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
+
   logout = () => {
     this.setAccessToken();
   };
