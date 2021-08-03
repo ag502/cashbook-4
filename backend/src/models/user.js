@@ -11,16 +11,25 @@ const user = (sequelize) => {
       },
       nickname: {
         type: DataTypes.STRING,
-        unique: false,
         allowNull: false,
       },
       password: {
         type: DataTypes.STRING(80),
+      },
+      provider: {
+        type: DataTypes.STRING(20),
         allowNull: false,
+        defaultValue: 'local',
       },
     },
     {
       tableName: 'user',
+      indexes: [
+        {
+          unique: true,
+          fields: ['nickname', 'provider'],
+        },
+      ],
     }
   );
 
