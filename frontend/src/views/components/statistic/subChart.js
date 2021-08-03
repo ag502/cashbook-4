@@ -20,14 +20,14 @@ class SubChart extends HTMLElement {
 
   connectedCallback() {
     this.observer.subscribe(
-      notifyTypes.FETCHED_DATA,
+      notifyTypes.CLICK_CATEGORY,
       this,
       this.handleFetchedData
     );
     this.render();
   }
 
-  handleFetchedData = () => {
+  handleFetchedData = (category) => {
     this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
     this.render();
   };

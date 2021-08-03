@@ -39,8 +39,14 @@ class MainChart extends HTMLElement {
         this.curSelected && this.curSelected.removeClass('active');
         $item.addClass('active');
         this.curSelected = $item;
+
+        this.handleClickCategory($item.id);
       }
     });
+  };
+
+  handleClickCategory = (id) => {
+    this.observer.notify(notifyTypes.CLICK_CATEGORY, id);
   };
 
   render = () => {
