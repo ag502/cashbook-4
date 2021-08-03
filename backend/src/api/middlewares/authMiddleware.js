@@ -14,18 +14,18 @@ const authMiddleware = async (req, res, next) => {
   const validResult = authTokenService.verifyToken(accessToken);
   if (validResult.success) {
     req['decoded'] = validResult.decoded;
-    const isRefreshTokenVaild = authTokenService.verifyToken(refreshToken);
-    if (!isRefreshTokenVaild.success) {
-      if (isRefreshTokenVaild.error.errorType === errorTypes.TokenExpired) {
-        const newRefreshToken = authTokenService.createRefreshToken({
-          id: req['decoded'].iss,
-        });
+    // const isRefreshTokenVaild = authTokenService.verifyToken(refreshToken);
+    // if (!isRefreshTokenVaild.success) {
+    //   if (isRefreshTokenVaild.error.errorType === errorTypes.TokenExpired) {
+    //     const newRefreshToken = authTokenService.createRefreshToken({
+    //       id: req['decoded'].iss,
+    //     });
 
-        res.cookie('refreshToken', newRefreshToken, { httpOnly: true });
-      } else {
-        return res.status(STATUS_CODES.BAD_REQUEST).json(isRefreshTokenVaild); // refresh token이 valid하지 않을때
-      }
-    }
+    //     res.cookie('refreshToken', newRefreshToken, { httpOnly: true });
+    //   } else {
+    //     return res.status(STATUS_CODES.BAD_REQUEST).json(isRefreshTokenVaild); // refresh token이 valid하지 않을때
+    //   }
+    // }
     return next();
   }
   if (validResult.error.errorType === errorTypes.TokenExpired) {

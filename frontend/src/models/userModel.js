@@ -17,17 +17,13 @@ class UserModel {
   };
 
   checkLogin = async () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve(false);
-      }, 300);
-    });
+    const result = await authAPI.checkLogin();
+    return result.success;
   };
 
   login = async ({ nickname, password }) => {
     const result = await authAPI.loginAPI({ nickname, password });
     if (result.success) {
-      console.log('notify success');
       this.isLogin = true;
       this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
     }

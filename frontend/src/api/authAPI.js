@@ -5,6 +5,21 @@ class AuthAPI extends CommonAPI {
     super();
   }
 
+  checkLogin = async () => {
+    const accessToken = this.getAccessToken();
+
+    const path = '/api/auth/check';
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken,
+      },
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
+
   loginAPI = async ({ nickname, password }) => {
     const path = '/api/auth/login';
     const options = {
