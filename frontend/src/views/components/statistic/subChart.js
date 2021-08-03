@@ -25,6 +25,11 @@ class SubChart extends HTMLElement {
       this,
       this.handleFetchedData
     );
+    this.observer.subscribe(
+      notifyTypes.CHANGED_CURRENT_DATE,
+      this,
+      this.handleChangeDate
+    );
     this.render();
   }
 
@@ -36,6 +41,12 @@ class SubChart extends HTMLElement {
         this.chartController.getMonthExpByCategory(category);
       this.isShow = true;
     }
+    this.lineData = this.chartController.getLineChartData();
+    this.render();
+  };
+
+  handleChangeDate = () => {
+    this.isShow = false;
     this.render();
   };
 
@@ -46,16 +57,16 @@ class SubChart extends HTMLElement {
 
     if (this.isShow) {
       this.setHTML(/*html*/ `
-      <div class='chart--container sub'>
-        <line-chart 
-          width='750'
-          height='500' 
-          config=${JSON.stringify(this.lineData)}
-          style='width:100%;'
-        >
-        </line-chart>
-      </div>
-    }`);
+        <div class='chart--container sub'>
+          <line-chart 
+            width='750'
+            height='500' 
+            config=${JSON.stringify(this.lineData)}
+            style='width:100%;'
+          >
+          </line-chart>
+        </div>
+      `);
       dayAccountKeys.forEach((key) => {
         const $dayAccount = new DayAccount({
           date: key,
