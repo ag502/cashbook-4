@@ -117,7 +117,7 @@ class GithubOauthService {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
-    const accessToken = this.authTokenService.createAccessToken(newUser);
+    const accessToken = this.authTokenService.createAccessToken(user);
     return { succes: true, accessToken };
   }
 }

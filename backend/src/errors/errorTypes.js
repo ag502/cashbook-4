@@ -5,6 +5,5 @@ const errorTypes = {
   TokenExpired: 'tokenExpired',
   UnValidToken: 'unvalidToken',
   BadRequest: 'badRequest',
-  NicknameExist: 'nicknameExist',
 };
 export default errorTypes;
