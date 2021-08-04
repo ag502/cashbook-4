@@ -12,9 +12,9 @@ class AccountAPI extends CommonAPI {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
-      body: JSON.stringify({ data }),
+      body: JSON.stringify(data),
     };
     const result = await this.request({ path, options });
   };

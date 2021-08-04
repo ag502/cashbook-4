@@ -27,9 +27,9 @@ class HistoryPanel extends HTMLElement {
     this.selectedPaymentId = null;
     this.dateString = parsingDate(new Date());
     this.inputInfo = {
-      time: this.dateString,
+      date: parsingDate(new Date()),
       categoryId: '',
-      context: '',
+      content: '',
       paymentId: '',
       price: '',
     };
@@ -42,6 +42,7 @@ class HistoryPanel extends HTMLElement {
       this.handleAccountClick
     );
     this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
+    this.observer.subscribe(notifyTypes.FETCHED_DATA, this, this.render);
 
     this.render();
   }
@@ -49,10 +50,20 @@ class HistoryPanel extends HTMLElement {
   disconnectedCallback() {
     this.observer.unsubscribe(notifyTypes.CLICK_ACCOUNT, this);
     this.observer.unsubscribe(notifyTypes.INIT_USER, this);
+    this.observer.subscribe(notifyTypes.FETCHED_DATA, this);
   }
 
   handleAccountClick = (accountInfo) => {
     const { date, category, content, paymentMethod, price } = accountInfo;
+    this.selectCategory(category);
+
+    this.inputInfo = {
+      ...this.inputInfo,
+      time: date,
+      categoryId: category,
+      context: content,
+      price,
+    };
     this.dateString = parsingDate(date);
     this.category = category;
     this.content = content;
@@ -86,23 +97,26 @@ class HistoryPanel extends HTMLElement {
   };
 
   selectCategory = (id) => {
+    const categoryId = parseInt(id);
     this.toggleCategoryDropdown();
     const $selectCategoryBtn = this.querySelector('#select-category-btn');
-    $selectCategoryBtn.innerHTML = `${categories[id]} ${chevronDown}`;
+    $selectCategoryBtn.innerHTML = `${
+      categories[categoryId - 1]
+    } ${chevronDown}`;
     $selectCategoryBtn.classList.add('selected');
 
-    this.inputInfo = { ...this.inputInfo, categoryId: id };
+    this.inputInfo = { ...this.inputInfo, categoryId };
   };
 
   selectPayment = (id) => {
+    this.selectedPaymentId = parseInt(id);
     this.togglePaymentDropdown();
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
-    this.selectedPaymentId = Number(id);
     const payment = this.payments.find((p) => p.id === this.selectedPaymentId);
     $selectPaymentBtn.innerHTML = `${payment.name} ${chevronDown}`;
     $selectPaymentBtn.classList.add('selected');
 
-    this.inputInfo = { ...this.inputInfo, paymentId: id };
+    this.inputInfo = { ...this.inputInfo, paymentId: this.selectedPaymentId };
   };
 
   handleAddPayment = () => {
@@ -158,18 +172,23 @@ class HistoryPanel extends HTMLElement {
     const $checkbox = this.querySelector('.check-box');
     $checkbox.addEventListener('click', async () => {
       if (!this.checkCanSubmit()) {
-        console.log('no');
+        return;
       }
+      this.inputInfo = {
+        ...this.inputInfo,
+        date: new Date(this.inputInfo.date),
+      };
       await this.controller.addAccount(this.inputInfo);
     });
   };
 
   render = () => {
+    const { date, content } = this.inputInfo;
     this.setHTML(/*html*/ `
         <form>
             <div class="history-input-box">
                 <label>일자</label>
-                <input type="text" name="time" value='${this.dateString}'/>
+                <input type="text" name="date" value='${date}'/>
             </div>
                 
 
@@ -196,9 +215,9 @@ class HistoryPanel extends HTMLElement {
                 <label>내용</label>
                 <input 
                   type="text" 
-                  name="context" 
+                  name="content" 
                   placeholder="입력하세요" 
-                  ${this.content ? `value=${this.content}` : ''}
+                  ${this.content ? `value=${content}` : ''}
                 />
             </div>
 

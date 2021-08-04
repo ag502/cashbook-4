@@ -34,6 +34,15 @@ class CashBookModel {
     return result.success ? result.result : {};
   };
 
+  _postNewAccountData = async (data) => {
+    await accountAPI.addAccount(data);
+  };
+
+  addNewAccountData = async (data) => {
+    await this._postNewAccountData(data);
+    this.observer.notify(notifyTypes.FETCHED_DATA);
+  };
+
   moveMonth = async (monthCount) => {
     this.currentDate.setMonth(this.currentDate.getMonth() + monthCount);
     this.observer.notify(notifyTypes.CHANGED_CURRENT_DATE, this.currentDate);
