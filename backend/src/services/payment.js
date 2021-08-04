@@ -57,7 +57,7 @@ class PaymentService {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
-    return { success: true, data: payments !== null ? payments : [] };
+    return { success: true, data: payments };
   }
   async updatePayment({ userId, paymentId, newName }) {
     let targetPayment;
@@ -101,6 +101,7 @@ class PaymentService {
           plain: true,
         }
       );
+
       if (result[1] >= 1) {
         flag = true;
       }

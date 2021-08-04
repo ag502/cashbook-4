@@ -8,5 +8,6 @@ const errorTypes = {
   NicknameExist: 'nicknameExist',
   UnAuhorized: 'unauthorized',
   NotExist: 'notExist',
+  ValidationError: 'validationError',
 };
 export default errorTypes;

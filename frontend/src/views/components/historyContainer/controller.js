@@ -43,7 +43,7 @@ class HistoryContainerController extends BaseController {
         dayAccounts[time] = [];
       }
 
-      dayAccounts[time].push(account);
+      dayAccounts[time].push({ ...account, price: Number(account.price) });
     });
 
     return dayAccounts;
@@ -58,10 +58,11 @@ class HistoryContainerController extends BaseController {
 
     accounts.forEach((account) => {
       totalCount += 1;
-      if (account.price >= 0) {
-        return (totalIncome += account.price);
+      const numPrice = Number(account.price);
+      if (numPrice >= 0) {
+        return (totalIncome += numPrice);
       }
-      return (totalExpenditure -= account.price);
+      return (totalExpenditure -= numPrice);
     });
 
     return { totalCount, totalIncome, totalExpenditure };
