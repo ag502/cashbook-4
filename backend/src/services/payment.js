@@ -49,6 +49,20 @@ class PaymentService {
     }
     return { success: true };
   }
+  async getPayment({ userId }) {
+    let payments;
+    try {
+      payments = await this.paymentModel.findAll({
+        where: { user_id: userId },
+        attributes: ['id', 'name'],
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    return { success: true, data: payments !== null ? payments : [] };
+  }
 }
 
 export default new PaymentService(payment, user);

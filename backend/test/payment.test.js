@@ -57,7 +57,57 @@ const paymentTest = ({ BASEURL, userInfo }) =>
           );
         });
       });
+      describe('Read 테스트', () => {
+        it('basic Read payment 테스트', (done) => {
+          request.get(
+            BASEURL + '/api/payment',
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+              json: true,
+            },
+            (err, res, body) => {
+              if (err) {
+                console.log(err);
+              }
+              if (!body.success) {
+                console.log(body);
+              }
 
+              if (body?.data?.find((e) => e.name === '현대카드')) {
+                assert(body.success);
+              } else {
+                assert(false);
+              }
+
+              done();
+            }
+          );
+        });
+        it('로그인 없이 Read payment 테스트', (done) => {
+          request.get(
+            BASEURL + '/api/payment',
+            {
+              json: true,
+            },
+            (err, res, body) => {
+              if (err) {
+                console.log(err);
+              }
+              if (!body.success) {
+                if (body.error.errorType === errorTypes.UnAuhorized) {
+                  assert(true);
+                } else {
+                  assert(false);
+                }
+              }
+
+              done();
+            }
+          );
+        });
+      });
       after(() => {
         paymentTestResolve();
       });

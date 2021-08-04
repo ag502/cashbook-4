@@ -9,7 +9,16 @@ export default (app) => {
   const routes = Router();
   app.use('/payment', routes);
   routes.use('/', authMiddleware);
-  routes.get('/', async (req, res) => {});
+  routes.get('/', async (req, res) => {
+    const { id } = req['decoded'];
+
+    const result = await paymentService.getPayment({ userId: id });
+
+    if (!result.success) {
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
+    }
+    return res.status(STATUS_CODES.OK).json(result);
+  });
 
   routes.post('/', async (req, res) => {
     //TODO: 결제수단 추가
