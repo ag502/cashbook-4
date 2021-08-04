@@ -34,7 +34,29 @@ export default (app) => {
 
     return res.status(STATUS_CODES.OK).json(result);
   });
+  routes.put('/:paymentId', async (req, res) => {
+    const { id } = req.decoded;
+    const { paymentId } = req.params;
+    const { name } = req.body;
 
+    const result = await paymentService.updatePayment({
+      userId: id,
+      paymentId,
+      newName: name,
+    });
+
+    if (!result.success) {
+      if (result.error.errorType === errorTypes.NotExist) {
+        return res.status(STATUS_CODES.NOT_FOUNT).json(result);
+      }
+      if (result.error.errorType === errorTypes.AlreadyExist) {
+        return res.status(STATUS_CODES.CONFLICT).json(result);
+      }
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
+    }
+
+    return res.status(STATUS_CODES.OK).json(result);
+  });
   routes.delete('/:paymentId', async (req, res) => {
     const { id } = req.decoded;
     const { paymentId } = req.params;

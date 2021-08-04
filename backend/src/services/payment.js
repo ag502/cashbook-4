@@ -77,7 +77,19 @@ class PaymentService {
       return { success: false, error: getError(errorTypes.NotExist) };
     }
 
-    let deletedCount;
+    let isExistPayment;
+    try {
+      isExistPayment = await this.paymentModel.findOne({
+        where: { user_id: userId, name: newName },
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (isExistPayment) {
+      return { success: false, error: getError(errorTypes.AlreadyExist) };
+    }
+
     let flag = false;
     try {
       const result = await this.paymentModel.update(
@@ -89,7 +101,9 @@ class PaymentService {
           plain: true,
         }
       );
-      console.log(result);
+      if (result[1] >= 1) {
+        flag = true;
+      }
     } catch (err) {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }

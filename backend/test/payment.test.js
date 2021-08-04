@@ -142,6 +142,102 @@ const paymentTest = ({ BASEURL, userInfo }) =>
           );
         });
       });
+
+      describe('Update 테스트', () => {
+        it('로그인 없이 update payment 테스트', (done) => {
+          request.put(
+            BASEURL + '/api/payment/' + payment1.id,
+            {
+              json: true,
+            },
+            (err, res, body) => {
+              if (err) {
+                console.log(err);
+              }
+              if (!body.success) {
+                if (body.error.errorType === errorTypes.UnAuhorized) {
+                  assert(true);
+                } else {
+                  assert(false);
+                }
+              }
+
+              done();
+            }
+          );
+        });
+        it('이미 있는 name으로 update payment 테스트', (done) => {
+          request.put(
+            BASEURL + '/api/payment/' + payment1.id,
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+              body: { name: '삼성카드' },
+              json: true,
+            },
+            (err, res, body) => {
+              if (!body.success) {
+                if (body.error.errorType === errorTypes.AlreadyExist) {
+                  assert(true);
+                } else {
+                  assert(false);
+                }
+              }
+              done();
+            }
+          );
+        });
+        it('basic update payment 테스트', (done) => {
+          request.put(
+            BASEURL + '/api/payment/' + payment2.id,
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+              body: { name: '사암성카드' },
+              json: true,
+            },
+            (err, res, body) => {
+              if (err) {
+                console.log(err);
+              }
+              if (!body.success) {
+                console.log(body);
+              }
+              assert(body.success);
+
+              done();
+            }
+          );
+        });
+        it('존재하지않는 payment에 update payment 테스트', (done) => {
+          request.put(
+            BASEURL + '/api/payment/' + (payment1.id + 300),
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+              body: { name: '비트코인' },
+              json: true,
+            },
+            (err, res, body) => {
+              if (err) {
+                console.log(err);
+              }
+              if (!body.success) {
+                if (body.error.errorType === errorTypes.NotExist) {
+                  assert(true);
+                } else {
+                  assert(false);
+                }
+              }
+
+              done();
+            }
+          );
+        });
+      });
       describe('Delete 테스트', () => {
         it('로그인 없이 delete payment 테스트', (done) => {
           request.delete(
