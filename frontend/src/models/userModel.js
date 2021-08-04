@@ -27,8 +27,7 @@ class UserModel {
     }
 
     if (this.isLogin) {
-      this.payments = await this._fetchPayments();
-      console.log(this.payments);
+      await this.setPayments();
     }
 
     this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
@@ -91,8 +90,15 @@ class UserModel {
     return this.payments;
   };
 
+  setPayments = async () => {
+    const result = await this._fetchPayments();
+    this.payments = result;
+  };
+
   addPayment = async (name) => {
     const result = await paymentAPI.addPayment(name);
+    await this.setPayments();
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
     return result;
   };
 }

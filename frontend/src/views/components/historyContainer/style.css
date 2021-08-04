@@ -123,8 +123,22 @@ history-panel .dropdown .content {
   justify-content: space-between;
 }
 
+history-panel .dropdown .payment-item {
+  position: relative;
+}
+
+history-panel .dropdown #edit {
+  position: absolute;
+  right: 14px;
+}
+
+history-panel .dropdown #edit svg {
+  pointer-events: none;
+}
+
 history-panel .dropdown .content svg {
   height: 20px;
+  width: 20px;
 }
 
 history-panel .dropdown > :last-child .content {

@@ -30,6 +30,7 @@ class HistoryPanel extends HTMLElement {
     this.currentDate = this.currentDate.getDate();
 
     this.payments = this.controller.getPayments();
+    this.selectedPaymentId = null;
 
     this.dateString = parsingDate(new Date());
   }
@@ -43,6 +44,11 @@ class HistoryPanel extends HTMLElement {
     this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
 
     this.render();
+  }
+
+  disconnectedCallback() {
+    this.observer.unsubscribe(notifyTypes.CLICK_ACCOUNT, this);
+    this.observer.unsubscribe(notifyTypes.INIT_USER, this);
   }
 
   handleAccountClick = (accountInfo) => {
@@ -89,13 +95,17 @@ class HistoryPanel extends HTMLElement {
   selectPayment = (id) => {
     this.togglePaymentDropdown();
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
-    $selectPaymentBtn.innerHTML = `${this.payments[id]} ${chevronDown}`;
+    this.selectedPaymentId = Number(id);
+    const payment = this.payments.find((p) => p.id === this.selectedPaymentId);
+    $selectPaymentBtn.innerHTML = `${payment.name} ${chevronDown}`;
     $selectPaymentBtn.classList.add('selected');
   };
 
   handleAddPayment = () => {
     this.observer.notify(notifyTypes.CLICK_ADD_PAYMENT);
   };
+
+  handleModifyPayment;
 
   addEvents = () => {
     const $selectCategoryBtn = this.querySelector('#select-category-btn');
@@ -118,6 +128,9 @@ class HistoryPanel extends HTMLElement {
     $paymentDropdown.addEventListener('click', ({ target }) => {
       if (target.id === 'add-payment') {
         this.handleAddPayment();
+        return;
+      } else if (target.id === 'edit') {
+        this.handleModifyPayment();
         return;
       }
       this.selectPayment(target.dataset.id);
@@ -174,7 +187,10 @@ class HistoryPanel extends HTMLElement {
                           return `
                               <div class='payment-item' data-id=${payment.id}>
                                   <div class='content'>
-                                    ${payment.name} ${verticalMore}
+                                    ${payment.name} 
+                                  </div>
+                                  <div class='edit' id='edit' data-id=${payment.id}>
+                                    ${verticalMore}
                                   </div>
                               </div>
                             `;
