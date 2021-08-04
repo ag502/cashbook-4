@@ -2,14 +2,11 @@ import errorTypes from '../errors/errorTypes.js';
 import sequelize from '../models/index.js';
 import getError from '../utils/error.js';
 
-import authTokenService from './auth-token.js';
-
 const { payment, user } = sequelize.models;
 
 class PaymentService {
   constructor(paymentModel, userModel) {
     this.paymentModel = paymentModel;
-    this.userModel = userModel;
   }
 
   async createPayment({ userId, name }) {
@@ -41,7 +38,6 @@ class PaymentService {
         flag = true;
       }
     } catch (err) {
-      console.log(err);
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
     if (!flag) {
@@ -62,6 +58,44 @@ class PaymentService {
     }
 
     return { success: true, data: payments !== null ? payments : [] };
+  }
+  async deletePayment({ userId, paymentId }) {
+    let targetPayment;
+    try {
+      targetPayment = await this.paymentModel.findOne({
+        where: {
+          id: paymentId,
+          user_id: userId,
+        },
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!targetPayment) {
+      return { success: false, error: getError(errorTypes.NotExist) };
+    }
+
+    let deletedCount;
+    let flag = false;
+    try {
+      deletedCount = await this.paymentModel.destroy({
+        where: { id: paymentId },
+        raw: true,
+      });
+
+      if (deletedCount >= 1) {
+        flag = true;
+      }
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!flag) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+    return { success: true };
   }
 }
 

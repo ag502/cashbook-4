@@ -7,5 +7,6 @@ const errorTypes = {
   BadRequest: 'badRequest',
   NicknameExist: 'nicknameExist',
   UnAuhorized: 'unauthorized',
+  NotExist: 'notExist',
 };
 export default errorTypes;

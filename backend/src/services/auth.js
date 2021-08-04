@@ -56,6 +56,7 @@ class AuthService {
         raw: true,
       });
     } catch (err) {
+      console.log(err);
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
