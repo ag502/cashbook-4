@@ -109,6 +109,8 @@ class PieChart extends HTMLElement {
     this.config.forEach(({ categoryId, percent }) => {
       const curAngle = (360 * percent) / 100;
       accAngle += curAngle;
+
+      accAngle = accAngle >= 360 ? 359.999 : accAngle;
       const [finishX, finishY] = this.getFinishCoor(accAngle);
 
       const pathAttr = this.composePathAttr(

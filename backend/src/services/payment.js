@@ -101,6 +101,7 @@ class PaymentService {
           plain: true,
         }
       );
+
       if (result[1] >= 1) {
         flag = true;
       }

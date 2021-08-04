@@ -20,23 +20,25 @@ class CashBookModel {
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
-  _fecthAccountsByMonth = async (month = this.currentDate.getMonth() + 1) => {
-    const result = await accountAPI.getAccountByMonth();
-    return result;
+  _fecthAccountsByMonth = async () => {
+    const result = await accountAPI.getAccountByMonth(this.currentDate);
+    return result.success ? result.accounts : [];
   };
 
   _fetchYearAccountByCategory = async (categoryId) => {
-    const result = await accountAPI.getYearAccountByCategory(categoryId);
-    return result;
+    const curDate = this.currentDate;
+    const result = await accountAPI.getYearAccountByCategory(
+      curDate,
+      categoryId
+    );
+    return result.success ? result.result : {};
   };
 
   moveMonth = async (monthCount) => {
     this.currentDate.setMonth(this.currentDate.getMonth() + monthCount);
     this.observer.notify(notifyTypes.CHANGED_CURRENT_DATE, this.currentDate);
 
-    this.accounts = await this._fecthAccountsByMonth(
-      this.currentDate.getMonth() + 1
-    );
+    this.accounts = await this._fecthAccountsByMonth();
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
