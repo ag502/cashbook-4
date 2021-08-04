@@ -10,7 +10,7 @@ class SubChart extends HTMLElement {
     this.isShow = false;
     this.chartController = chartController;
     this.observer = observer;
-    this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
+    this.monthExpByCategory = [];
     this.lineData = {};
   }
 

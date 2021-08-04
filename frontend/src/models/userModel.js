@@ -10,7 +10,7 @@ class UserModel {
     this.isLogin = null;
     this.observer = observer;
     this.authAPI = authAPI;
-    // this.init();
+    this.init();
   }
 
   init = async () => {

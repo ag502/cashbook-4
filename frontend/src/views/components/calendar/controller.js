@@ -13,15 +13,16 @@ class CalendarController extends BaseController {
 
     this.cashBookModel.getAccounts().forEach(({ date, price }) => {
       const parsedDate = parsingDate(date);
+      const numPrice = Number(price);
       if (!accountInfoPerDay[parsedDate]) {
         accountInfoPerDay[parsedDate] = { income: 0, expenditure: 0 };
       }
-      if (price < 0) {
-        accountInfoPerDay[parsedDate].expenditure += price;
-        totalExpenditure += price;
+      if (numPrice < 0) {
+        accountInfoPerDay[parsedDate].expenditure += numPrice;
+        totalExpenditure += numPrice;
       } else {
-        accountInfoPerDay[parsedDate].income += price;
-        totalIncome += price;
+        accountInfoPerDay[parsedDate].income += numPrice;
+        totalIncome += numPrice;
       }
     });
 
