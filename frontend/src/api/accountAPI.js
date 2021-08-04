@@ -5,10 +5,10 @@ class AccountAPI extends CommonAPI {
     super();
   }
 
-  getAccountByMonth = async () => {
+  getAccountByMonth = async (date) => {
     const accessToken = this.getAccessToken();
 
-    const path = '/api/account/';
+    const path = `/api/account/${date}`;
     const options = {
       method: 'GET',
       headers: {
@@ -21,12 +21,15 @@ class AccountAPI extends CommonAPI {
     return result;
   };
 
-  getYearAccountByCategory = async (categoryId) => {
-    const path = `/api/account/category-year-expenditure/${categoryId}`;
+  getYearAccountByCategory = async (date, categoryId) => {
+    const accessToken = this.getAccessToken();
+
+    const path = `/api/account/category-year-expenditure/${date}/${categoryId}`;
     const options = {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken,
       },
     };
     const result = await this.request({ path, options });

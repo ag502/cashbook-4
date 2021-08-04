@@ -26,8 +26,12 @@ class CashBookModel {
   };
 
   _fetchYearAccountByCategory = async (categoryId) => {
-    const result = await accountAPI.getYearAccountByCategory(categoryId);
-    return result;
+    const curDate = this.currentDate;
+    const result = await accountAPI.getYearAccountByCategory(
+      curDate,
+      categoryId
+    );
+    return result.success ? result.result : {};
   };
 
   moveMonth = async (monthCount) => {
