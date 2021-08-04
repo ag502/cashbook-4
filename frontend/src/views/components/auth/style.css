@@ -6,6 +6,7 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  border-radius: 10px;
 }
 
 .auth-content h1 {
@@ -93,4 +94,5 @@
   font: var(--bold-small);
   color: var(--error);
   margin-top: 0.5em;
+  text-align: center;
 }

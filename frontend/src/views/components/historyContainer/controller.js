@@ -1,6 +1,8 @@
 import BaseController from '@/common/utils/baseController';
 import notifyTypes from '@/common/utils/notifyTypes';
 
+import errorTypes from '@/common/utils/error';
+
 const initalIncludeOptions = {
   income: true,
   expenditure: true,
@@ -72,6 +74,26 @@ class HistoryContainerController extends BaseController {
   setAccountIncludeOptions = (accountsIncludeOptions) => {
     this.accountsIncludeOptions = accountsIncludeOptions;
     this.observer.notify(notifyTypes.CHANGED_DATA_FILTER);
+  };
+
+  getPayments = () => {
+    return this.userModel.getPayments();
+  };
+
+  addPayment = async (name) => {
+    const result = await this.userModel.addPayment(name);
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.AlreadyExist) {
+        return { success: false, message: '이미 같은 결제수단이 존재합니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예끼치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return result;
   };
 }
 

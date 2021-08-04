@@ -1,6 +1,6 @@
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
-import { check, chevronDown, iconButton } from '../icons';
+import { check, chevronDown, iconButton, verticalMore } from '../icons';
 import historyContainerController from './controller';
 import { parsingDate } from '@/common/utils/functions';
 
@@ -17,8 +17,6 @@ const categories = [
   '미분류',
 ];
 
-const payments = ['현대카드', '삼성카드'];
-
 class HistoryPanel extends HTMLElement {
   constructor() {
     super();
@@ -31,6 +29,8 @@ class HistoryPanel extends HTMLElement {
     this.currentMonth = this.currentDate.getMonth() + 1;
     this.currentDate = this.currentDate.getDate();
 
+    this.payments = this.controller.getPayments();
+
     this.dateString = parsingDate(new Date());
   }
 
@@ -40,6 +40,7 @@ class HistoryPanel extends HTMLElement {
       this,
       this.handleAccountClick
     );
+    this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
 
     this.render();
   }
@@ -52,6 +53,11 @@ class HistoryPanel extends HTMLElement {
     this.paymentMethod = paymentMethod;
     this.price = price;
 
+    this.render();
+  };
+
+  handleInitUser = () => {
+    this.payments = this.controller.getPayments();
     this.render();
   };
 
@@ -83,8 +89,12 @@ class HistoryPanel extends HTMLElement {
   selectPayment = (id) => {
     this.togglePaymentDropdown();
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
-    $selectPaymentBtn.innerHTML = `${payments[id]} ${chevronDown}`;
+    $selectPaymentBtn.innerHTML = `${this.payments[id]} ${chevronDown}`;
     $selectPaymentBtn.classList.add('selected');
+  };
+
+  handleAddPayment = () => {
+    this.observer.notify(notifyTypes.CLICK_ADD_PAYMENT);
   };
 
   addEvents = () => {
@@ -106,6 +116,10 @@ class HistoryPanel extends HTMLElement {
     });
     const $paymentDropdown = this.querySelector('.dropdown.payment');
     $paymentDropdown.addEventListener('click', ({ target }) => {
+      if (target.id === 'add-payment') {
+        this.handleAddPayment();
+        return;
+      }
       this.selectPayment(target.dataset.id);
     });
   };
@@ -155,19 +169,22 @@ class HistoryPanel extends HTMLElement {
                 <label>결제수단</label>
                 <button id="select-payment-btn">선택하세요 ${chevronDown}</button>
                 <div class="dropdown payment">
-                      ${payments
-                        .map((payment, index) => {
-                          return (
-                            '<div class="payment-item" data-id=' +
-                            index +
-                            '>' +
-                            '<div class="content">' +
-                            payment +
-                            '</div>' +
-                            '</div>'
-                          );
+                      ${this.payments
+                        .map((payment) => {
+                          return `
+                              <div class='payment-item' data-id=${payment.id}>
+                                  <div class='content'>
+                                    ${payment.name} ${verticalMore}
+                                  </div>
+                              </div>
+                            `;
                         })
                         .join('')}
+                        <div id="add-payment">
+                          <div class="content">
+                            추가하기
+                          </div>
+                        </div>
                     </div>
             </div>
 

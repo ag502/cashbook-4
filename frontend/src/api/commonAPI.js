@@ -5,15 +5,6 @@ class CommonAPI {
     this.baseURL = 'http://localhost:3000';
     this.abortController = new AbortController();
   }
-  beforeRequest = async (cb) => {
-    const token = localStorage.getItem('accessToken');
-    if (!token) {
-      await cb();
-      return;
-    }
-
-    const newAccessTokenResult = await this.getNewAccessToken();
-  };
 
   getNewAccessToken = async () => {};
 
