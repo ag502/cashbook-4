@@ -36,7 +36,7 @@ class HistoryContainerController extends BaseController {
     const dayAccounts = {};
 
     accounts.forEach((account) => {
-      const time = account.date.getTime();
+      const time = new Date(account.date).getTime();
       if (!dayAccounts[time]) {
         dayAccounts[time] = [];
       }

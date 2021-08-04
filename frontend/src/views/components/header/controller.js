@@ -1,8 +1,10 @@
 import cashBookModel from '@/models/cashBookModel';
+import userModel from '@/models/userModel';
 
 class HeaderController {
   constructor() {
     this.cashBookModel = cashBookModel;
+    this.userModel = userModel;
   }
 
   handlePrevBtnClick = async () => {
@@ -15,6 +17,9 @@ class HeaderController {
 
   getCurrentDate() {
     return this.cashBookModel.getCurrentDate();
+  }
+  getIsLogin() {
+    return this.userModel.getIsLogin();
   }
 }
 

@@ -20,41 +20,11 @@ export default (app) => {
     return res.status(STATUS_CODES.OK).json({ success: true });
   });
 
-  routes.get('/token', async (req, res) => {
-    const refreshToken = req?.cookies?.refreshToken;
-    const tokenVerifyResult = authTokenService.verifyToken(refreshToken);
-
-    if (!tokenVerifyResult.success) {
-      if (tokenVerifyResult.error.errorType === errorTypes.TokenExpired) {
-        return res
-          .status(STATUS_CODES.UNAUTHORIZED)
-          .json({ success: false, error: getError(errorTypes.TokenExpired) });
-      } else {
-        return res.status(STATUS_CODES.BAD_REQUEST).json(tokenVerifyResult); // refresh token이 valid하지 않을때
-      }
-    }
-
-    const decoded = tokenVerifyResult.decoded;
-    const user = await userService.getUserById(decoded.iss);
-
-    if (user.success) {
-      const newAccessToken = authTokenService.createAccessToken(user.data);
-      return res
-        .status(STATUS_CODES.OK)
-        .json({ success: true, accessToken: newAccessToken });
-    }
-
-    return res
-      .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-      .json(getError(errorTypes.UnexpectError));
-  });
-
   routes.post('/login', async (req, res) => {
     const { nickname, password } = req.body;
     const result = await authService.login({ nickname, password });
     if (result.success) {
-      const { accessToken, refreshToken } = result;
-      res.cookie('refreshToken', refreshToken, { httpOnly: true });
+      const { accessToken } = result;
       return res
         .status(STATUS_CODES.OK)
         .json({ success: result.success, accessToken });
@@ -86,8 +56,8 @@ export default (app) => {
     const { code } = req.body;
     const result = await githubOauthService.githubLogin({ code });
     if (result.success) {
-      const { accessToken, refreshToken } = result;
-      res.cookie('refreshToken', refreshToken, { httpOnly: true });
+      const { accessToken } = result;
+
       return res
         .status(STATUS_CODES.OK)
         .json({ success: result.success, accessToken });

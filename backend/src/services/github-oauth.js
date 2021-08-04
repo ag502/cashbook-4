@@ -102,9 +102,7 @@ class GithubOauthService {
 
     if (user) {
       const accessToken = this.authTokenService.createAccessToken(user);
-      const refreshToken = this.authTokenService.createRefreshToken(user);
-
-      return { success: true, accessToken, refreshToken };
+      return { success: true, accessToken };
     }
 
     let newUser;
@@ -120,8 +118,7 @@ class GithubOauthService {
     }
 
     const accessToken = this.authTokenService.createAccessToken(user);
-    const refreshToken = this.authTokenService.createRefreshToken(user);
-    return { succes: true, accessToken, refreshToken };
+    return { succes: true, accessToken };
   }
 }
 

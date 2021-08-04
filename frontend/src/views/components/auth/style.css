@@ -45,6 +45,11 @@
   padding: 20px 0 20px;
 }
 
+.auth-content .submit-input button.active {
+  background: var(--line);
+  color: var(--body);
+}
+
 .auth-content button {
   width: 100%;
   padding: 5px;
@@ -81,4 +86,11 @@
   cursor: pointer;
   color: var(--primary3);
   font-weight: bold;
+}
+
+.error-text {
+  display: none;
+  font: var(--bold-small);
+  color: var(--error);
+  margin-top: 0.5em;
 }

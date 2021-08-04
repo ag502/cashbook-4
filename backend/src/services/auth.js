@@ -65,8 +65,7 @@ class AuthService {
 
     if (await checkPassword(password, user.password)) {
       const accessToken = this.authTokenService.createAccessToken(user);
-      const refreshToken = this.authTokenService.createRefreshToken(user);
-      return { success: true, accessToken, refreshToken };
+      return { success: true, accessToken };
     }
 
     return { success: false, error: getError(errorTypes.LoginFailed) };

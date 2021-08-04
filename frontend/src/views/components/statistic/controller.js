@@ -68,7 +68,7 @@ class ChartController extends BaseController {
       .getAccounts()
       .forEach(({ category, date, price, ...rest }) => {
         if (price < 0 && category === categoryId) {
-          const curDate = date.getTime();
+          const curDate = new Date(date).getTime();
           monthExpByCategory[curDate] = monthExpByCategory[curDate] || [];
           monthExpByCategory[curDate].push({
             category,

@@ -1,4 +1,11 @@
-import { prevArrow, nextArrow, fileText, calender, chart } from '../icons';
+import {
+  prevArrow,
+  nextArrow,
+  fileText,
+  calender,
+  chart,
+  logoutButton,
+} from '../icons';
 import headerController from './controller';
 import observer from '@/common/utils/observer';
 
@@ -13,6 +20,7 @@ class Header extends HTMLElement {
     this.currentDate = this.controller.getCurrentDate();
     this.currentMonth = this.currentDate.getMonth() + 1;
     this.currentYear = this.currentDate.getFullYear();
+    this.isLogin = this.controller.getIsLogin();
   }
 
   connectedCallback() {
@@ -22,8 +30,12 @@ class Header extends HTMLElement {
       this,
       this.handleDateChanged
     );
+    this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
   }
-
+  handleInitUser = (isLogin) => {
+    this.isLogin = isLogin;
+    this.render();
+  };
   handleDateChanged = (data) => {
     this.currentMonth = data.getMonth() + 1;
     this.currentYear = data.getFullYear();
@@ -53,6 +65,12 @@ class Header extends HTMLElement {
     $chartBtn.addEventListener('click', () => {
       location.hash = '#/chart';
     });
+    if (this.isLogin) {
+      const $logoutBtn = this.querySelector('#logout-btn');
+      $logoutBtn.addEventListener('click', () => {
+        this.observer.notify(notifyTypes.CLICK_LOGOUT);
+      });
+    }
   };
 
   render = () => {
@@ -78,6 +96,9 @@ class Header extends HTMLElement {
         <button class='active' id='file-text-btn'>${fileText}</button>
         <button id='calender-btn'>${calender}</button>
         <button id='chart-btn'>${chart}</button>
+        ${
+          this.isLogin ? `<button id="logout-btn">${logoutButton}</button>` : ''
+        }
       </div>
     `);
 

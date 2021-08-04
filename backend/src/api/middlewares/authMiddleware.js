@@ -5,27 +5,15 @@ import STATUS_CODES from '../../utils/http-status.js';
 
 const authMiddleware = async (req, res, next) => {
   const accessToken = req.headers?.authorization?.split(' ')[1]; // remove bearer tag
-  const refreshToken = req.cookies?.refreshToken;
 
   if (!accessToken) {
     return res.status(STATUS_CODES.UNAUTHORIZED);
   }
 
   const validResult = authTokenService.verifyToken(accessToken);
+
   if (validResult.success) {
     req['decoded'] = validResult.decoded;
-    const isRefreshTokenVaild = authTokenService.verifyToken(refreshToken);
-    if (!isRefreshTokenVaild.success) {
-      if (isRefreshTokenVaild.error.errorType === errorTypes.TokenExpired) {
-        const newRefreshToken = authTokenService.createRefreshToken({
-          id: req['decoded'].iss,
-        });
-
-        res.cookie('refreshToken', newRefreshToken, { httpOnly: true });
-      } else {
-        return res.status(STATUS_CODES.BAD_REQUEST).json(isRefreshTokenVaild); // refresh token이 valid하지 않을때
-      }
-    }
     return next();
   }
   if (validResult.error.errorType === errorTypes.TokenExpired) {

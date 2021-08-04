@@ -2,6 +2,7 @@ import observer from '@/common/utils/observer';
 import records from './mockDatas';
 
 import notifyTypes from '@/common/utils/notifyTypes';
+import accountAPI from '../api/accountAPI';
 
 class CashBookModel {
   constructor() {
@@ -18,16 +19,9 @@ class CashBookModel {
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
-  _fecthAccountsByMonth = (month = this.currentDate.getMonth() + 1) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        if (month === 8) {
-          resolve(records);
-        } else {
-          resolve([]);
-        }
-      });
-    }, 1000);
+  _fecthAccountsByMonth = async (month = this.currentDate.getMonth() + 1) => {
+    const result = await accountAPI.getAccountByMonth();
+    return result;
   };
 
   moveMonth = async (monthCount) => {

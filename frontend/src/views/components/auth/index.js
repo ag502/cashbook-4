@@ -26,11 +26,19 @@ class Auth extends HTMLElement {
       this,
       this.handleChangedContent
     );
+    this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
   }
 
   disconnectedCallback() {
     this.observer.unsubscribe(notifyTypes.CHANGED_LOGIN_CONTENT, this);
+    this.observer.unsubscribe(notifyTypes.INIT_USER, this);
   }
+
+  handleInitUser = (isLogin) => {
+    if (isLogin) {
+      this.remove();
+    }
+  };
 
   handleChangedContent = (type) => {
     if (type === this.contentTypes.REGISTER) {
