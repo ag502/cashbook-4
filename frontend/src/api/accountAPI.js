@@ -5,6 +5,20 @@ class AccountAPI extends CommonAPI {
     super();
   }
 
+  addAccount = async (data) => {
+    const accessToken = this.getAccessToken();
+    const path = '/api/account';
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify(data),
+    };
+    const result = await this.request({ path, options });
+  };
+
   getAccountByMonth = async (date) => {
     const accessToken = this.getAccessToken();
 

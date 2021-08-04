@@ -127,6 +127,10 @@ class HistoryContainerController extends BaseController {
     }
     return result;
   };
+
+  addAccount = async (data) => {
+    await this.cashBookModel.addNewAccountData(data);
+  };
 }
 
 export default new HistoryContainerController();

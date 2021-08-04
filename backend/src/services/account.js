@@ -98,7 +98,6 @@ class AccountService {
         result: this._addEmptyMonth(yearAccountsByCategory),
       };
     } catch (err) {
-      console.log(err);
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
   }
@@ -114,8 +113,8 @@ class AccountService {
             date,
             price,
             content,
-            paymentId,
-            categoryId,
+            payment_id: paymentId,
+            category_id: categoryId,
             user_id: userId,
           },
           { treatUndefinedAsNull: false }
@@ -126,6 +125,7 @@ class AccountService {
         flag = true;
       }
     } catch (err) {
+      console.log(err);
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
