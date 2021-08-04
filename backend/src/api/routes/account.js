@@ -72,6 +72,15 @@ export default (app) => {
     const { id } = req.decoded;
     const { date, price, content, paymentId, categoryId } = req.body;
     const accountInfo = { date, price, content, paymentId, categoryId };
+    const result = await accountService.createAccount({
+      userId: id,
+      accountInfo,
+    });
+
+    if (!result.success) {
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
+    }
+    return res.status(STATUS_CODES.OK).json(result);
   });
 
   routes.put('/:accountId', async (req, res) => {

@@ -22,8 +22,8 @@ const accountBodyValidators = {
   price: body('price')
     .notEmpty()
     .withMessage('price is Required')
-    .isString()
-    .withMessage('price is String'),
+    .isDecimal()
+    .withMessage('price is Decimal'),
   content: body('content')
     .isString()
     .withMessage('content is String')
