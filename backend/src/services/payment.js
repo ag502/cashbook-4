@@ -101,7 +101,7 @@ class PaymentService {
           plain: true,
         }
       );
-
+      console.log(result);
       if (result[1] >= 1) {
         flag = true;
       }

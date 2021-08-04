@@ -1,6 +1,11 @@
 import { param, body } from 'express-validator';
 
 const accountParamValidators = {
+  accountId: param('accountId')
+    .notEmpty()
+    .withMessage('accountId is Required')
+    .isNumeric()
+    .withMessage('accountId is number'),
   date: param('date')
     .notEmpty()
     .withMessage('date is Required')
@@ -48,6 +53,17 @@ export function getYearAccountsVal() {
 
 export function createAccountVal() {
   return [
+    accountBodyValidators.date,
+    accountBodyValidators.price,
+    accountBodyValidators.content,
+    accountBodyValidators.paymentId,
+    accountBodyValidators.categoryId,
+  ];
+}
+
+export function updateAccountVal() {
+  return [
+    accountParamValidators.accountId,
     accountBodyValidators.date,
     accountBodyValidators.price,
     accountBodyValidators.content,

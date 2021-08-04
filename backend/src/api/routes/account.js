@@ -8,6 +8,7 @@ import {
   getMonthAccountsVal,
   getYearAccountsVal,
   createAccountVal,
+  updateAccountVal,
 } from '../middlewares/accountValidator.js';
 import getError from '../../utils/error.js';
 import { errorTypes } from '../../errors/index.js';
@@ -83,8 +84,38 @@ export default (app) => {
     return res.status(STATUS_CODES.OK).json(result);
   });
 
-  routes.put('/:accountId', async (req, res) => {
-    //TODO: account 수정
+  routes.put('/:accountId', updateAccountVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
+
+    const { id } = req.decoded;
+    const { date, price, content, paymentId, categoryId } = req.body;
+    const { accountId } = req.params;
+
+    const accountInfo = {
+      id: accountId,
+      date,
+      price,
+      content,
+      paymentId,
+      categoryId,
+    };
+    const result = await accountService.updateAccount({
+      userId: id,
+      accountInfo,
+    });
+
+    if (!result.success) {
+      if (result.error.errorType === errorTypes.NotExist) {
+        return res.status(STATUS_CODES.NOT_FOUNT).json(result);
+      }
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
+    }
+    return res.status(STATUS_CODES.OK).json(result);
   });
 
   routes.delete('/:accountId', async (req, res) => {

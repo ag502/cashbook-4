@@ -30,6 +30,8 @@ class AccountService {
           },
         ],
         attributes: [
+          'id',
+          ['payment_id', 'payment'],
           ['category_id', 'category'],
           'price',
           'content',
@@ -125,7 +127,59 @@ class AccountService {
         flag = true;
       }
     } catch (err) {
-      console.log(err);
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!flag) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    return { success: true };
+  }
+
+  async updateAccount({ userId, accountInfo }) {
+    const { id, date, price, content, paymentId, categoryId } = accountInfo;
+
+    let isExistAccount;
+    try {
+      isExistAccount = await this.accountModel.findOne({
+        where: { user_id: userId, id },
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!isExistAccount) {
+      return { success: false, error: getError(errorTypes.NotExist) };
+    }
+
+    let flag = false;
+    try {
+      const result = await this.accountModel.update(
+        {
+          date,
+          price,
+          content,
+          payment_id: paymentId,
+          category_id: categoryId,
+          user_id: userId,
+        },
+        {
+          where: {
+            id,
+          },
+          raw: true,
+          returning: true,
+          plain: true,
+          treatUndefinedAsNull: false,
+        }
+      );
+
+      if (result[1] >= 1) {
+        flag = true;
+      }
+    } catch (err) {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
 
