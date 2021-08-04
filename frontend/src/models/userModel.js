@@ -1,4 +1,5 @@
 import authAPI from '../api/authAPI.js';
+import paymentAPI from '../api/paymentAPI.js';
 
 import observer from '@/common/utils/observer';
 import notifyTypes from '../common/utils/notifyTypes';
@@ -10,6 +11,7 @@ class UserModel {
     this.isLogin = null;
     this.observer = observer;
     this.authAPI = authAPI;
+    this.payments = [];
     this.init();
   }
 
@@ -23,6 +25,11 @@ class UserModel {
         window.history.pushState({}, document.title, newUrl);
       }
     }
+
+    if (this.isLogin) {
+      await this.setPayments();
+    }
+
     this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
     this.observer.subscribe(
       notifyTypes.CLICK_GITHUB_OAUTH,
@@ -30,6 +37,14 @@ class UserModel {
       this.getGithubLoginURL
     );
     this.observer.subscribe(notifyTypes.CLICK_LOGOUT, this, this.logout);
+  };
+
+  _fetchPayments = async () => {
+    const result = await paymentAPI.getPayments();
+    if (result.success) {
+      return result.data;
+    }
+    return [];
   };
 
   checkLogin = async () => {
@@ -69,6 +84,36 @@ class UserModel {
 
   getIsLogin = () => {
     return this.isLogin;
+  };
+
+  getPayments = () => {
+    return this.payments;
+  };
+
+  setPayments = async () => {
+    const result = await this._fetchPayments();
+    this.payments = result;
+  };
+
+  addPayment = async (name) => {
+    const result = await paymentAPI.addPayment(name);
+    await this.setPayments();
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    return result;
+  };
+
+  deletePayment = async (paymentId) => {
+    const result = await paymentAPI.deletePayment(paymentId);
+    await this.setPayments();
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    return result;
+  };
+
+  updatePayment = async ({ paymentId, name }) => {
+    const result = await paymentAPI.updatePayment({ paymentId, name });
+    await this.setPayments();
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    return result;
   };
 }
 

@@ -118,9 +118,27 @@ history-panel .dropdown .content {
   width: 100px;
   height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
   pointer-events: none;
+  justify-content: space-between;
+}
+
+history-panel .dropdown .payment-item {
+  position: relative;
+}
+
+history-panel .dropdown #edit {
+  position: absolute;
+  right: 14px;
+}
+
+history-panel .dropdown #edit svg {
+  pointer-events: none;
+}
+
+history-panel .dropdown .content svg {
+  height: 20px;
+  width: 20px;
 }
 
 history-panel .dropdown > :last-child .content {
@@ -208,4 +226,64 @@ history-statistics .right > div {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+add-payment,
+edit-payment {
+  display: flex;
+  flex-direction: column;
+  min-width: 350px;
+  background-color: var(--background);
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  border-radius: 10px;
+}
+
+add-payment .top,
+edit-payment .top {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+add-payment .top label,
+edit-payment .top label {
+  font: var(--body-medium);
+  color: var(--title-active);
+}
+
+add-payment .top input,
+edit-payment .top input {
+  margin-top: 24px;
+  background: var(--background);
+  border: 1px solid var(--line);
+  width: 100%;
+  height: 42px;
+  border-radius: 10px;
+  padding: 10px;
+  font: var(--body-medium);
+  outline: none;
+}
+
+add-payment .bottom,
+edit-payment .bottom {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 40px;
+}
+
+add-payment .bottom button,
+edit-payment .bottom button {
+  font: var(--body-medium);
+}
+
+add-payment .bottom #submit-btn,
+edit-payment .bottom #submit-btn {
+  color: var(--primary3);
+}
+
+edit-payment .bottom #delete-btn {
+  color: var(--error);
 }

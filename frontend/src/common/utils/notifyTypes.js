@@ -11,6 +11,9 @@ const notifyTypes = {
   LOGOUT: 'logout',
   CLICK_GITHUB_OAUTH: 'click-github-oauth',
   FETCHED_GITHUB_AUTH_URL: 'fetched-github-auth-url',
+  CLICK_ADD_PAYMENT: 'click-add-payment',
+  CLICK_EDIT_PAYMENT: 'click-edit-payment',
+  CLOSE_MODAL: 'close-modal',
 };
 
 export default notifyTypes;

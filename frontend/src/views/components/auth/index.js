@@ -54,6 +54,7 @@ class Auth extends HTMLElement {
     this.setHTML(``);
     const $loginContainer = new Modal({
       $contentElement: this.$currentContent,
+      toggleModal: false,
     });
 
     this.appendChild($loginContainer);

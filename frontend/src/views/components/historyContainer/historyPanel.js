@@ -1,6 +1,6 @@
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
-import { check, chevronDown, iconButton } from '../icons';
+import { check, chevronDown, iconButton, verticalMore } from '../icons';
 import historyContainerController from './controller';
 import { parsingDate } from '@/common/utils/functions';
 
@@ -17,8 +17,6 @@ const categories = [
   '미분류',
 ];
 
-const payments = ['현대카드', '삼성카드'];
-
 class HistoryPanel extends HTMLElement {
   constructor() {
     super();
@@ -31,6 +29,9 @@ class HistoryPanel extends HTMLElement {
     this.currentMonth = this.currentDate.getMonth() + 1;
     this.currentDate = this.currentDate.getDate();
 
+    this.payments = this.controller.getPayments();
+    this.selectedPaymentId = null;
+
     this.dateString = parsingDate(new Date());
   }
 
@@ -40,8 +41,14 @@ class HistoryPanel extends HTMLElement {
       this,
       this.handleAccountClick
     );
+    this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
 
     this.render();
+  }
+
+  disconnectedCallback() {
+    this.observer.unsubscribe(notifyTypes.CLICK_ACCOUNT, this);
+    this.observer.unsubscribe(notifyTypes.INIT_USER, this);
   }
 
   handleAccountClick = (accountInfo) => {
@@ -52,6 +59,11 @@ class HistoryPanel extends HTMLElement {
     this.paymentMethod = paymentMethod;
     this.price = price;
 
+    this.render();
+  };
+
+  handleInitUser = () => {
+    this.payments = this.controller.getPayments();
     this.render();
   };
 
@@ -83,8 +95,18 @@ class HistoryPanel extends HTMLElement {
   selectPayment = (id) => {
     this.togglePaymentDropdown();
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
-    $selectPaymentBtn.innerHTML = `${payments[id]} ${chevronDown}`;
+    this.selectedPaymentId = Number(id);
+    const payment = this.payments.find((p) => p.id === this.selectedPaymentId);
+    $selectPaymentBtn.innerHTML = `${payment.name} ${chevronDown}`;
     $selectPaymentBtn.classList.add('selected');
+  };
+
+  handleAddPayment = () => {
+    this.observer.notify(notifyTypes.CLICK_ADD_PAYMENT);
+  };
+
+  handleModifyPayment = (id) => {
+    this.observer.notify(notifyTypes.CLICK_EDIT_PAYMENT, Number(id));
   };
 
   addEvents = () => {
@@ -106,6 +128,13 @@ class HistoryPanel extends HTMLElement {
     });
     const $paymentDropdown = this.querySelector('.dropdown.payment');
     $paymentDropdown.addEventListener('click', ({ target }) => {
+      if (target.id === 'add-payment') {
+        this.handleAddPayment();
+        return;
+      } else if (target.id === 'edit') {
+        this.handleModifyPayment(target.dataset.id);
+        return;
+      }
       this.selectPayment(target.dataset.id);
     });
   };
@@ -155,19 +184,25 @@ class HistoryPanel extends HTMLElement {
                 <label>결제수단</label>
                 <button id="select-payment-btn">선택하세요 ${chevronDown}</button>
                 <div class="dropdown payment">
-                      ${payments
-                        .map((payment, index) => {
-                          return (
-                            '<div class="payment-item" data-id=' +
-                            index +
-                            '>' +
-                            '<div class="content">' +
-                            payment +
-                            '</div>' +
-                            '</div>'
-                          );
+                      ${this.payments
+                        .map((payment) => {
+                          return `
+                              <div class='payment-item' data-id=${payment.id}>
+                                  <div class='content'>
+                                    ${payment.name} 
+                                  </div>
+                                  <div class='edit' id='edit' data-id=${payment.id}>
+                                    ${verticalMore}
+                                  </div>
+                              </div>
+                            `;
                         })
                         .join('')}
+                        <div id="add-payment">
+                          <div class="content">
+                            추가하기
+                          </div>
+                        </div>
                     </div>
             </div>
 
