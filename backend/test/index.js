@@ -22,12 +22,8 @@ describe('cashbook 백엔드 테스트 시작', async () => {
     await paymentModel.destroy({ where: {}, truncate: { cascade: true } });
     await accountModel.destroy({ where: {}, truncate: { cascade: true } });
   });
-
   const userInfo = await authTest({ githubUser, BASEURL });
   const paymentInfo = await paymentTest({ userInfo, BASEURL });
   const accountInfo = await accountTest({ paymentInfo, userInfo, BASEURL });
-  it('테스트 테스트', (done) => {
-    assert(true);
-    done();
-  });
+  console.log(paymentInfo);
 });

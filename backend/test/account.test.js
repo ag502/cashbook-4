@@ -17,6 +17,10 @@ const accountTest = ({ BASEURL, userInfo, paymentInfo }) =>
         assert(true);
         done();
       });
+
+      after(() => {
+        accountTestResolve(console.log('asdasd'));
+      });
     });
   });
 

@@ -30,6 +30,7 @@ class AccountService {
           },
         ],
         attributes: [
+          'id',
           ['category_id', 'category'],
           'price',
           'content',
