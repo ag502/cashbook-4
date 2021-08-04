@@ -40,12 +40,13 @@ class ChartController extends BaseController {
     let totalExpenditure = 0;
 
     this.cashBookModel.getAccounts().forEach(({ category, price }) => {
-      if (price < 0) {
-        totalExpenditure += -price;
+      const numPrice = Number(price);
+      if (numPrice < 0) {
+        totalExpenditure += -numPrice;
         accountsByCategory[category] = accountsByCategory[category] || {
           price: 0,
         };
-        accountsByCategory[category].price += -price;
+        accountsByCategory[category].price += -numPrice;
       }
     });
     return [totalExpenditure, accountsByCategory];
