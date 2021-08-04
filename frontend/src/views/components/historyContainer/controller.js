@@ -111,6 +111,21 @@ class HistoryContainerController extends BaseController {
     }
     return result;
   };
+  updatePayment = async ({ paymentId, name }) => {
+    const result = await this.userModel.updatePayment({ paymentId, name });
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.NotExist) {
+        return { success: false, message: '존재하지 않는 결제정보입니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예끼치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return result;
+  };
 }
 
 export default new HistoryContainerController();

@@ -12,14 +12,19 @@ class EditPayment extends HTMLElement {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
-
-    const payments = this.controller.getPayments();
-    this.payment = payments.find((p) => p.id === paymentId);
+    this.payment = null;
+    this.paymentId = paymentId;
+    this.setPayment(paymentId);
   }
 
   connectedCallback() {
     this.render();
   }
+
+  setPayment = (paymentId) => {
+    const payments = this.controller.getPayments();
+    this.payment = payments.find((p) => p.id === paymentId);
+  };
 
   addEvents = () => {
     const $form = this.querySelector('#add-payment-form');
@@ -33,11 +38,16 @@ class EditPayment extends HTMLElement {
     event.preventDefault();
     const $payment = event.currentTarget.querySelector('#payment-input');
     const name = $payment.value;
-    const result = await this.controller.updatePayment(name);
+    const result = await this.controller.updatePayment({
+      paymentId: this.paymentId,
+      name,
+    });
     if (!result.success) {
       this.displayResultMessage(result.message, result.success);
       return;
     }
+    this.setPayment(this.paymentId);
+    this.render();
     this.displayResultMessage('결제정보를 수정했습니다!', result.success);
   };
 

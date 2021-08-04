@@ -47,6 +47,21 @@ class PaymentAPI extends CommonAPI {
     const result = await this.request({ path, options });
     return result;
   };
+
+  updatePayment = async ({ paymentId, name }) => {
+    const accessToken = this.getAccessToken();
+    const path = '/api/payment/' + paymentId;
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken,
+      },
+      body: JSON.stringify({ name }),
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
 }
 
 export default new PaymentAPI();

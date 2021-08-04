@@ -108,6 +108,13 @@ class UserModel {
     this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
     return result;
   };
+
+  updatePayment = async ({ paymentId, name }) => {
+    const result = await paymentAPI.updatePayment({ paymentId, name });
+    await this.setPayments();
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    return result;
+  };
 }
 
 export default new UserModel();

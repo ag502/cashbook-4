@@ -283,3 +283,7 @@ add-payment .bottom #submit-btn,
 edit-payment .bottom #submit-btn {
   color: var(--primary3);
 }
+
+edit-payment .bottom #delete-btn {
+  color: var(--error);
+}
