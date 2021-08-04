@@ -1,5 +1,5 @@
 import BaseController from '@/common/utils/baseController';
-import { parsingDate } from '@/common/utils/functions';
+import { getCategoryString } from '@/common/utils/functions';
 
 class ChartController extends BaseController {
   constructor() {
@@ -79,6 +79,25 @@ class ChartController extends BaseController {
       });
 
     return monthExpByCategory;
+  };
+
+  handleCategoryClick = async (categoryId) => {
+    await this.cashBookModel.changeCategory(categoryId);
+  };
+
+  getLineChartData = (categoryId) => {
+    const yearCategoryAccount = this.cashBookModel.getYearCategoryAccount();
+    const data = Object.keys(yearCategoryAccount).reduce(
+      (acc, curMonth) => [...acc, yearCategoryAccount[curMonth]],
+      []
+    );
+    return {
+      datasets: {
+        data,
+        backgroundColor:
+          categoryId === 0 ? '#ffffff' : getCategoryString(categoryId).color,
+      },
+    };
   };
 }
 

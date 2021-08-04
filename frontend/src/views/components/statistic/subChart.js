@@ -7,28 +7,41 @@ import notifyTypes from '@/common/utils/notifyTypes';
 class SubChart extends HTMLElement {
   constructor() {
     super();
+    this.isShow = false;
     this.chartController = chartController;
     this.observer = observer;
     this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
-    this.lineData = {
-      datasets: {
-        data: [20, 100, 1000, 10000, 23453, 53533, 123213, 99999],
-        backgroundColor: ['blue'],
-      },
-    };
+    this.lineData = {};
   }
 
   connectedCallback() {
     this.observer.subscribe(
-      notifyTypes.FETCHED_DATA,
+      notifyTypes.CLICK_CATEGORY,
       this,
       this.handleFetchedData
+    );
+    this.observer.subscribe(
+      notifyTypes.CHANGED_CURRENT_DATE,
+      this,
+      this.handleChangeDate
     );
     this.render();
   }
 
-  handleFetchedData = () => {
-    this.monthExpByCategory = this.chartController.getMonthExpByCategory(5);
+  handleFetchedData = (category) => {
+    if (category === 0) {
+      this.isShow = false;
+    } else {
+      this.monthExpByCategory =
+        this.chartController.getMonthExpByCategory(category);
+      this.isShow = true;
+    }
+    this.lineData = this.chartController.getLineChartData(category);
+    this.render();
+  };
+
+  handleChangeDate = () => {
+    this.isShow = false;
     this.render();
   };
 
@@ -37,25 +50,28 @@ class SubChart extends HTMLElement {
       (a, b) => b - a
     );
 
-    this.setHTML(/*html*/ `
-      <div class='chart--container sub'>
-        <line-chart 
-          width='750'
-          height='500' 
-          config=${JSON.stringify(this.lineData)}
-          style='width:100%;'
-        >
-        </line-chart>
-      </div>
-    `);
-
-    dayAccountKeys.forEach((key) => {
-      const $dayAccount = new DayAccount({
-        date: key,
-        accounts: this.monthExpByCategory[key],
+    if (this.isShow) {
+      this.setHTML(/*html*/ `
+        <div class='chart--container sub'>
+          <line-chart 
+            width='750'
+            height='500' 
+            config=${JSON.stringify(this.lineData)}
+            style='width:100%;'
+          >
+          </line-chart>
+        </div>
+      `);
+      dayAccountKeys.forEach((key) => {
+        const $dayAccount = new DayAccount({
+          date: key,
+          accounts: this.monthExpByCategory[key],
+        });
+        this.appendChild($dayAccount);
       });
-      this.appendChild($dayAccount);
-    });
+    } else {
+      this.setHTML('');
+    }
   };
 }
 

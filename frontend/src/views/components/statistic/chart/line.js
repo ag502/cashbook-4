@@ -1,4 +1,6 @@
 import { SVG_URL } from '@/common/utils/constant';
+import chartController from '../controller';
+
 const SVG_PADDING = 60;
 const MAX_SPACE = 10;
 const UNIT = 1;
@@ -42,6 +44,7 @@ class LineChart extends HTMLElement {
   constructor() {
     super();
     this.xCoor = [];
+    this.chartController = chartController;
     this.initBaseData();
   }
 
@@ -51,6 +54,7 @@ class LineChart extends HTMLElement {
 
   initBaseData = () => {
     this.config = JSON.parse(this.getAttr('config'));
+    console.log(this.config);
     this.svgW = parseInt(this.getAttr('width')) - SVG_PADDING || 300;
     this.svgH = parseInt(this.getAttr('height')) - SVG_PADDING || 300;
 
@@ -75,7 +79,7 @@ class LineChart extends HTMLElement {
 
   makeAnimation = ($element) => {
     if ($element.tagName === 'path') {
-      $element.animate([{ strokeDashoffset: 2000 }, { strokeDashoffset: 0 }], {
+      $element.animate([{ strokeDashoffset: 5000 }, { strokeDashoffset: 0 }], {
         duration: 2000,
         fill: 'forwards',
       });
@@ -118,6 +122,7 @@ class LineChart extends HTMLElement {
   };
 
   makeYAxis = () => {
+    const curMonth = this.chartController.getCurrentDate().getMonth() + 1;
     const interval = this.svgW / 11;
     const yAxis = [...Array(12).keys()]
       .map((nth) => {
@@ -128,13 +133,14 @@ class LineChart extends HTMLElement {
           x2=${this.convertX(interval * nth)}
           y1=${this.convertY(0)}
           y2=${this.convertY(this.svgH)}
-          stroke='#F5F5F5'
+          stroke=${nth + 1 === curMonth ? '#219A95' : '#F5F5F5'}
         />
         <text
           x=${this.convertX(interval * nth)}
           y=${this.convertY(0)}
           dy='5%'
           text-anchor='middle'
+          fill=${nth + 1 === curMonth ? '#219A95' : '#000000'}
         >
           ${MONTHS[nth]}
         </text>
@@ -168,13 +174,14 @@ class LineChart extends HTMLElement {
   };
 
   makeLine = () => {
+    const { datasets } = this.config;
     const pathAttr = this.composePathAttr();
     const $line = document
       .createElementNS(SVG_URL, 'path')
       .setAttr('d', pathAttr)
-      .setAttr('stroke', 'purple')
+      .setAttr('stroke', `${datasets.backgroundColor}`)
       .setAttr('stroke-width', 2)
-      .setAttr('stroke-dasharray', 2000)
+      .setAttr('stroke-dasharray', 5000)
       .setAttr('fill', 'transparent');
 
     this.makeAnimation($line);
@@ -193,8 +200,8 @@ class LineChart extends HTMLElement {
               <circle
                 cx=${this.xCoor[idx]}
                 cy=${this.convertY((data - this.start) * this.unitCalibration)}
-                r='3'
-                stroke='blue'
+                r='4'
+                fill=${datasets.backgroundColor}
               />
             `
           )

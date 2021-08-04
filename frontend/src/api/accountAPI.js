@@ -20,6 +20,18 @@ class AccountAPI extends CommonAPI {
 
     return result;
   };
+
+  getYearAccountByCategory = async (categoryId) => {
+    const path = `/api/account/category-year-expenditure/${categoryId}`;
+    const options = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
 }
 
 export default new AccountAPI();

@@ -9,6 +9,7 @@ class MainChart extends HTMLElement {
     super();
     this.chartController = chartController;
     this.observer = observer;
+    this.curSelected = null;
     [this.total, this.data] = this.chartController.getPieChartData();
   }
 
@@ -19,11 +20,31 @@ class MainChart extends HTMLElement {
       this.handleFetchedData
     );
     this.render();
+    this.addEvents();
   }
 
   handleFetchedData = () => {
     [this.total, this.data] = this.chartController.getPieChartData();
     this.render();
+  };
+
+  addEvents = () => {
+    this.addEventListener('click', async ({ target }) => {
+      const $item = target.closest('.main-chart--info-item');
+      if ($item) {
+        if ($item === this.curSelected) {
+          $item.toggleClass('active');
+          this.curSelected = null;
+        } else {
+          this.curSelected && this.curSelected.removeClass('active');
+          $item.addClass('active');
+          this.curSelected = $item;
+        }
+        await this.chartController.handleCategoryClick(
+          this.curSelected ? $item.id : 0
+        );
+      }
+    });
   };
 
   render = () => {
@@ -42,7 +63,7 @@ class MainChart extends HTMLElement {
           ${this.data
             .map(
               ({ categoryId, percent, price }) => /*html*/ `
-                <div class='main-chart--info-item'>
+                <div class='main-chart--info-item' id=${categoryId}>
                   <category-badge categoryId=${categoryId}></category-badge>
                   <div class='price-info'>
                     <span class='price-percent'>${percent} %</span>
