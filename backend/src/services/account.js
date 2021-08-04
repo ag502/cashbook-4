@@ -102,6 +102,39 @@ class AccountService {
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
   }
+
+  async createAccount({ userId, accountInfo }) {
+    const { date, price, content, paymentId, categoryId } = accountInfo;
+
+    let flag = false;
+    try {
+      const result = (
+        await this.accountModel.create(
+          {
+            date,
+            price,
+            content,
+            paymentId,
+            categoryId,
+            user_id: userId,
+          },
+          { treatUndefinedAsNull: false }
+        )
+      ).get({ plain: true });
+
+      if (result.user_id === userId) {
+        flag = true;
+      }
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!flag) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    return { success: true };
+  }
 }
 
 export default new AccountService();
