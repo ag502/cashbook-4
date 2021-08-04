@@ -6,20 +6,12 @@ import errorTypes from '../errors/errorTypes.js';
 class AuthTokenService {
   constructor() {
     this.accessTokenExpireTime = env.ACCESS_TOKEN_EXPIRE_TIME;
-    this.refreshTokenExpireTime = env.REFRESH_TOKEN_EXPIRE_TIME;
     this.TokenExpiredError = 'TokenExpiredError';
   }
 
   createAccessToken({ id, nickname, provider }) {
     return jwt.sign({ id, nickname, provider }, env.JWT_SECRET, {
       expiresIn: this.accessTokenExpireTime,
-      issuer: `${id}`,
-    });
-  }
-
-  createRefreshToken({ id }) {
-    return jwt.sign({}, env.JWT_SECRET, {
-      expiresIn: this.refreshTokenExpireTime,
       issuer: `${id}`,
     });
   }
@@ -32,7 +24,7 @@ class AuthTokenService {
       if (err.name == this.TokenExpiredError) {
         return { success: false, error: getError(errorTypes.TokenExpired) };
       }
-      return { success: false, error: getError(errorTypes.BadRequest) };
+      return { success: false, error: getError(errorTypes.UnValidToken) };
     }
   }
 }

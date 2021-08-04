@@ -1,10 +1,14 @@
+import observer from '@/common/utils/observer';
+
 import loginController from './controller';
 import { github } from '../icons';
+import notifyTypes from '@/common/utils/notifyTypes';
 
 class LoginContent extends HTMLElement {
   constructor() {
     super();
     this.controller = loginController;
+    this.observer = observer;
   }
 
   connectedCallback() {
@@ -76,6 +80,11 @@ class LoginContent extends HTMLElement {
     $passwordInput.addEventListener('keyup', ({ currentTarget }) => {
       this.validator(currentTarget);
     });
+
+    const $githubOauthBtn = this.querySelector('#github-oauth-btn');
+    $githubOauthBtn.addEventListener('click', () => {
+      this.observer.notify(notifyTypes.CLICK_GITHUB_OAUTH);
+    });
   };
 
   render = () => {
@@ -89,21 +98,21 @@ class LoginContent extends HTMLElement {
           <label for="nickname">Nickname</label>
           <input type="text" id="nickname" autocomplete="off"
           placeholder="nickname"/>
-          <span class="error-text ">닉네임을 입력해 주세요!</span>
+          <span class="error-text">닉네임을 입력해 주세요!</span>
         </div>
         <div class="input-wrapper password-input">
           <label for="password">Password</label>
           <input type="password" id="password" name="password" 
             autocomplete="off" placeholder="뒤에 누가 있는지 확인하세요 :)"/>
-            <span class="error-text ">비밀번호를 입력해 주세요!</span>
+            <span class="error-text">비밀번호를 입력해 주세요!</span>
         </div>
         <div class="input-wrapper submit-input">
           <button type="submit">로그인</button>
-          <span class="error-text ">로그인에 실패하였습니다!</span>
+          <span class="error-text">로그인에 실패하였습니다!</span>
         </div>
       </form>
       <div class="social-logins">
-        <button>
+        <button id='github-oauth-btn'>
           ${github} Github으로 로그인하기!
         </button>
       </div>

@@ -12,6 +12,11 @@ class AuthController {
       REGISTER: 'register',
       LOGIN: 'LOGIN',
     };
+    this.observer.subscribe(
+      notifyTypes.FETCHED_GITHUB_AUTH_URL,
+      this,
+      this.redirectURL
+    );
   }
 
   showRegisterView = () => {
@@ -46,11 +51,26 @@ class AuthController {
 
   handleRegister = async ({ nickname, password }) => {
     const result = await this.userModel.register({ nickname, password });
-    return result.success;
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.AlreadyExist) {
+        return { success: false, message: '이미 같은 유저가 존재합니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예끼치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return result;
   };
 
   getContentTypes = () => {
     return this.contentTypes;
+  };
+
+  redirectURL = (url) => {
+    location.href = url;
   };
 }
 
