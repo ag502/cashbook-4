@@ -12,7 +12,7 @@ export default (app) => {
   routes.get('/', async (req, res) => {
     const { id } = req.decoded;
 
-    const result = await paymentService.getPayment({ userId: id });
+    const result = await paymentService.getPayments({ userId: id });
 
     if (!result.success) {
       return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);

@@ -144,10 +144,9 @@ const paymentTest = ({ BASEURL, userInfo }) =>
       });
       describe('Delete 테스트', () => {
         it('로그인 없이 delete payment 테스트', (done) => {
-          request.get(
-            BASEURL + '/api/payment',
+          request.delete(
+            BASEURL + '/api/payment/' + payment1.id,
             {
-              body: { id: payment1.id },
               json: true,
             },
             (err, res, body) => {
@@ -167,13 +166,12 @@ const paymentTest = ({ BASEURL, userInfo }) =>
           );
         });
         it('basic delete payment 테스트', (done) => {
-          request.get(
-            BASEURL + '/api/payment',
+          request.delete(
+            BASEURL + '/api/payment/' + payment1.id,
             {
               headers: {
                 Authorization: `Bearer ${userInfo.token}`,
               },
-              body: { id: payment1.id },
               json: true,
             },
             (err, res, body) => {
@@ -190,13 +188,12 @@ const paymentTest = ({ BASEURL, userInfo }) =>
           );
         });
         it('존재하지않는 payment에 delete payment 테스트', (done) => {
-          request.get(
-            BASEURL + '/api/payment',
+          request.delete(
+            BASEURL + '/api/payment/' + (payment1.id + 300),
             {
               headers: {
                 Authorization: `Bearer ${userInfo.token}`,
               },
-              body: { id: payment1.id },
               json: true,
             },
             (err, res, body) => {

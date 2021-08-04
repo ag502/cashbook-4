@@ -45,7 +45,7 @@ class PaymentService {
     }
     return { success: true };
   }
-  async getPayment({ userId }) {
+  async getPayments({ userId }) {
     let payments;
     try {
       payments = await this.paymentModel.findAll({
@@ -59,6 +59,47 @@ class PaymentService {
 
     return { success: true, data: payments !== null ? payments : [] };
   }
+  async updatePayment({ userId, paymentId, newName }) {
+    let targetPayment;
+    try {
+      targetPayment = await this.paymentModel.findOne({
+        where: {
+          id: paymentId,
+          user_id: userId,
+        },
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!targetPayment) {
+      return { success: false, error: getError(errorTypes.NotExist) };
+    }
+
+    let deletedCount;
+    let flag = false;
+    try {
+      const result = await this.paymentModel.update(
+        { name: newName },
+        {
+          where: { id: paymentId },
+          raw: true,
+          returning: true,
+          plain: true,
+        }
+      );
+      console.log(result);
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!flag) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+    return { success: true };
+  }
+
   async deletePayment({ userId, paymentId }) {
     let targetPayment;
     try {
