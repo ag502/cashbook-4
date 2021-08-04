@@ -7,11 +7,14 @@ import historyContainerController from './controller';
 import './style.css';
 import notifyTypes from '@/common/utils/notifyTypes';
 
-class AddPayment extends HTMLElement {
-  constructor() {
+class EditPayment extends HTMLElement {
+  constructor({ paymentId }) {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
+
+    const payments = this.controller.getPayments();
+    this.payment = payments.find((p) => p.id === paymentId);
   }
 
   connectedCallback() {
@@ -20,25 +23,37 @@ class AddPayment extends HTMLElement {
 
   addEvents = () => {
     const $form = this.querySelector('#add-payment-form');
-    const $cancelBtn = this.querySelector('#cancel-btn');
+    const $deleteBtn = this.querySelector('#delete-btn');
 
     $form.addEventListener('submit', this.handleSubmit);
-    $cancelBtn.addEventListener('click', () => {
-      this.observer.notify(notifyTypes.CLOSE_MODAL);
-    });
+    $deleteBtn.addEventListener('click', this.handleDelete);
   };
 
   handleSubmit = async (event) => {
     event.preventDefault();
     const $payment = event.currentTarget.querySelector('#payment-input');
     const name = $payment.value;
-    const result = await this.controller.addPayment(name);
+    const result = await this.controller.updatePayment(name);
     if (!result.success) {
       this.displayResultMessage(result.message, result.success);
       return;
     }
-    this.displayResultMessage('결제정보를 추가했습니다!', result.success);
+    this.displayResultMessage('결제정보를 수정했습니다!', result.success);
   };
+
+  handleDelete = async () => {
+    const result = await this.controller.deletePayment(this.payment.id);
+    if (!result.success) {
+      this.displayResultMessage(result.message, result.success);
+      return;
+    }
+
+    this.displayResultMessage('결제정보가 삭제되었습니다!', result.success);
+    setTimeout(() => {
+      this.observer.notify(notifyTypes.CLOSE_MODAL);
+    }, 1200);
+  };
+
   displayResultMessage = (message, success) => {
     const $addForm = this.querySelector('#add-payment-form');
     const $errorText = $addForm.parentNode.querySelector('.error-text');
@@ -48,33 +63,34 @@ class AddPayment extends HTMLElement {
     }
     $errorText.style.display = 'block';
   };
+
   render = () => {
     this.setHTML(
       /*html*/ ` 
       <form id='add-payment-form'>
         <div class="top">
             <label>
-                추가하실 결제수단을 적어주세요.
+                새 결제수단을 입력하세요.
             </label>
-            <input type='text' id='payment-input' placeholder="입력하세요"/>
+            <input type='text' id='payment-input' placeholder='${this.payment.name}'/>
         </div>
         <span class="error-text"></span>
         <div class='bottom'>
             <div class='left'>
-                <button id='cancel-btn' type='button'>취소</button>
+                <button id='delete-btn' type='button'>삭제</button>
             </div>
             <div>
-                <button id='submit-btn' type='submit'>등록</button>
+                <button id='submit-btn' type='submit'>수정</button>
             </div>
         </div>
     </form>
     `
-    ).addClass('add-payment');
+    ).addClass('edit-payment');
 
     this.addEvents();
   };
 }
 
-customElements.define('add-payment', AddPayment);
+customElements.define('edit-payment', EditPayment);
 
-export default customElements.get('add-payment');
+export default customElements.get('edit-payment');

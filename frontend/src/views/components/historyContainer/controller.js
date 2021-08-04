@@ -95,6 +95,22 @@ class HistoryContainerController extends BaseController {
     }
     return result;
   };
+
+  deletePayment = async (paymentId) => {
+    const result = await this.userModel.deletePayment(paymentId);
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.NotExist) {
+        return { success: false, message: '삭제에 실패했습니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예끼치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return result;
+  };
 }
 
 export default new HistoryContainerController();

@@ -33,6 +33,20 @@ class PaymentAPI extends CommonAPI {
     const result = await this.request({ path, options });
     return result;
   };
+
+  deletePayment = async (paymentId) => {
+    const accessToken = this.getAccessToken();
+    const path = '/api/payment/' + paymentId;
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + accessToken,
+      },
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
 }
 
 export default new PaymentAPI();

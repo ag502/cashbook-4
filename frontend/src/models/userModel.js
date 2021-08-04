@@ -101,6 +101,13 @@ class UserModel {
     this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
     return result;
   };
+
+  deletePayment = async (paymentId) => {
+    const result = await paymentAPI.deletePayment(paymentId);
+    await this.setPayments();
+    this.observer.notify(notifyTypes.INIT_USER, this.isLogin);
+    return result;
+  };
 }
 
 export default new UserModel();

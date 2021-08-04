@@ -3,6 +3,7 @@ import HistoryContent from './historyContent'; // this can use history-content t
 import historyStatistics from './historyStatistics';
 import Modal from '../modal';
 import AddPayment from './addPayment';
+import EditPayment from './editPayment';
 
 import observer from '@/common/utils/observer';
 import historyContainerController from './controller';
@@ -30,16 +31,26 @@ class HistoryContainer extends HTMLElement {
       this,
       this.showAddPayment
     );
+    this.observer.subscribe(
+      notifyTypes.CLICK_EDIT_PAYMENT,
+      this,
+      this.showEditPayment
+    );
   }
 
+  showEditPayment = (paymentId) => {
+    this.showModalContent(this.modalType.EDIT_PAYMENT, { paymentId });
+  };
   showAddPayment = () => {
     this.showModalContent(this.modalType.ADD_PAYMENT);
   };
 
-  showModalContent = (type) => {
+  showModalContent = (type, data = {}) => {
     let $currentContent;
     if (type === this.modalType.ADD_PAYMENT) {
-      $currentContent = new AddPayment();
+      $currentContent = new AddPayment(data);
+    } else if (type === this.modalType.EDIT_PAYMENT) {
+      $currentContent = new EditPayment(data);
     }
     const $addPaymentModal = new Modal({
       $contentElement: $currentContent,

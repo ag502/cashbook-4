@@ -105,7 +105,9 @@ class HistoryPanel extends HTMLElement {
     this.observer.notify(notifyTypes.CLICK_ADD_PAYMENT);
   };
 
-  handleModifyPayment;
+  handleModifyPayment = (id) => {
+    this.observer.notify(notifyTypes.CLICK_EDIT_PAYMENT, Number(id));
+  };
 
   addEvents = () => {
     const $selectCategoryBtn = this.querySelector('#select-category-btn');
@@ -130,7 +132,7 @@ class HistoryPanel extends HTMLElement {
         this.handleAddPayment();
         return;
       } else if (target.id === 'edit') {
-        this.handleModifyPayment();
+        this.handleModifyPayment(target.dataset.id);
         return;
       }
       this.selectPayment(target.dataset.id);

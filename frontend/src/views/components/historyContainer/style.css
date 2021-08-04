@@ -228,7 +228,8 @@ history-statistics .right > div {
   cursor: pointer;
 }
 
-add-payment {
+add-payment,
+edit-payment {
   display: flex;
   flex-direction: column;
   min-width: 350px;
@@ -239,18 +240,21 @@ add-payment {
   border-radius: 10px;
 }
 
-add-payment .top {
+add-payment .top,
+edit-payment .top {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
-add-payment .top label {
+add-payment .top label,
+edit-payment .top label {
   font: var(--body-medium);
   color: var(--title-active);
 }
 
-add-payment .top input {
+add-payment .top input,
+edit-payment .top input {
   margin-top: 24px;
   background: var(--background);
   border: 1px solid var(--line);
@@ -262,17 +266,20 @@ add-payment .top input {
   outline: none;
 }
 
-add-payment .bottom {
+add-payment .bottom,
+edit-payment .bottom {
   display: flex;
   justify-content: space-between;
   width: 100%;
   margin-top: 40px;
 }
 
-add-payment .bottom button {
+add-payment .bottom button,
+edit-payment .bottom button {
   font: var(--body-medium);
 }
 
-add-payment .bottom #submit-btn {
+add-payment .bottom #submit-btn,
+edit-payment .bottom #submit-btn {
   color: var(--primary3);
 }
