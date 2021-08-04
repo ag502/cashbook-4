@@ -7,6 +7,7 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import {
   getMonthAccountsVal,
   getYearAccountsVal,
+  createAccountVal,
 } from '../middlewares/accountValidator.js';
 import getError from '../../utils/error.js';
 import { errorTypes } from '../../errors/index.js';
@@ -60,9 +61,26 @@ export default (app) => {
       return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
     }
   );
+  routes.post('/', createAccountVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
 
-  routes.post('/', async (req, res) => {
-    //TODO: account 등록
+    const { id } = req.decoded;
+    const { date, price, content, paymentId, categoryId } = req.body;
+    const accountInfo = { date, price, content, paymentId, categoryId };
+    const result = await accountService.createAccount({
+      userId: id,
+      accountInfo,
+    });
+
+    if (!result.success) {
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
+    }
+    return res.status(STATUS_CODES.OK).json(result);
   });
 
   routes.put('/:accountId', async (req, res) => {
