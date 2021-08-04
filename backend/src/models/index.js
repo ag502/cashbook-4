@@ -34,7 +34,12 @@ payment.belongsTo(user, { foreignKey: 'user_id', targetKey: 'id' });
 category.hasMany(account, { foreignKey: 'category_id', sourceKey: 'id' });
 account.belongsTo(category, { foreignKey: 'category_id', targetKey: 'id' });
 
-payment.hasMany(account, { foreignKey: 'payment_id', sourceKey: 'id' });
+payment.hasMany(account, {
+  foreignKey: 'payment_id',
+  sourceKey: 'id',
+  onDelete: 'SET NULL',
+});
+
 account.belongsTo(payment, { foreignKey: 'payment_id', targetKey: 'id' });
 
 export default sequelize;

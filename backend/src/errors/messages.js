@@ -7,6 +7,8 @@ const errorMessages = {
   [errorTypes.TokenExpired]: '토큰이 만료됨.',
   [errorTypes.UnValidToken]: '유효하지 않은 토큰.',
   [errorTypes.BadRequest]: '잘못된 요청.',
+  [errorTypes.UnAuhorized]: '인증되지 않음',
+  [errorTypes.NotExist]: '정보가 존재하지 않음',
   [errorTypes.ValidationError]: '파라미터가 유효하지 않습니다.',
 };
 

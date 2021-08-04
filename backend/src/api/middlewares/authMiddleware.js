@@ -7,7 +7,9 @@ const authMiddleware = async (req, res, next) => {
   const accessToken = req.headers?.authorization?.split(' ')[1]; // remove bearer tag
 
   if (!accessToken) {
-    return res.status(STATUS_CODES.UNAUTHORIZED);
+    return res
+      .status(STATUS_CODES.UNAUTHORIZED)
+      .json({ error: getError(errorTypes.UnAuhorized) });
   }
 
   const validResult = authTokenService.verifyToken(accessToken);
