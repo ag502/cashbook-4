@@ -8,7 +8,10 @@ const githubUser = {
   nickname: 'SecretJuJu',
   provider: 'github',
 };
+
 let userInfo;
+let paymentInfo;
+
 describe('cashbook 백엔드 테스트 시작', async () => {
   before(async () => {
     console.log('------- 테이블 초기화 --------');
@@ -19,5 +22,5 @@ describe('cashbook 백엔드 테스트 시작', async () => {
     await paymentModel.destroy({ where: {}, truncate: { cascade: true } });
   });
   userInfo = await authTest({ githubUser, BASEURL });
-  await paymentTest({ userInfo, BASEURL });
+  paymentInfo = await paymentTest({ userInfo, BASEURL });
 });

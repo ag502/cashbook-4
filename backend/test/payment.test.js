@@ -6,11 +6,15 @@ const payment1 = {
   name: '현대카드',
 };
 
+const payment2 = {
+  name: '삼성카드',
+};
+
 const paymentTest = ({ BASEURL, userInfo }) =>
   new Promise((paymentTestResolve, paymentTestReject) => {
     describe('payment test', () => {
       describe('Create 테스트', () => {
-        it('basic create payment 테스트', (done) => {
+        it('basic create payment 테스트1', (done) => {
           request.post(
             BASEURL + '/api/payment',
             {
@@ -18,6 +22,28 @@ const paymentTest = ({ BASEURL, userInfo }) =>
                 Authorization: `Bearer ${userInfo.token}`,
               },
               body: payment1,
+              json: true,
+            },
+            (err, res, body) => {
+              if (err) {
+                console.log(err);
+              }
+              if (!body.success) {
+                console.log(body);
+              }
+              assert(body.success);
+              done();
+            }
+          );
+        });
+        it('basic create payment 테스트2', (done) => {
+          request.post(
+            BASEURL + '/api/payment',
+            {
+              headers: {
+                Authorization: `Bearer ${userInfo.token}`,
+              },
+              body: payment2,
               json: true,
             },
             (err, res, body) => {
@@ -75,9 +101,15 @@ const paymentTest = ({ BASEURL, userInfo }) =>
                 console.log(body);
               }
 
-              const myPayment = body?.data?.find((e) => e.name === '현대카드');
-              payment1.id = myPayment.id;
-              if (myPayment) {
+              const firstPayment = body?.data?.find(
+                (e) => e.name === '현대카드'
+              );
+              const secondPayment = body?.data?.find(
+                (e) => e.name === '삼성카드'
+              );
+              payment1.id = firstPayment.id;
+              payment2.id = secondPayment.id;
+              if (body.data.length === 2) {
                 assert(body.success);
               } else {
                 assert(false);
@@ -185,7 +217,7 @@ const paymentTest = ({ BASEURL, userInfo }) =>
         });
       });
       after(() => {
-        paymentTestResolve();
+        paymentTestResolve(payment2);
       });
     });
   });
