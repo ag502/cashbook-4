@@ -25,15 +25,14 @@ class HistoryPanel extends HTMLElement {
 
     this.payments = this.controller.getPayments();
     this.selectedPaymentId = null;
+    this.dateString = parsingDate(new Date());
     this.inputInfo = {
-      time: '',
+      time: this.dateString,
       categoryId: '',
       context: '',
       paymentId: '',
       price: '',
     };
-
-    this.dateString = parsingDate(new Date());
   }
 
   connectedCallback() {
@@ -114,6 +113,12 @@ class HistoryPanel extends HTMLElement {
     this.observer.notify(notifyTypes.CLICK_EDIT_PAYMENT, Number(id));
   };
 
+  checkCanSubmit = () => {
+    return !Object.keys(this.inputInfo).some(
+      (field) => this.inputInfo[field] === ''
+    );
+  };
+
   addEvents = () => {
     const $selectCategoryBtn = this.querySelector('#select-category-btn');
     $selectCategoryBtn.addEventListener('click', (event) => {
@@ -147,8 +152,15 @@ class HistoryPanel extends HTMLElement {
     this.addEventListener('input', ({ target }) => {
       if (target.tagName === 'INPUT') {
         this.inputInfo = { ...this.inputInfo, [target.name]: target.value };
-        console.log(this.inputInfo);
       }
+    });
+
+    const $checkbox = this.querySelector('.check-box');
+    $checkbox.addEventListener('click', async () => {
+      if (!this.checkCanSubmit()) {
+        console.log('no');
+      }
+      await this.controller.addAccount(this.inputInfo);
     });
   };
 
