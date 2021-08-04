@@ -1,8 +1,14 @@
 import { Router } from 'express';
+import { validationResult } from 'express-validator';
 
 import accountService from '../../services/account.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
+import {
+  getMonthAccountsVal,
+  getYearAccountsVal,
+} from '../middlewares/accountValidator.js';
+import getError from '../../utils/error.js';
 import { errorTypes } from '../../errors/index.js';
 import STATUS_CODES from '../../utils/http-status.js';
 
@@ -154,7 +160,14 @@ export default (app) => {
   routes.use('/', authMiddleware);
   app.use('/account', routes);
 
-  routes.get('/:date', async (req, res) => {
+  routes.get('/:date', getMonthAccountsVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
+
     const { id } = req.decoded;
     const { date } = req.params;
     const result = await accountService.getAccountsByMonth(date, id);
@@ -167,7 +180,15 @@ export default (app) => {
 
   routes.get(
     '/category-year-expenditure/:date/:categoryId',
+    getYearAccountsVal(),
     async (req, res) => {
+      const error = validationResult(req);
+      if (!error.isEmpty()) {
+        return res
+          .status(STATUS_CODES.BAD_REQUEST)
+          .json({ error: getError(errorTypes.ValidationError) });
+      }
+
       const { id } = req.decoded;
       const { categoryId, date } = req.params;
       const result = await accountService.getYearAccountsByCategory(
