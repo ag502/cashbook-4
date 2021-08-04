@@ -20,9 +20,9 @@ class CashBookModel {
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
-  _fecthAccountsByMonth = async (month = this.currentDate.getMonth() + 1) => {
-    const result = await accountAPI.getAccountByMonth();
-    return result;
+  _fecthAccountsByMonth = async (date = this.currentDate) => {
+    const result = await accountAPI.getAccountByMonth(date);
+    return result.success ? result.accounts : [];
   };
 
   _fetchYearAccountByCategory = async (categoryId) => {
