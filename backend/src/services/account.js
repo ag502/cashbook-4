@@ -81,7 +81,12 @@ class AccountService {
             { user_id: userId },
             { category_id: categoryId },
             { price: { [Sequelize.Op.lt]: 0 } },
-            { [Sequelize.fn('MONTH', Sequelize.col('date'))]: curYear },
+            {
+              date: sequelize.where(
+                sequelize.fn('YEAR', sequelize.col('date')),
+                curYear
+              ),
+            },
           ],
         },
         group: [Sequelize.fn('Month', Sequelize.col('date'))],
@@ -93,6 +98,7 @@ class AccountService {
         result: this._addEmptyMonth(yearAccountsByCategory),
       };
     } catch (err) {
+      console.log(err);
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
   }

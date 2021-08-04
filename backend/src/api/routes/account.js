@@ -165,20 +165,23 @@ export default (app) => {
     return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
   });
 
-  routes.get('/category-year-expenditure/:date/:category', async (req, res) => {
-    const { id } = req.decoded;
-    const { categoryId, date } = req.params;
-    const result = await accountService.getYearAccountsByCategory(
-      date,
-      categoryId,
-      id
-    );
+  routes.get(
+    '/category-year-expenditure/:date/:categoryId',
+    async (req, res) => {
+      const { id } = req.decoded;
+      const { categoryId, date } = req.params;
+      const result = await accountService.getYearAccountsByCategory(
+        date,
+        categoryId,
+        id
+      );
 
-    if (result.success) {
-      return res.status(STATUS_CODES.OK).json(result);
+      if (result.success) {
+        return res.status(STATUS_CODES.OK).json(result);
+      }
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
     }
-    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
-  });
+  );
 
   routes.post('/', async (req, res) => {
     //TODO: account 등록
