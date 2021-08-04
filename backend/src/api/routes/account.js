@@ -162,12 +162,22 @@ export default (app) => {
     if (result.success) {
       return res.status(STATUS_CODES.OK).json(result);
     }
-    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json();
+    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
   });
 
-  routes.get('/category-year-expenditure/:id', async (req, res) => {
-    const { id } = req.params;
-    res.json(yearExpenditureByCateogry[id]);
+  routes.get('/category-year-expenditure/:date/:category', async (req, res) => {
+    const { id } = req.decoded;
+    const { categoryId, date } = req.params;
+    const result = await accountService.getYearAccountsByCategory(
+      date,
+      categoryId,
+      id
+    );
+
+    if (result.success) {
+      return res.status(STATUS_CODES.OK).json(result);
+    }
+    return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
   });
 
   routes.post('/', async (req, res) => {
