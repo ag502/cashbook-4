@@ -54,7 +54,6 @@ class LineChart extends HTMLElement {
 
   initBaseData = () => {
     this.config = JSON.parse(this.getAttr('config'));
-    console.log(this.config);
     this.svgW = parseInt(this.getAttr('width')) - SVG_PADDING || 300;
     this.svgH = parseInt(this.getAttr('height')) - SVG_PADDING || 300;
 
