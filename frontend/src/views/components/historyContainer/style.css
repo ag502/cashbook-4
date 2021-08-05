@@ -211,7 +211,7 @@ input[type='date']::-webkit-datetime-edit-text {
   padding-left: 10px;
 }
 
-#toggle-payType-btn {
+#toggle-dealType-btn {
   border: 2px solid var(--primary3);
   border-radius: 6px;
   display: flex;
@@ -224,31 +224,31 @@ input[type='date']::-webkit-datetime-edit-text {
   overflow: hidden;
 }
 
-#toggle-payType-btn .income {
+#toggle-dealType-btn .income {
   display: inline-block;
   position: absolute;
   animation-duration: 0.4s;
-  animation-name: payType-slide;
+  animation-name: dealType-slide;
   width: 100%;
 }
 
-#toggle-payType-btn.default .income {
+#toggle-dealType-btn.default .income {
   display: none;
 }
 
-#toggle-payType-btn .expenditure {
+#toggle-dealType-btn .expenditure {
   display: none;
 }
 
-#toggle-payType-btn.default .expenditure {
+#toggle-dealType-btn.default .expenditure {
   display: inline-block;
   position: absolute;
   animation-duration: 0.4s;
-  animation-name: payType-slide;
+  animation-name: dealType-slide;
   width: 100%;
 }
 
-@keyframes payType-slide {
+@keyframes dealType-slide {
   from {
     left: 100%;
     transform: translateX(0);
