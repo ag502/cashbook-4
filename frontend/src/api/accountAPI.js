@@ -37,6 +37,7 @@ class AccountAPI extends CommonAPI {
   };
 
   deleteAccount = async (accountId) => {
+    console.log('호출됨');
     const accessToken = this.getAccessToken();
     const path = `/api/account/${accountId}`;
 

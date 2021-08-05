@@ -46,6 +46,11 @@ class HistoryPanel extends HTMLElement {
     );
     this.observer.subscribe(notifyTypes.INIT_USER, this, this.handleInitUser);
     this.observer.subscribe(notifyTypes.FETCHED_DATA, this, this.render);
+    this.observer.subscribe(
+      notifyTypes.DELETE_ACCOUNT,
+      this,
+      this.handleDeleteAccount
+    );
 
     this.render();
   }
@@ -54,6 +59,7 @@ class HistoryPanel extends HTMLElement {
     this.observer.unsubscribe(notifyTypes.CLICK_ACCOUNT, this);
     this.observer.unsubscribe(notifyTypes.INIT_USER, this);
     this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
+    this.observer.unsubscribe(notifyTypes.DELETE_ACCOUNT, this);
   }
 
   handleAccountClick = (accountInfo) => {
@@ -137,10 +143,24 @@ class HistoryPanel extends HTMLElement {
     this.observer.notify(notifyTypes.CLICK_EDIT_PAYMENT, Number(id));
   };
 
+  handleDeleteAccount = async (id) => {
+    const result = await this.controller.deleteAccount(id);
+    this.showResultViewer(result);
+    if (result.success) {
+      this.inputInfo = { ...initalInputInfo };
+      this.mode = 'ADD';
+      this.submitIcon = check;
+    }
+  };
+
   checkCanSubmit = () => {
     return !Object.keys(this.inputInfo).some(
       (field) => this.inputInfo[field] === ''
     );
+  };
+
+  showResultViewer = (result) => {
+    this.observer.notify(notifyTypes.SHOW_RESULT, result);
   };
 
   addEvents = () => {
@@ -220,10 +240,6 @@ class HistoryPanel extends HTMLElement {
         return;
       }
     });
-  };
-
-  showResultViewer = (result) => {
-    this.observer.notify(notifyTypes.SHOW_RESULT, result);
   };
 
   render = () => {
