@@ -29,7 +29,11 @@ class Account extends HTMLElement {
         </div>
         <div class="right">
             <div class="payment">
-                ${this.accountInfo.paymentMethod}
+                ${
+                  this.accountInfo.paymentMethod
+                    ? this.accountInfo.paymentMethod
+                    : '미분류'
+                }
             </div>
             <div class="price">
                 ${this.accountInfo.price} 원

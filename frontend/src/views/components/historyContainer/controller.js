@@ -90,7 +90,7 @@ class HistoryContainerController extends BaseController {
       } else {
         return {
           success: false,
-          message: '예끼치 못한 에러가 발생하였습니다!',
+          message: '예기치 못한 에러가 발생하였습니다!',
         };
       }
     }
@@ -106,7 +106,7 @@ class HistoryContainerController extends BaseController {
       } else {
         return {
           success: false,
-          message: '예끼치 못한 에러가 발생하였습니다!',
+          message: '예기치 못한 에러가 발생하였습니다!',
         };
       }
     }
@@ -121,7 +121,7 @@ class HistoryContainerController extends BaseController {
       } else {
         return {
           success: false,
-          message: '예끼치 못한 에러가 발생하였습니다!',
+          message: '예기치 못한 에러가 발생하였습니다!',
         };
       }
     }
@@ -129,7 +129,20 @@ class HistoryContainerController extends BaseController {
   };
 
   addAccount = async (data) => {
-    await this.cashBookModel.addNewAccountData(data);
+    console.log(data);
+    const result = await this.cashBookModel.addNewAccountData(data);
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.ValidationError) {
+        return { success: false, message: '입력한 정보가 올바르지 않습니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예기치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return result;
   };
 
   updateAccount = async (data) => {

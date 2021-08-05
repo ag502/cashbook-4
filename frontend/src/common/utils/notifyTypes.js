@@ -14,6 +14,7 @@ const notifyTypes = {
   CLICK_ADD_PAYMENT: 'click-add-payment',
   CLICK_EDIT_PAYMENT: 'click-edit-payment',
   CLOSE_MODAL: 'close-modal',
+  SHOW_RESULT: 'show-result',
 };
 
 export default notifyTypes;

@@ -5,5 +5,6 @@ const errorTypes = {
   TokenExpired: 'tokenExpired',
   UnValidToken: 'unvalidToken',
   NotExist: 'notExist',
+  ValidationError: 'validationError',
 };
 export default errorTypes;

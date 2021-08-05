@@ -4,6 +4,7 @@ import historyStatistics from './historyStatistics';
 import Modal from '../modal';
 import AddPayment from './addPayment';
 import EditPayment from './editPayment';
+import ResultView from './resultView';
 
 import observer from '@/common/utils/observer';
 import historyContainerController from './controller';
@@ -21,6 +22,7 @@ class HistoryContainer extends HTMLElement {
     this.modalType = {
       ADD_PAYMENT: 'add-payment',
       EDIT_PAYMENT: 'edit-payment',
+      RESULT_VIEW: 'result-view',
     };
   }
 
@@ -36,6 +38,7 @@ class HistoryContainer extends HTMLElement {
       this,
       this.showEditPayment
     );
+    this.observer.subscribe(notifyTypes.SHOW_RESULT, this, this.showResult);
   }
 
   showEditPayment = (paymentId) => {
@@ -45,12 +48,18 @@ class HistoryContainer extends HTMLElement {
     this.showModalContent(this.modalType.ADD_PAYMENT);
   };
 
+  showResult = (message) => {
+    this.showModalContent(this.modalType.RESULT_VIEW, { message });
+  };
+
   showModalContent = (type, data = {}) => {
     let $currentContent;
     if (type === this.modalType.ADD_PAYMENT) {
       $currentContent = new AddPayment(data);
     } else if (type === this.modalType.EDIT_PAYMENT) {
       $currentContent = new EditPayment(data);
+    } else if (type === this.modalType.RESULT_VIEW) {
+      $currentContent = new ResultView(data);
     }
     const $addPaymentModal = new Modal({
       $contentElement: $currentContent,

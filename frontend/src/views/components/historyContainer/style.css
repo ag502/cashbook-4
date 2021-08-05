@@ -229,7 +229,8 @@ history-statistics .right > div {
 }
 
 add-payment,
-edit-payment {
+edit-payment,
+result-view {
   display: flex;
   flex-direction: column;
   min-width: 350px;

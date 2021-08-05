@@ -34,20 +34,16 @@ class CashBookModel {
     return result.success ? result.result : {};
   };
 
-  _postNewAccountData = async (data) => {
-    await accountAPI.addAccount(data);
-  };
-
   addNewAccountData = async (data) => {
-    await this._postNewAccountData(data);
+    const result = await accountAPI.addAccount(data);
     this.accounts = await this._fecthAccountsByMonth();
-    this.observer.notify(notifyTypes.FETCHED_DATA);
+    return result;
   };
 
   updateAccountData = async (data) => {
-    await accountAPI.editAccount(data);
+    const result = await accountAPI.editAccount(data);
     this.accounts = await this._fecthAccountsByMonth();
-    this.observer.notify(notifyTypes.FETCHED_DATA);
+    return result;
   };
 
   moveMonth = async (monthCount) => {

@@ -104,7 +104,6 @@ class HistoryPanel extends HTMLElement {
     } ${chevronDown}`;
     $selectCategoryBtn.classList.add('selected');
 
-    this.toggleSelect = { ...this.toggleSelect, category: categoryId };
     this.inputInfo = { ...this.inputInfo, categoryId };
   };
 
@@ -112,11 +111,12 @@ class HistoryPanel extends HTMLElement {
     const paymentId = parseInt(id);
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
     const payment = this.payments.find((p) => p.id === paymentId);
-    $selectPaymentBtn.innerHTML = `${payment.name} ${chevronDown}`;
-    $selectPaymentBtn.classList.add('selected');
+    if (payment) {
+      $selectPaymentBtn.innerHTML = `${payment?.name} ${chevronDown}`;
+      $selectPaymentBtn.classList.add('selected');
+    }
 
-    this.toggleSelect = { ...this.toggleSelect, payment: paymentId };
-    this.inputInfo = { ...this.inputInfo, paymentId: this.selectedPaymentId };
+    this.inputInfo = { ...this.inputInfo, paymentId };
   };
 
   handleAddPayment = () => {
@@ -181,11 +181,20 @@ class HistoryPanel extends HTMLElement {
         date: new Date(this.inputInfo.date),
       };
       if (!this.mode) {
-        await this.controller.addAccount(this.inputInfo);
+        console.log(this.inputInfo);
+        const result = await this.controller.addAccount(this.inputInfo);
+        this.showResultViewer(result.message);
+        return;
       } else {
-        await this.controller.updateAccount(this.inputInfo);
+        const result = await this.controller.updateAccount(this.inputInfo);
+        this.showResultViewer(result.message);
+        return;
       }
     });
+  };
+
+  showResultViewer = (message) => {
+    this.observer.notify(notifyTypes.SHOW_RESULT, message);
   };
 
   render = () => {
