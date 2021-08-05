@@ -30,6 +30,7 @@ day-account .info .date {
 account-item {
   display: flex;
   flex-direction: row;
+  overflow: hidden;
   align-items: center;
   height: 70px;
   padding: 0 7px;
@@ -46,6 +47,7 @@ account-item > div {
   display: flex;
   padding: 0 5px;
   justify-content: space-between;
+  align-items: center;
 }
 
 account-item .category {
@@ -59,37 +61,6 @@ account-item .category {
   color: white;
 }
 
-account-item .category.category1 {
-  background-color: var(--category1);
-}
-account-item .category.category2 {
-  background-color: var(--category2);
-}
-account-item .category.category3 {
-  background-color: var(--category3);
-}
-account-item .category.category4 {
-  background-color: var(--category4);
-}
-account-item .category.category5 {
-  background-color: var(--category5);
-}
-account-item .category.category6 {
-  background-color: var(--category6);
-}
-account-item .category.category7 {
-  background-color: var(--category7);
-}
-account-item .category.category8 {
-  background-color: var(--category8);
-}
-account-item .category.category9 {
-  background-color: var(--category9);
-}
-account-item .category.category10 {
-  background-color: var(--category10);
-}
-
 account-item .context {
   width: 100%;
   padding-left: 10px;
@@ -101,14 +72,56 @@ account-item .context {
   height: fit-content;
 }
 
-.account .payment {
-  color: var(--body);
+account-item .erase {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-right: -30px;
+  transition: transform 1s;
+}
+
+account-item .erase svg path {
+  stroke: #ff0000;
+}
+
+account-item .erase.unshow {
+  animation: unshow-erase 0.3s ease-in;
+}
+
+account-item .erase.show {
+  animation: show-erase 0.3s ease-in forwards;
+}
+
+@keyframes unshow-erase {
+  0% {
+    margin-right: 0px;
+  }
+  100% {
+    margin-right: -30px;
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes show-erase {
+  0% {
+    margin-right: -20px;
+  }
+  100% {
+    margin-right: 0px;
+    transform: rotate(-180deg);
+  }
+}
+
+account-item .right {
   font: var(--body-medium);
+}
+
+.right .payment {
+  color: var(--body);
   height: fit-content;
 }
 
-.account .price {
+.right .price {
   color: var(--title-active);
-  font: var(--body-medium);
   height: fit-content;
 }

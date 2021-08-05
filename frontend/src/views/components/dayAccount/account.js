@@ -1,6 +1,7 @@
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
 import { getCategoryString } from '@/common/utils/functions';
+import { deleteBtn } from '../icons';
 
 class Account extends HTMLElement {
   constructor(accountInfo) {
@@ -28,20 +29,47 @@ class Account extends HTMLElement {
     const { id: myId } = this.accountInfo;
     if (myId !== id) {
       this.removeClass('select');
+
+      const $eraseBtn = this.querySelector('.erase');
+      if ($eraseBtn.classList.contains('show')) {
+        $eraseBtn.addClass('unshow');
+        $eraseBtn.removeClass('show');
+      }
     }
   };
 
   addEvents = () => {
+    const $eraseBtn = this.querySelector('.erase');
+
     this.addEventListener('click', () => {
       this.toggleClass('select');
       this.observer.notify(notifyTypes.CLICK_ACCOUNT, this.accountInfo);
+
+      if (this.classList.contains('select')) {
+        $eraseBtn.addClass('show');
+        $eraseBtn.removeClass('unshow');
+      } else {
+        $eraseBtn.addClass('unshow');
+        $eraseBtn.removeClass('show');
+      }
+    });
+
+    $eraseBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      console.log('a');
+      this.observer.notify(notifyTypes.DELETE_ACCOUNT, this.accountInfo.id);
     });
   };
 
   render = () => {
     this.setHTML(/*html*/ `
         <div class="left">
-            <div class="category category${this.accountInfo.category}">
+            <div 
+              class="category" 
+              style='background-color:${
+                getCategoryString(this.accountInfo.category).color
+              };'
+              >
                 ${getCategoryString(this.accountInfo.category).name}
             </div>
 
@@ -60,6 +88,9 @@ class Account extends HTMLElement {
             <div class="price">
                 ${this.accountInfo.price.toLocaleString()} 원
             </div>
+        </div>
+        <div class="erase">
+          ${deleteBtn}
         </div>
       `);
   };
