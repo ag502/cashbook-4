@@ -36,7 +36,7 @@ class Account extends HTMLElement {
                 }
             </div>
             <div class="price">
-                ${this.accountInfo.price} 원
+                ${this.accountInfo.price.toLocaleString()} 원
             </div>
         </div>
       `);

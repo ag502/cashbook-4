@@ -45,12 +45,12 @@ class DayAccount extends HTMLElement {
             <div class="right">
                 ${
                   this.totalIncome > 0
-                    ? `<span>수입 ${this.totalIncome}</span>`
+                    ? `<span>수입 ${this.totalIncome.toLocaleString()}</span>`
                     : ``
                 }
                 ${
                   this.totalExpenditure > 0
-                    ? `<span>지출 ${this.totalExpenditure}</span>`
+                    ? `<span>지출 ${this.totalExpenditure.toLocaleString()}</span>`
                     : ``
                 }
                   
