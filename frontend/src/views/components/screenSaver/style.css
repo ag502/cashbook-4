@@ -1,0 +1,20 @@
+screen-saver {
+  display: none;
+}
+@media screen and (max-width: 950px) {
+  screen-saver {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background);
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+
+  screen-saver span {
+    font: var(--display-large);
+  }
+}
