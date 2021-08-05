@@ -28,3 +28,5 @@ cd ../backend
 
 npm install
 npm run deploy
+
+sudo service nginx restart

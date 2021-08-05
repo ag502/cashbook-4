@@ -2,7 +2,7 @@ import errorTypes from '@/common/utils/error';
 
 class CommonAPI {
   constructor() {
-    this.baseURL = 'http://localhost:3000';
+    this.baseURL = 'https://api.woowahan.club:3000';
     this.abortController = new AbortController();
   }
 
