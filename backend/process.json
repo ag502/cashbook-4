@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "app",
+      "script": "./src/app.js",
+      "merge_logs": true,
+      "max_restarts": 100,
+      "max_memory_restart": "200M"
+    }
+  ]
+}
