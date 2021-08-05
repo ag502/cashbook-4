@@ -35,6 +35,11 @@ class HistoryPanel extends HTMLElement {
     this.inputInfo = { ...initalInputInfo };
 
     this.mode = 'ADD';
+    this.dealTypes = {
+      expenditure: -1,
+      income: 1,
+    };
+    this.dealType = this.dealTypes.expenditure;
     this.submitIcon = check;
   }
 
@@ -79,6 +84,13 @@ class HistoryPanel extends HTMLElement {
         content,
         price,
       };
+
+      if (this.inputInfo.price > 0) {
+        this.dealType = this.dealTypes.income;
+      } else {
+        this.dealType = this.dealTypes.expenditure;
+      }
+      this.inputInfo.price = Math.abs(this.inputInfo.price);
       this.mode = 'MODIFY';
       this.submitIcon = pencil;
     }
@@ -197,6 +209,12 @@ class HistoryPanel extends HTMLElement {
 
     this.addEventListener('input', ({ target }) => {
       if (target.tagName === 'INPUT') {
+        if (target.name === 'price') {
+          const price = target.value;
+          if (price < 0) {
+            target.value = Math.abs(price);
+          }
+        }
         this.inputInfo = { ...this.inputInfo, [target.name]: target.value };
       }
     });
@@ -214,6 +232,13 @@ class HistoryPanel extends HTMLElement {
         ...this.inputInfo,
         date: new Date(this.inputInfo.date),
       };
+
+      if (this.dealType === this.dealTypes.income) {
+        this.inputInfo.price = Math.abs(this.inputInfo.price);
+      } else {
+        this.inputInfo.price = -1 * Math.abs(this.inputInfo.price);
+      }
+
       if (this.mode === 'ADD') {
         const result = await this.controller.addAccount(this.inputInfo);
         this.showResultViewer(result);
@@ -232,12 +257,25 @@ class HistoryPanel extends HTMLElement {
         return;
       }
     });
+
+    const $toggleDealTypeBtn = this.querySelector('#toggle-dealType-btn');
+    $toggleDealTypeBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.currentTarget.toggleClass('default');
+      const currentState = event.currentTarget.getAttr('class');
+      if (currentState) {
+        this.dealType = this.dealTypes.expenditure;
+      } else {
+        this.dealType = this.dealTypes.income;
+      }
+    });
   };
 
   render = () => {
     const { date, content, price } = this.inputInfo;
     this.setHTML(/*html*/ `
         <form>
+          
             <div class="history-input-box">
                 <label>일자</label>
                 <input 
@@ -310,7 +348,20 @@ class HistoryPanel extends HTMLElement {
 
             <div class="history-input-box cash">
                 <label>금액</label>
+                
                 <div class="cost-content">
+                        <button id="toggle-dealType-btn" type="button" class="${
+                          this.dealType === this.dealTypes.expenditure
+                            ? 'default'
+                            : ''
+                        }">
+                          <span class="income">
+                            수입
+                          </span>
+                          <span class="expenditure">
+                            지출
+                          </span>
+                        </button>
                     <input 
                       type="number" 
                       placholder="입력하세요" 
