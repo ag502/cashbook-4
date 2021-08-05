@@ -8,26 +8,36 @@ import './style.css';
 import notifyTypes from '@/common/utils/notifyTypes';
 
 class ResultView extends HTMLElement {
-  constructor() {
+  constructor({ message }) {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
+
+    this.message = message;
   }
 
   connectedCallback() {
     this.render();
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    // request new fetched data
+  }
 
-  addEvents = () => {};
+  addEvents = () => {
+    const $closeBtn = this.querySelector('#close-btn');
+    $closeBtn.addEventListener('click', () => {
+      this.observer.notify(notifyTypes.CLOSE_MODAL);
+    });
+  };
 
   handleSubmit = async (event) => {};
 
   render = () => {
     this.setHTML(
       /*html*/ ` 
-      dsadasdasds
+      <h1>${this.message}</h1>
+      <button id='close'>확인</button>
     `
     ).addClass('result-view');
 

@@ -129,7 +129,6 @@ class HistoryContainerController extends BaseController {
   };
 
   addAccount = async (data) => {
-    console.log(data);
     const result = await this.cashBookModel.addNewAccountData(data);
     if (!result.success) {
       const { error } = result;
@@ -142,7 +141,7 @@ class HistoryContainerController extends BaseController {
         };
       }
     }
-    return result;
+    return { ...result, message: '추가되었습니다!' };
   };
 
   updateAccount = async (data) => {

@@ -288,3 +288,14 @@ edit-payment .bottom #submit-btn {
 edit-payment .bottom #delete-btn {
   color: var(--error);
 }
+
+result-view h1 {
+  font: var(--display-large);
+}
+result-view button {
+  margin-top: 30px;
+  color: var(--primary1);
+  font: var(--display-small);
+  width: 100%;
+  text-align: center;
+}

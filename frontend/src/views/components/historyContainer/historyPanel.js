@@ -181,7 +181,6 @@ class HistoryPanel extends HTMLElement {
         date: new Date(this.inputInfo.date),
       };
       if (!this.mode) {
-        console.log(this.inputInfo);
         const result = await this.controller.addAccount(this.inputInfo);
         this.showResultViewer(result.message);
         return;
