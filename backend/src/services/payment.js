@@ -38,6 +38,7 @@ class PaymentService {
         flag = true;
       }
     } catch (err) {
+      console.log(err);
       return { success: false, error: getError(errorTypes.UnexpectError) };
     }
     if (!flag) {
