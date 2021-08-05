@@ -1,4 +1,5 @@
 import observer from '@/common/utils/observer';
+import accountController from './controller';
 import notifyTypes from '@/common/utils/notifyTypes';
 import { getCategoryString } from '@/common/utils/functions';
 import { deleteBtn } from '../icons';
@@ -6,6 +7,7 @@ import { deleteBtn } from '../icons';
 class Account extends HTMLElement {
   constructor(accountInfo) {
     super();
+    this.accountController = accountController;
     this.accountInfo = accountInfo;
     this.observer = observer;
     this.isClicked = false;
@@ -38,12 +40,16 @@ class Account extends HTMLElement {
     }
   };
 
+  showResultViewer = (result) => {
+    this.observer.notify(notifyTypes.SHOW_RESULT, result);
+  };
+
   addEvents = () => {
+    const $eraseBtn = this.querySelector('.erase');
+
     this.addEventListener('click', () => {
       this.toggleClass('select');
       this.observer.notify(notifyTypes.CLICK_ACCOUNT, this.accountInfo);
-
-      const $eraseBtn = this.querySelector('.erase');
 
       if (this.classList.contains('select')) {
         $eraseBtn.addClass('show');
@@ -52,6 +58,14 @@ class Account extends HTMLElement {
         $eraseBtn.addClass('unshow');
         $eraseBtn.removeClass('show');
       }
+    });
+
+    $eraseBtn.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      const result = await this.accountController.deleteAccount(
+        this.accountInfo.id
+      );
+      this.showResultViewer(result);
     });
   };
 

@@ -46,6 +46,12 @@ class CashBookModel {
     return result;
   };
 
+  deleteAccountData = async (accountId) => {
+    const result = await accountAPI.deleteAccount(accountId);
+    this.accounts = await this._fecthAccountsByMonth();
+    return result;
+  };
+
   moveMonth = async (monthCount) => {
     this.currentDate.setMonth(this.currentDate.getMonth() + monthCount);
     this.observer.notify(notifyTypes.CHANGED_CURRENT_DATE, this.currentDate);

@@ -36,6 +36,21 @@ class AccountAPI extends CommonAPI {
     return result;
   };
 
+  deleteAccount = async (accountId) => {
+    const accessToken = this.getAccessToken();
+    const path = `/api/account/${accountId}`;
+
+    const options = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+    const result = await this.request({ path, options });
+    return result;
+  };
+
   getAccountByMonth = async (date) => {
     const accessToken = this.getAccessToken();
 
