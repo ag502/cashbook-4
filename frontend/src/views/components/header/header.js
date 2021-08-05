@@ -53,18 +53,18 @@ class Header extends HTMLElement {
       this.controller.handleNextBtnClick();
     });
 
-    const $fileTextBtn = this.querySelector('#file-text-btn');
-    $fileTextBtn.addEventListener('click', () => {
-      location.hash = '';
-    });
-    const $calenderBtn = this.querySelector('#calender-btn');
-    $calenderBtn.addEventListener('click', () => {
-      location.hash = '#/calender';
-    });
-    const $chartBtn = this.querySelector('#chart-btn');
-    $chartBtn.addEventListener('click', () => {
-      location.hash = '#/chart';
-    });
+    // const $fileTextBtn = this.querySelector('#file-text-btn');
+    // $fileTextBtn.addEventListener('click', () => {
+    //   location.hash = '';
+    // });
+    // const $calenderBtn = this.querySelector('#calender-btn');
+    // $calenderBtn.addEventListener('click', () => {
+    //   location.hash = '#/calender';
+    // });
+    // const $chartBtn = this.querySelector('#chart-btn');
+    // $chartBtn.addEventListener('click', () => {
+    //   location.hash = '#/chart';
+    // });
     if (this.isLogin) {
       const $logoutBtn = this.querySelector('#logout-btn');
       $logoutBtn.addEventListener('click', () => {
@@ -93,9 +93,9 @@ class Header extends HTMLElement {
       </div>
 
       <div class='right'>
-        <button class='active' id='file-text-btn'>${fileText}</button>
-        <button id='calender-btn'>${calender}</button>
-        <button id='chart-btn'>${chart}</button>
+        <button class='active' id='file-text-btn' route='/'>${fileText}</button>
+        <button id='calender-btn' route='/calender'>${calender}</button>
+        <button id='chart-btn' route='/chart'>${chart}</button>
         ${
           this.isLogin ? `<button id="logout-btn">${logoutButton}</button>` : ''
         }

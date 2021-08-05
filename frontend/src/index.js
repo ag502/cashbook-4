@@ -2,41 +2,41 @@ import MainPage from '@/views/pages/mainPage';
 import CalenderPage from '@/views/pages/calenderPage';
 import StatisticPage from '@/views/pages/statisticPage';
 
-import Auth from '@/views/components/auth';
-
-import observer from '@/common/utils/observer';
+import $ from '@/common/utils/domController';
 
 import '@/common/styles/normalize.css';
 import '@/common/styles/global.css';
 
-import $ from '@/common/utils/domController';
+import observer from '@/common/utils/observer';
 import notifyTypes from './common/utils/notifyTypes';
+
+import Auth from '@/views/components/auth';
+
 import BaseController from './common/utils/baseController';
+
+import router from './router';
 
 const $app = document.querySelector('#app');
 
 const routes = {
-  '': new MainPage(),
+  '/': new MainPage(),
   '/calender': new CalenderPage(),
   '/chart': new StatisticPage(),
 };
 
-const render = () => {
-  const hash = location.hash.replace('#', '');
-  const $page = routes[hash];
-  if (!$page) {
-    // TODO: 404 페이지
-    location.hash = '';
-    return;
-  }
-
-  $app.innerHTML = '';
-  $app.appendChild($page);
+const historyRouterPush = (pathName) => {
+  window.history.pushState({}, pathName, window.location.origin + pathName);
+  router(routes, $app);
 };
 
-window.addEventListener('hashchange', render);
+$app.addEventListener('click', (evt) => {
+  const pathName = evt.target.getAttribute('route');
+  if (pathName) {
+    historyRouterPush(pathName);
+  }
+});
 
-window.addEventListener('DOMContentLoaded', render);
+router(routes, $app);
 
 const handleInitUser = (isLogin) => {
   if (isLogin) {
@@ -47,3 +47,9 @@ const handleInitUser = (isLogin) => {
   $app.appendChild($auth);
 };
 observer.subscribe(notifyTypes.INIT_USER, $app, handleInitUser);
+
+window.addEventListener('popstate', () => {
+  router(routes, $app);
+});
+
+router(routes, $app);

@@ -45,7 +45,9 @@ main-header .right {
 main-header .right button {
   margin-left: 26px;
 }
-
+main-header .right button svg {
+  pointer-events: none;
+}
 main-header .right button.active svg path {
   stroke: var(--off-white);
 }
