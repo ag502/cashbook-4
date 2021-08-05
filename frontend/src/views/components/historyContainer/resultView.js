@@ -22,6 +22,7 @@ class ResultView extends HTMLElement {
 
   disconnectedCallback() {
     // request new fetched data
+    this.observer.notify(notifyTypes.FETCHED_DATA);
   }
 
   addEvents = () => {
@@ -37,7 +38,7 @@ class ResultView extends HTMLElement {
     this.setHTML(
       /*html*/ ` 
       <h1>${this.message}</h1>
-      <button id='close'>확인</button>
+      <button id='close-btn'>확인</button>
     `
     ).addClass('result-view');
 
