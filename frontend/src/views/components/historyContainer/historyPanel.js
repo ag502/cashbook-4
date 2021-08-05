@@ -190,13 +190,16 @@ class HistoryPanel extends HTMLElement {
         ...this.inputInfo,
         date: new Date(this.inputInfo.date),
       };
-      if (this.MODE === 'ADD') {
+      if (this.mode === 'ADD') {
         const result = await this.controller.addAccount(this.inputInfo);
         this.showResultViewer(result.message);
         return;
-      } else if (this.MODE === 'UPDATE') {
+      } else if (this.mode === 'MODIFY') {
         const result = await this.controller.updateAccount(this.inputInfo);
         this.showResultViewer(result.message);
+        if (result.success) {
+          this.inputInfo = { ...initalInputInfo };
+        }
         return;
       }
     });
