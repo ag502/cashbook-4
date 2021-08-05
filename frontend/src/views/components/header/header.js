@@ -16,7 +16,6 @@ class Header extends HTMLElement {
   constructor(path) {
     super();
     this.path = path;
-    console.log(path);
     this.controller = headerController;
     this.observer = observer;
     this.currentDate = this.controller.getCurrentDate();
