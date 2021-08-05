@@ -18,7 +18,7 @@ const categories = [
 ];
 
 const initalInputInfo = {
-  date: parsingDate(new Date()),
+  date: parsingDate(new Date(), 'inputCalendar'),
   categoryId: '',
   content: '',
   paymentId: '',
@@ -67,7 +67,7 @@ class HistoryPanel extends HTMLElement {
       this.inputInfo = {
         ...this.inputInfo,
         id,
-        date: parsingDate(date),
+        date: parsingDate(date, 'inputCalendar'),
         category,
         payment,
         content,
@@ -181,9 +181,21 @@ class HistoryPanel extends HTMLElement {
       }
     });
 
+    this.addEventListener('click', ({ target }) => {
+      if (target.tagName === 'INPUT') {
+        if (target.type === 'date') {
+          console.log(HTMLElement);
+        }
+      }
+    });
+
     const $checkbox = this.querySelector('.check-box');
     $checkbox.addEventListener('click', async () => {
       if (!this.checkCanSubmit()) {
+        this.showResultViewer({
+          success: false,
+          message: '정보를 모두 입력해 주세요',
+        });
         return;
       }
       this.inputInfo = {
@@ -192,13 +204,18 @@ class HistoryPanel extends HTMLElement {
       };
       if (this.mode === 'ADD') {
         const result = await this.controller.addAccount(this.inputInfo);
-        this.showResultViewer(result.message);
+        this.showResultViewer(result);
+        if (result.success) {
+          this.inputInfo = { ...initalInputInfo };
+        }
         return;
       } else if (this.mode === 'MODIFY') {
         const result = await this.controller.updateAccount(this.inputInfo);
         this.showResultViewer(result);
         if (result.success) {
           this.inputInfo = { ...initalInputInfo };
+          this.mode = 'ADD';
+          this.submitIcon = check;
         }
         return;
       }
@@ -215,7 +232,7 @@ class HistoryPanel extends HTMLElement {
         <form>
             <div class="history-input-box">
                 <label>일자</label>
-                <input type="text" name="date" value='${date}'/>
+                <input type="date" name="date" value='${date}'/>
             </div>
                 
 
@@ -280,7 +297,6 @@ class HistoryPanel extends HTMLElement {
             <div class="history-input-box cash">
                 <label>금액</label>
                 <div class="cost-content">
-                    ${iconButton}
                     <input 
                       type="number" 
                       placholder="입력하세요" 

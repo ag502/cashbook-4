@@ -173,6 +173,32 @@ history-panel .dropdown > :last-child .content {
   color: var(--place-holder);
 }
 
+input[type='date'] {
+  position: relative;
+}
+input[type='date']::-webkit-clear-button,
+input[type='date']::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: -100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}
+
+input[type='date']::-webkit-datetime-edit-text {
+  -webkit-appearance: none;
+  display: none;
+}
+
 .history-input-box.cash .cost-content {
   width: 100%;
   display: flex;

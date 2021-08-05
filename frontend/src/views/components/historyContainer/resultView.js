@@ -23,7 +23,7 @@ class ResultView extends HTMLElement {
 
   disconnectedCallback() {
     // request new fetched data
-    if (this.sucess) {
+    if (this.success) {
       this.observer.notify(notifyTypes.FETCHED_DATA);
     }
   }

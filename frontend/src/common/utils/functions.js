@@ -15,6 +15,10 @@ export const parsingDate = (date, type = 'calender') => {
     )}${appendZero(curDate.getDate())}`;
   } else if (type === 'account') {
     return `${curDate.getMonth() + 1}월 ${curDate.getDate()}일`;
+  } else if (type === 'inputCalendar') {
+    return `${curDate.getFullYear()}-${appendZero(
+      curDate.getMonth() + 1
+    )}-${appendZero(curDate.getDate())}`;
   }
 };
 
