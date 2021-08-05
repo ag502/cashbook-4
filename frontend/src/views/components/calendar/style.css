@@ -1,7 +1,17 @@
 calendar-container {
   display: block;
-  width: 848px;
-  margin: -25px auto 0 auto;
+  position: relative;
+  width: 100%;
+}
+
+.fixer {
+  height: 38px;
+  width: 100%;
+  background-color: var(--primary1);
+}
+
+.calendar-wrapper {
+  padding: 0 92px 0;
 }
 
 .calendar-header {
@@ -10,7 +20,7 @@ calendar-container {
   align-items: center;
   background-color: var(--off-white);
   height: 48px;
-  margin-bottom: 16px;
+  margin: -24px 0 16px 0;
   font: var(--body-regular);
   text-align: center;
   color: var(--label);
