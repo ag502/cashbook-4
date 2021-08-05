@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { validationResult } from 'express-validator';
 
 import authService from '../../services/auth.js';
 import authTokenService from '../../services/auth-token.js';
@@ -12,6 +13,12 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import STATUS_CODES from '../../utils/http-status.js';
 import getError from '../../utils/error.js';
 
+import {
+  loginVal,
+  registerVal,
+  githubAuthVal,
+} from '../middlewares/authValidator.js';
+
 export default (app) => {
   const routes = Router();
   app.use('/auth', routes);
@@ -20,7 +27,14 @@ export default (app) => {
     return res.status(STATUS_CODES.OK).json({ success: true });
   });
 
-  routes.post('/login', async (req, res) => {
+  routes.post('/login', loginVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
+
     const { nickname, password } = req.body;
     const result = await authService.login({ nickname, password });
     if (result.success) {
@@ -35,7 +49,13 @@ export default (app) => {
     return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json(result);
   });
 
-  routes.post('/register', async (req, res) => {
+  routes.post('/register', registerVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
     const { nickname, password } = req.body;
     const result = await authService.register({ nickname, password });
     if (result.success) {
@@ -52,7 +72,13 @@ export default (app) => {
     res.status(STATUS_CODES.OK).json(redirectUrl);
   });
 
-  routes.post('/github', async (req, res) => {
+  routes.post('/github', githubAuthVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
     const { code } = req.body;
     const result = await githubOauthService.githubLogin({ code });
     if (result.success) {

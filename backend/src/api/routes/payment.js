@@ -1,9 +1,16 @@
 import { Router } from 'express';
+import { validationResult } from 'express-validator';
 import authMiddleware from '../middlewares/authMiddleware.js';
 
 import paymentService from '../../services/payment.js';
+import getError from '../../utils/error.js';
 import errorTypes from '../../errors/errorTypes.js';
 import STATUS_CODES from '../../utils/http-status.js';
+import {
+  createPaymentVal,
+  deletePaymentVal,
+  updatePaymentVal,
+} from '../middlewares/paymentValidator.js';
 
 export default (app) => {
   const routes = Router();
@@ -20,9 +27,17 @@ export default (app) => {
     return res.status(STATUS_CODES.OK).json(result);
   });
 
-  routes.post('/', async (req, res) => {
+  routes.post('/', createPaymentVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
+
     const { id } = req.decoded;
     const { name } = req.body;
+
     const result = await paymentService.createPayment({ userId: id, name });
 
     if (!result.success) {
@@ -34,7 +49,14 @@ export default (app) => {
 
     return res.status(STATUS_CODES.OK).json(result);
   });
-  routes.put('/:paymentId', async (req, res) => {
+  routes.put('/:paymentId', updatePaymentVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
+
     const { id } = req.decoded;
     const { paymentId } = req.params;
     const { name } = req.body;
@@ -57,7 +79,14 @@ export default (app) => {
 
     return res.status(STATUS_CODES.OK).json(result);
   });
-  routes.delete('/:paymentId', async (req, res) => {
+  routes.delete('/:paymentId', deletePaymentVal(), async (req, res) => {
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ error: getError(errorTypes.ValidationError) });
+    }
+
     const { id } = req.decoded;
     const { paymentId } = req.params;
 

@@ -189,6 +189,44 @@ class AccountService {
 
     return { success: true };
   }
+  async deleteAccount({ userId, accountId }) {
+    let isExistAccount;
+
+    try {
+      isExistAccount = await this.accountModel.findOne({
+        where: {
+          user_id: userId,
+          id: accountId,
+        },
+        raw: true,
+      });
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!isExistAccount) {
+      return { success: false, error: getError(errorTypes.NotExist) };
+    }
+
+    let flag = false;
+    try {
+      const deletedCount = await this.accountModel.destroy({
+        where: { id: accountId },
+        raw: true,
+      });
+
+      if (deletedCount >= 1) {
+        flag = true;
+      }
+    } catch (err) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+
+    if (!flag) {
+      return { success: false, error: getError(errorTypes.UnexpectError) };
+    }
+    return { success: true };
+  }
 }
 
 export default new AccountService();
