@@ -40,6 +40,13 @@ class CashBookModel {
 
   addNewAccountData = async (data) => {
     await this._postNewAccountData(data);
+    this.accounts = await this._fecthAccountsByMonth();
+    this.observer.notify(notifyTypes.FETCHED_DATA);
+  };
+
+  updateAccountData = async (data) => {
+    await accountAPI.editAccount(data);
+    this.accounts = await this._fecthAccountsByMonth();
     this.observer.notify(notifyTypes.FETCHED_DATA);
   };
 
