@@ -180,7 +180,6 @@ class HistoryPanel extends HTMLElement {
         ...this.inputInfo,
         date: new Date(this.inputInfo.date),
       };
-      console.log(this.inputInfo);
       if (!this.mode) {
         const result = await this.controller.addAccount(this.inputInfo);
         this.showResultViewer(result.message);
