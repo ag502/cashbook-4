@@ -17,6 +17,14 @@ const categories = [
   '미분류',
 ];
 
+const initalInputInfo = {
+  date: parsingDate(new Date()),
+  categoryId: '',
+  content: '',
+  paymentId: '',
+  price: '',
+};
+
 class HistoryPanel extends HTMLElement {
   constructor() {
     super();
@@ -24,13 +32,7 @@ class HistoryPanel extends HTMLElement {
     this.observer = observer;
     this.payments = this.controller.getPayments();
 
-    this.inputInfo = {
-      date: parsingDate(new Date()),
-      categoryId: '',
-      content: '',
-      paymentId: '',
-      price: '',
-    };
+    this.inputInfo = { ...initalInputInfo };
 
     this.mode = null;
   }
@@ -55,22 +57,26 @@ class HistoryPanel extends HTMLElement {
 
   handleAccountClick = (accountInfo) => {
     const { date, category, content, price, payment, id } = accountInfo;
-    this.selectCategory(category);
 
-    this.inputInfo = {
-      ...this.inputInfo,
-      id,
-      date: parsingDate(date),
-      category,
-      content,
-      price,
-    };
+    if (id === this.inputInfo.id) {
+      this.inputInfo = { ...initalInputInfo };
+    } else {
+      this.inputInfo = {
+        ...this.inputInfo,
+        id,
+        date: parsingDate(date),
+        category,
+        payment,
+        content,
+        price,
+      };
+    }
 
     this.mode = 'modify';
 
     this.render();
-    this.selectCategory(category);
-    this.selectPayment(payment);
+    this.selectCategory(this.inputInfo.category);
+    this.selectPayment(this.inputInfo.payment);
   };
 
   handleInitUser = () => {
@@ -99,10 +105,11 @@ class HistoryPanel extends HTMLElement {
   selectCategory = (id) => {
     const categoryId = parseInt(id);
     const $selectCategoryBtn = this.querySelector('#select-category-btn');
-    $selectCategoryBtn.innerHTML = `${
-      categories[categoryId - 1]
-    } ${chevronDown}`;
-    $selectCategoryBtn.classList.add('selected');
+    if (categoryId) {
+      $selectCategoryBtn
+        .setHTML(`${categories[categoryId - 1]} ${chevronDown}`)
+        .addClass('selected');
+    }
 
     this.inputInfo = { ...this.inputInfo, categoryId };
   };
@@ -112,10 +119,10 @@ class HistoryPanel extends HTMLElement {
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
     const payment = this.payments.find((p) => p.id === paymentId);
     if (payment) {
-      $selectPaymentBtn.innerHTML = `${payment?.name} ${chevronDown}`;
-      $selectPaymentBtn.classList.add('selected');
+      $selectPaymentBtn
+        .setHTML(`${payment?.name} ${chevronDown}`)
+        .addClass('selected');
     }
-
     this.inputInfo = { ...this.inputInfo, paymentId };
   };
 
