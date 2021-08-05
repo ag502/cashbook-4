@@ -1,4 +1,8 @@
 #!/bin/bash
+
+## set path ##
+
+cd /home/ubuntu/workspace/cashbook-4
   
 ## github ##
 
