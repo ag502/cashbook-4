@@ -27,6 +27,12 @@ class HistoryStatistics extends HTMLElement {
       this,
       this.handleDataChanged
     );
+
+    this.observer.subscribe(
+      notifyTypes.CHANGED_CURRENT_DATE,
+      this,
+      this.initStatisticsInfo
+    );
   }
   disconnectedCallback() {
     this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
@@ -34,6 +40,10 @@ class HistoryStatistics extends HTMLElement {
   }
 
   initStatisticsInfo = () => {
+    this.controller.init();
+    this.isIncomeChecked = true;
+    this.isExpenditureChecked = true;
+
     const { totalCount, totalIncome, totalExpenditure } =
       this.controller.getAccountsStatistics();
     this.totalCount = totalCount;
@@ -97,7 +107,7 @@ class HistoryStatistics extends HTMLElement {
               this.isIncomeChecked === true
                 ? saveActiveButtonSmall
                 : saveButtonSmall
-            }</button> 수입 ${this.totalIncome}
+            }</button> 수입 ${this.totalIncome.toLocaleString()}
           </div>
           <div class="expenditure ${
             this.isExpenditureChecked === true ? 'active' : ''
@@ -106,7 +116,7 @@ class HistoryStatistics extends HTMLElement {
               this.isExpenditureChecked === true
                 ? saveActiveButtonSmall
                 : saveButtonSmall
-            }</button> 지출 ${this.totalExpenditure}
+            }</button> 지출 ${this.totalExpenditure.toLocaleString()}
           </div>
         <div>
     `);

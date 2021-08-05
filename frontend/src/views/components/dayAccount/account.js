@@ -7,14 +7,36 @@ class Account extends HTMLElement {
     super();
     this.accountInfo = accountInfo;
     this.observer = observer;
+    this.isClicked = false;
   }
 
   connectedCallback() {
+    this.observer.subscribe(
+      notifyTypes.CLICK_ACCOUNT,
+      this,
+      this.handleToggleAccount
+    );
     this.render();
+    this.addEvents();
+  }
+
+  disconnectedCallback() {
+    this.observer.unsubscribe(notifyTypes.CLICK_ACCOUNT, this);
+  }
+
+  handleToggleAccount = ({ id }) => {
+    const { id: myId } = this.accountInfo;
+    if (myId !== id) {
+      this.removeClass('select');
+    }
+  };
+
+  addEvents = () => {
     this.addEventListener('click', () => {
+      this.toggleClass('select');
       this.observer.notify(notifyTypes.CLICK_ACCOUNT, this.accountInfo);
     });
-  }
+  };
 
   render = () => {
     this.setHTML(/*html*/ `
@@ -36,7 +58,7 @@ class Account extends HTMLElement {
                 }
             </div>
             <div class="price">
-                ${this.accountInfo.price} 원
+                ${this.accountInfo.price.toLocaleString()} 원
             </div>
         </div>
       `);

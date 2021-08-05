@@ -37,6 +37,10 @@ account-item {
   cursor: pointer;
 }
 
+account-item.select {
+  background-color: var(--background);
+}
+
 account-item > div {
   width: 100%;
   display: flex;

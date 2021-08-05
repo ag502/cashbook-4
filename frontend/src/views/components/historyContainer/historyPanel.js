@@ -1,6 +1,6 @@
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
-import { check, chevronDown, iconButton, verticalMore } from '../icons';
+import { check, chevronDown, iconButton, verticalMore, pencil } from '../icons';
 import historyContainerController from './controller';
 import { parsingDate } from '@/common/utils/functions';
 
@@ -17,6 +17,14 @@ const categories = [
   '미분류',
 ];
 
+const initalInputInfo = {
+  date: parsingDate(new Date(), 'inputCalendar'),
+  categoryId: '',
+  content: '',
+  paymentId: '',
+  price: '',
+};
+
 class HistoryPanel extends HTMLElement {
   constructor() {
     super();
@@ -24,15 +32,10 @@ class HistoryPanel extends HTMLElement {
     this.observer = observer;
     this.payments = this.controller.getPayments();
 
-    this.inputInfo = {
-      date: parsingDate(new Date()),
-      categoryId: '',
-      content: '',
-      paymentId: '',
-      price: '',
-    };
+    this.inputInfo = { ...initalInputInfo };
 
-    this.mode = null;
+    this.mode = 'ADD';
+    this.submitIcon = check;
   }
 
   connectedCallback() {
@@ -55,22 +58,28 @@ class HistoryPanel extends HTMLElement {
 
   handleAccountClick = (accountInfo) => {
     const { date, category, content, price, payment, id } = accountInfo;
-    this.selectCategory(category);
 
-    this.inputInfo = {
-      ...this.inputInfo,
-      id,
-      date: parsingDate(date),
-      category,
-      content,
-      price,
-    };
-
-    this.mode = 'modify';
+    if (id === this.inputInfo.id) {
+      this.inputInfo = { ...initalInputInfo };
+      this.mode = 'ADD';
+      this.submitIcon = check;
+    } else {
+      this.inputInfo = {
+        ...this.inputInfo,
+        id,
+        date: parsingDate(date, 'inputCalendar'),
+        category,
+        payment,
+        content,
+        price,
+      };
+      this.mode = 'MODIFY';
+      this.submitIcon = pencil;
+    }
 
     this.render();
-    this.selectCategory(category);
-    this.selectPayment(payment);
+    this.selectCategory(this.inputInfo.category);
+    this.selectPayment(this.inputInfo.payment);
   };
 
   handleInitUser = () => {
@@ -99,10 +108,11 @@ class HistoryPanel extends HTMLElement {
   selectCategory = (id) => {
     const categoryId = parseInt(id);
     const $selectCategoryBtn = this.querySelector('#select-category-btn');
-    $selectCategoryBtn.innerHTML = `${
-      categories[categoryId - 1]
-    } ${chevronDown}`;
-    $selectCategoryBtn.classList.add('selected');
+    if (categoryId) {
+      $selectCategoryBtn
+        .setHTML(`${categories[categoryId - 1]} ${chevronDown}`)
+        .addClass('selected');
+    }
 
     this.inputInfo = { ...this.inputInfo, categoryId };
   };
@@ -112,10 +122,10 @@ class HistoryPanel extends HTMLElement {
     const $selectPaymentBtn = this.querySelector('#select-payment-btn');
     const payment = this.payments.find((p) => p.id === paymentId);
     if (payment) {
-      $selectPaymentBtn.innerHTML = `${payment?.name} ${chevronDown}`;
-      $selectPaymentBtn.classList.add('selected');
+      $selectPaymentBtn
+        .setHTML(`${payment?.name} ${chevronDown}`)
+        .addClass('selected');
     }
-
     this.inputInfo = { ...this.inputInfo, paymentId };
   };
 
@@ -171,29 +181,49 @@ class HistoryPanel extends HTMLElement {
       }
     });
 
+    this.addEventListener('click', ({ target }) => {
+      if (target.tagName === 'INPUT') {
+        if (target.type === 'date') {
+          console.log(HTMLElement);
+        }
+      }
+    });
+
     const $checkbox = this.querySelector('.check-box');
     $checkbox.addEventListener('click', async () => {
       if (!this.checkCanSubmit()) {
+        this.showResultViewer({
+          success: false,
+          message: '정보를 모두 입력해 주세요',
+        });
         return;
       }
       this.inputInfo = {
         ...this.inputInfo,
         date: new Date(this.inputInfo.date),
       };
-      if (!this.mode) {
+      if (this.mode === 'ADD') {
         const result = await this.controller.addAccount(this.inputInfo);
-        this.showResultViewer(result.message);
+        this.showResultViewer(result);
+        if (result.success) {
+          this.inputInfo = { ...initalInputInfo };
+        }
         return;
-      } else {
+      } else if (this.mode === 'MODIFY') {
         const result = await this.controller.updateAccount(this.inputInfo);
-        this.showResultViewer(result.message);
+        this.showResultViewer(result);
+        if (result.success) {
+          this.inputInfo = { ...initalInputInfo };
+          this.mode = 'ADD';
+          this.submitIcon = check;
+        }
         return;
       }
     });
   };
 
-  showResultViewer = (message) => {
-    this.observer.notify(notifyTypes.SHOW_RESULT, message);
+  showResultViewer = (result) => {
+    this.observer.notify(notifyTypes.SHOW_RESULT, result);
   };
 
   render = () => {
@@ -202,7 +232,7 @@ class HistoryPanel extends HTMLElement {
         <form>
             <div class="history-input-box">
                 <label>일자</label>
-                <input type="text" name="date" value='${date}'/>
+                <input type="date" name="date" value='${date}'/>
             </div>
                 
 
@@ -267,7 +297,6 @@ class HistoryPanel extends HTMLElement {
             <div class="history-input-box cash">
                 <label>금액</label>
                 <div class="cost-content">
-                    ${iconButton}
                     <input 
                       type="number" 
                       placholder="입력하세요" 
@@ -279,7 +308,7 @@ class HistoryPanel extends HTMLElement {
             </div>
 
             <div class="check-box">
-                ${check}
+                ${this.submitIcon}
             </div>
         </form> 
     `);
