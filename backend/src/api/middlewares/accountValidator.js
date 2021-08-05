@@ -71,3 +71,7 @@ export function updateAccountVal() {
     accountBodyValidators.categoryId,
   ];
 }
+
+export function deleteAccountVal() {
+  return [accountParamValidators.accountId];
+}
