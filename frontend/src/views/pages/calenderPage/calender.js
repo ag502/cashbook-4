@@ -13,7 +13,8 @@ class MainPage extends HTMLElement {
     // TODO : observer event subscrib & controller init
     this.innerHTML = '';
 
-    const header = new Header();
+    const path = window.location.pathname;
+    const header = new Header(path);
     const calendar = new Calendar();
     this.appendChild(header);
     this.appendChild(calendar);

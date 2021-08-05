@@ -50,8 +50,20 @@ main-header .right button svg {
 }
 main-header .right button.active svg path {
   stroke: var(--off-white);
+  animation-duration: 0.6s;
+  animation-name: btn-fade-in;
 }
 
 main-header .right button svg path {
   stroke: #a0e1e0;
+}
+
+@keyframes btn-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

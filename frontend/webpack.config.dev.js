@@ -38,7 +38,7 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /.(png|jpg|jpeg|svg)$/,
+        test: /.(png|jpg|jpeg|svg|ico)$/,
         type: 'asset',
         parser: {
           dataUrlCondition: {
@@ -57,7 +57,8 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: 'src/index.html',
+      favicon: 'src/assets/icon/favicon.ico',
     }),
     new MiniCssExtractPlugin({
       filename: 'index.css',

@@ -1,4 +1,4 @@
-import Headers from '@/views/components/header/header';
+import Header from '@/views/components/header/header';
 import Statistic from '@/views/components/statistic';
 
 class StaticsPage extends HTMLElement {
@@ -7,13 +7,10 @@ class StaticsPage extends HTMLElement {
   }
 
   connectedCallback() {
-    this.setHTML(
-      /*html*/
-      `
-        <main-header></main-header>
-        <statistic-container></statistic-container>
-      `
-    );
+    const path = window.location.pathname;
+    const header = new Header(path);
+    const statistic = new Statistic();
+    this.setHTML('').addElement(header).addElement(statistic);
   }
 }
 
