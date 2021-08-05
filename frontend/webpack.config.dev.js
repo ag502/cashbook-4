@@ -38,7 +38,7 @@ module.exports = {
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       {
-        test: /.(png|jpg|jpeg|svg)$/,
+        test: /.(png|jpg|jpeg|svg|ico)$/,
         type: 'asset',
         parser: {
           dataUrlCondition: {
