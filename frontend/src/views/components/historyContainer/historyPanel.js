@@ -201,14 +201,6 @@ class HistoryPanel extends HTMLElement {
       }
     });
 
-    this.addEventListener('click', ({ target }) => {
-      if (target.tagName === 'INPUT') {
-        if (target.type === 'date') {
-          console.log(HTMLElement);
-        }
-      }
-    });
-
     const $checkbox = this.querySelector('.check-box');
     $checkbox.addEventListener('click', async () => {
       if (!this.checkCanSubmit()) {
@@ -248,7 +240,12 @@ class HistoryPanel extends HTMLElement {
         <form>
             <div class="history-input-box">
                 <label>일자</label>
-                <input type="date" name="date" value='${date}'/>
+                <input 
+                  type="date" 
+                  name="date" 
+                  value='${date}'
+                  autocomplete='off'
+                />
             </div>
                 
 
@@ -276,7 +273,8 @@ class HistoryPanel extends HTMLElement {
                 <input 
                   type="text" 
                   name="content" 
-                  placeholder="입력하세요" 
+                  placeholder="입력하세요"
+                  autocomplete="off"
                   ${content ? `value='${content}'` : ''}
                 />
             </div>
@@ -317,6 +315,7 @@ class HistoryPanel extends HTMLElement {
                       type="number" 
                       placholder="입력하세요" 
                       name="price" 
+                      autocomplete='off'
                       ${price ? `value=${price}` : ''}
                     />
                       &nbsp;원
