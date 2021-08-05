@@ -67,8 +67,17 @@ history-panel .check-box {
   border-radius: 10px;
 }
 
-history-panel .check-box > svg > path {
+history-panel .check-box svg {
+  width: 80%;
+  height: 80%;
+}
+
+history-panel .check-box > svg path {
   stroke: var(--primary1);
+}
+
+history-panel .check-box > svg#pencil path {
+  fill: var(--primary1);
 }
 
 history-panel button {

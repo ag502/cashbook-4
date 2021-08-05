@@ -1,6 +1,6 @@
 import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
-import { check, chevronDown, iconButton, verticalMore } from '../icons';
+import { check, chevronDown, iconButton, verticalMore, pencil } from '../icons';
 import historyContainerController from './controller';
 import { parsingDate } from '@/common/utils/functions';
 
@@ -34,7 +34,8 @@ class HistoryPanel extends HTMLElement {
 
     this.inputInfo = { ...initalInputInfo };
 
-    this.mode = null;
+    this.mode = 'ADD';
+    this.submitIcon = check;
   }
 
   connectedCallback() {
@@ -60,6 +61,8 @@ class HistoryPanel extends HTMLElement {
 
     if (id === this.inputInfo.id) {
       this.inputInfo = { ...initalInputInfo };
+      this.mode = 'ADD';
+      this.submitIcon = check;
     } else {
       this.inputInfo = {
         ...this.inputInfo,
@@ -70,9 +73,9 @@ class HistoryPanel extends HTMLElement {
         content,
         price,
       };
+      this.mode = 'MODIFY';
+      this.submitIcon = pencil;
     }
-
-    this.mode = 'modify';
 
     this.render();
     this.selectCategory(this.inputInfo.category);
@@ -187,11 +190,11 @@ class HistoryPanel extends HTMLElement {
         ...this.inputInfo,
         date: new Date(this.inputInfo.date),
       };
-      if (!this.mode) {
+      if (this.MODE === 'ADD') {
         const result = await this.controller.addAccount(this.inputInfo);
         this.showResultViewer(result.message);
         return;
-      } else {
+      } else if (this.MODE === 'UPDATE') {
         const result = await this.controller.updateAccount(this.inputInfo);
         this.showResultViewer(result.message);
         return;
@@ -286,7 +289,7 @@ class HistoryPanel extends HTMLElement {
             </div>
 
             <div class="check-box">
-                ${check}
+                ${this.submitIcon}
             </div>
         </form> 
     `);
