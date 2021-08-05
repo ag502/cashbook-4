@@ -50,7 +50,7 @@ class HistoryPanel extends HTMLElement {
   disconnectedCallback() {
     this.observer.unsubscribe(notifyTypes.CLICK_ACCOUNT, this);
     this.observer.unsubscribe(notifyTypes.INIT_USER, this);
-    this.observer.subscribe(notifyTypes.FETCHED_DATA, this);
+    this.observer.unsubscribe(notifyTypes.FETCHED_DATA, this);
   }
 
   handleAccountClick = (accountInfo) => {
