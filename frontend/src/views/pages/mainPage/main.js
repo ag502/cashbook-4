@@ -10,7 +10,8 @@ class MainPage extends HTMLElement {
 
   connectedCallback() {
     // TODO : observer event subscrib & controller init
-    const header = new Header();
+    const path = window.location.pathname;
+    const header = new Header(path);
     const historyContainer = new HistoryContainer();
     this.setHTML('').addElement(header).addElement(historyContainer);
   }
