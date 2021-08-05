@@ -65,19 +65,21 @@ class MainChart extends HTMLElement {
               <div class='main-chart--info--header'>
                 ${curMonth}월 달 지출 금액 ${this.total.toLocaleString()}
               </div>
-              ${this.data
-                .map(
-                  ({ categoryId, percent, price }) => /*html*/ `
-                    <div class='main-chart--info-item' id=${categoryId}>
-                      <category-badge categoryId=${categoryId}></category-badge>
-                      <div class='price-info'>
-                        <span class='price-percent'>${percent} %</span>
-                        <span class='price-price'>${price.toLocaleString()}</span>
+              <div class='main-chart--info-item-container'>
+                ${this.data
+                  .map(
+                    ({ categoryId, percent, price }) => /*html*/ `
+                      <div class='main-chart--info-item' id=${categoryId}>
+                        <category-badge categoryId=${categoryId}></category-badge>
+                        <div class='price-info'>
+                          <span class='price-percent'>${percent} %</span>
+                          <span class='price-price'>${price.toLocaleString()}</span>
+                        </div>
                       </div>
-                    </div>
-                `
-                )
-                .join('')}`
+                  `
+                  )
+                  .join('')}
+              </div>`
         }
           </div>
       </div>

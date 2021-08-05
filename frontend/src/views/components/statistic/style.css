@@ -17,12 +17,20 @@
 }
 
 .main-chart--info {
+  display: flex;
+  flex-direction: column;
   width: 50%;
+  height: 100%;
 }
 
 .main-chart--info--header {
   margin-bottom: 35px;
   font: var(--body-large);
+  padding-left: 16px;
+}
+
+.main-chart--info-item-container {
+  overflow: auto;
 }
 
 .main-chart--info-item {
