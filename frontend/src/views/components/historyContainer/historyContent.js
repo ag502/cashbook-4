@@ -2,6 +2,7 @@ import historyContainerController from './controller';
 import observer from '@/common/utils/observer';
 import DayAccount from '@/views/components/dayAccount';
 import notifyTypes from '@/common/utils/notifyTypes';
+import { emptyImage } from '../icons';
 
 class HistoryContent extends HTMLElement {
   constructor() {
@@ -37,18 +38,23 @@ class HistoryContent extends HTMLElement {
   render = () => {
     this.setHTML('');
     // 내림차순 정렬
-    const dayAccountKeys = Object.keys(this.dayAccounts).sort((a, b) => {
-      return b - a;
-    });
 
-    dayAccountKeys.forEach((dayAccountKey) => {
-      const $dayAccount = new DayAccount({
-        date: dayAccountKey,
-        accounts: this.dayAccounts[dayAccountKey],
+    if (!Object.keys(this.dayAccounts).length) {
+      this.setHTML(emptyImage);
+    } else {
+      const dayAccountKeys = Object.keys(this.dayAccounts).sort((a, b) => {
+        return b - a;
       });
 
-      this.appendChild($dayAccount);
-    });
+      dayAccountKeys.forEach((dayAccountKey) => {
+        const $dayAccount = new DayAccount({
+          date: dayAccountKey,
+          accounts: this.dayAccounts[dayAccountKey],
+        });
+
+        this.appendChild($dayAccount);
+      });
+    }
   };
 }
 

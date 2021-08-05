@@ -3,6 +3,7 @@ import observer from '@/common/utils/observer';
 import notifyTypes from '@/common/utils/notifyTypes';
 import PieChart from './chart/pie';
 import CategoryBadge from '../categoryBadge';
+import { emptyImage } from '../icons';
 
 class MainChart extends HTMLElement {
   constructor() {
@@ -51,29 +52,34 @@ class MainChart extends HTMLElement {
     const curMonth = this.chartController.getCurrentDate().getMonth() + 1;
     this.setHTML(/*html*/ `
       <div class='chart--container'>
-        <pie-chart 
-          width='300' 
-          height='300' 
-          config=${JSON.stringify(this.data)}>
-        </pie-chart>
-        <div class='main-chart--info'>
-          <div class='main-chart--info--header'>
-            ${curMonth}월 달 지출 금액 ${this.total.toLocaleString()}
+        ${
+          this.data.length === 0
+            ? emptyImage
+            : /*html*/ `
+            <pie-chart 
+              width='300' 
+              height='300' 
+              config=${JSON.stringify(this.data)}>
+            </pie-chart>
+            <div class='main-chart--info'>
+              <div class='main-chart--info--header'>
+                ${curMonth}월 달 지출 금액 ${this.total.toLocaleString()}
+              </div>
+              ${this.data
+                .map(
+                  ({ categoryId, percent, price }) => /*html*/ `
+                    <div class='main-chart--info-item' id=${categoryId}>
+                      <category-badge categoryId=${categoryId}></category-badge>
+                      <div class='price-info'>
+                        <span class='price-percent'>${percent} %</span>
+                        <span class='price-price'>${price.toLocaleString()}</span>
+                      </div>
+                    </div>
+                `
+                )
+                .join('')}`
+        }
           </div>
-          ${this.data
-            .map(
-              ({ categoryId, percent, price }) => /*html*/ `
-                <div class='main-chart--info-item' id=${categoryId}>
-                  <category-badge categoryId=${categoryId}></category-badge>
-                  <div class='price-info'>
-                    <span class='price-percent'>${percent} %</span>
-                    <span class='price-price'>${price.toLocaleString()}</span>
-                  </div>
-                </div>
-            `
-            )
-            .join('')}
-        </div>
       </div>
     `);
   };
