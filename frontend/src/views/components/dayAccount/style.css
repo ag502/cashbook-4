@@ -1,0 +1,127 @@
+day-account {
+  width: 100%;
+  max-width: 848px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 32px;
+}
+
+day-account .info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font: var(--bold-medium);
+  color: var(--body);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+day-account .info .date {
+  color: var(--title-active);
+}
+
+.account-list {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+}
+
+account-item {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  align-items: center;
+  height: 70px;
+  padding: 0 7px;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+}
+
+account-item.select {
+  background-color: var(--background);
+}
+
+account-item > div {
+  width: 100%;
+  display: flex;
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+account-item .category {
+  display: flex;
+  width: 92px;
+  height: 30px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  font: var(--bold-medium);
+  color: white;
+}
+
+account-item .context {
+  width: 100%;
+  padding-left: 10px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  color: var(--title-active);
+  font: var(--body-medium);
+  height: fit-content;
+}
+
+account-item .erase {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-right: -30px;
+  transition: transform 1s;
+}
+
+account-item .erase svg path {
+  stroke: #ff0000;
+}
+
+account-item .erase.unshow {
+  animation: unshow-erase 0.3s ease-in;
+}
+
+account-item .erase.show {
+  animation: show-erase 0.3s ease-in forwards;
+}
+
+@keyframes unshow-erase {
+  0% {
+    margin-right: 0px;
+  }
+  100% {
+    margin-right: -30px;
+    transform: rotate(180deg);
+  }
+}
+
+@keyframes show-erase {
+  0% {
+    margin-right: -20px;
+  }
+  100% {
+    margin-right: 0px;
+    transform: rotate(-180deg);
+  }
+}
+
+account-item .right {
+  font: var(--body-medium);
+}
+
+.right .payment {
+  color: var(--body);
+  height: fit-content;
+}
+
+.right .price {
+  color: var(--title-active);
+  height: fit-content;
+}
