@@ -4,9 +4,14 @@ import CalendarStatistic from './calendarStatistic';
 
 class Calendar extends HTMLElement {
   connectedCallback() {
-    this.addElement(new CalendarHeader())
-      .addElement(new CalendarContent())
-      .addElement(new CalendarStatistic());
+    this.setHTML(/*html*/ `
+      <div class='fixer'></div>
+      <div class='calendar-wrapper'>
+        <calendar-header></calendar-header>
+        <calendar-content></calendar-content>
+        <calendar-statistic></calendar-statistic>
+      </div>
+    `);
   }
 }
 
