@@ -196,7 +196,7 @@ class HistoryPanel extends HTMLElement {
         return;
       } else if (this.mode === 'MODIFY') {
         const result = await this.controller.updateAccount(this.inputInfo);
-        this.showResultViewer(result.message);
+        this.showResultViewer(result);
         if (result.success) {
           this.inputInfo = { ...initalInputInfo };
         }
@@ -205,8 +205,8 @@ class HistoryPanel extends HTMLElement {
     });
   };
 
-  showResultViewer = (message) => {
-    this.observer.notify(notifyTypes.SHOW_RESULT, message);
+  showResultViewer = (result) => {
+    this.observer.notify(notifyTypes.SHOW_RESULT, result);
   };
 
   render = () => {

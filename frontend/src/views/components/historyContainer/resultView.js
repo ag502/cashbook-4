@@ -8,12 +8,13 @@ import './style.css';
 import notifyTypes from '@/common/utils/notifyTypes';
 
 class ResultView extends HTMLElement {
-  constructor({ message }) {
+  constructor({ success, message }) {
     super();
     this.controller = historyContainerController;
     this.observer = observer;
 
     this.message = message;
+    this.success = success;
   }
 
   connectedCallback() {
@@ -22,7 +23,9 @@ class ResultView extends HTMLElement {
 
   disconnectedCallback() {
     // request new fetched data
-    this.observer.notify(notifyTypes.FETCHED_DATA);
+    if (this.sucess) {
+      this.observer.notify(notifyTypes.FETCHED_DATA);
+    }
   }
 
   addEvents = () => {

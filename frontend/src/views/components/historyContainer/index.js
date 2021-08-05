@@ -48,8 +48,8 @@ class HistoryContainer extends HTMLElement {
     this.showModalContent(this.modalType.ADD_PAYMENT);
   };
 
-  showResult = (message) => {
-    this.showModalContent(this.modalType.RESULT_VIEW, { message });
+  showResult = (result) => {
+    this.showModalContent(this.modalType.RESULT_VIEW, result);
   };
 
   showModalContent = (type, data = {}) => {
