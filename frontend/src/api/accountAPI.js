@@ -17,6 +17,7 @@ class AccountAPI extends CommonAPI {
       body: JSON.stringify(data),
     };
     const result = await this.request({ path, options });
+    return result;
   };
 
   editAccount = async (data) => {
@@ -32,6 +33,7 @@ class AccountAPI extends CommonAPI {
       body: JSON.stringify(rest),
     };
     const result = await this.request({ path, options });
+    return result;
   };
 
   getAccountByMonth = async (date) => {

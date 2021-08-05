@@ -90,7 +90,7 @@ class HistoryContainerController extends BaseController {
       } else {
         return {
           success: false,
-          message: '예끼치 못한 에러가 발생하였습니다!',
+          message: '예기치 못한 에러가 발생하였습니다!',
         };
       }
     }
@@ -106,7 +106,7 @@ class HistoryContainerController extends BaseController {
       } else {
         return {
           success: false,
-          message: '예끼치 못한 에러가 발생하였습니다!',
+          message: '예기치 못한 에러가 발생하였습니다!',
         };
       }
     }
@@ -121,7 +121,7 @@ class HistoryContainerController extends BaseController {
       } else {
         return {
           success: false,
-          message: '예끼치 못한 에러가 발생하였습니다!',
+          message: '예기치 못한 에러가 발생하였습니다!',
         };
       }
     }
@@ -129,11 +129,37 @@ class HistoryContainerController extends BaseController {
   };
 
   addAccount = async (data) => {
-    await this.cashBookModel.addNewAccountData(data);
+    const result = await this.cashBookModel.addNewAccountData(data);
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.ValidationError) {
+        return { success: false, message: '입력한 정보가 올바르지 않습니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예기치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return { ...result, message: '추가되었습니다!' };
   };
 
   updateAccount = async (data) => {
-    await this.cashBookModel.updateAccountData(data);
+    const result = await this.cashBookModel.updateAccountData(data);
+    if (!result.success) {
+      const { error } = result;
+      if (error.errorType === errorTypes.ValidationError) {
+        return { success: false, message: '입력한 정보가 올바르지 않습니다!' };
+      } else if (error.errorType === errorTypes.NotExist) {
+        return { success: false, message: '존재하지 않는 내용입니다!' };
+      } else {
+        return {
+          success: false,
+          message: '예기치 못한 에러가 발생하였습니다!',
+        };
+      }
+    }
+    return { ...result, message: '수정되었습니다!' };
   };
 }
 
