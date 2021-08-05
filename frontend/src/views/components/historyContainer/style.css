@@ -50,11 +50,11 @@ history-panel > form {
 }
 .history-input-box.cash {
   border: none;
-  width: 194px;
+  width: 220px;
 }
 
 .history-input-box.context {
-  width: 220px;
+  width: 200px;
 }
 
 history-panel .check-box {
@@ -204,9 +204,60 @@ input[type='date']::-webkit-datetime-edit-text {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 }
 .cost-content > input {
   text-align: right;
+  padding-left: 10px;
+}
+
+#toggle-payType-btn {
+  border: 2px solid var(--primary3);
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  font: var(--bold-medium);
+  color: var(--title-active);
+  width: 6em;
+  height: 2em;
+  position: relative;
+  overflow: hidden;
+}
+
+#toggle-payType-btn .income {
+  display: inline-block;
+  position: absolute;
+  animation-duration: 0.4s;
+  animation-name: payType-slide;
+  width: 100%;
+}
+
+#toggle-payType-btn.default .income {
+  display: none;
+}
+
+#toggle-payType-btn .expenditure {
+  display: none;
+}
+
+#toggle-payType-btn.default .expenditure {
+  display: inline-block;
+  position: absolute;
+  animation-duration: 0.4s;
+  animation-name: payType-slide;
+  width: 100%;
+}
+
+@keyframes payType-slide {
+  from {
+    left: 100%;
+    transform: translateX(0);
+  }
+
+  to {
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 history-content {

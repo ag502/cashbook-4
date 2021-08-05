@@ -232,12 +232,19 @@ class HistoryPanel extends HTMLElement {
         return;
       }
     });
+
+    const $togglePayTypeBtn = this.querySelector('#toggle-payType-btn');
+    $togglePayTypeBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.currentTarget.toggleClass('default');
+    });
   };
 
   render = () => {
     const { date, content, price } = this.inputInfo;
     this.setHTML(/*html*/ `
         <form>
+          
             <div class="history-input-box">
                 <label>일자</label>
                 <input 
@@ -310,7 +317,16 @@ class HistoryPanel extends HTMLElement {
 
             <div class="history-input-box cash">
                 <label>금액</label>
+                
                 <div class="cost-content">
+                        <button id="toggle-payType-btn" type="button" class='default'>
+                          <span class="income">
+                            수입
+                          </span>
+                          <span class="expenditure">
+                            지출
+                          </span>
+                        </button>
                     <input 
                       type="number" 
                       placholder="입력하세요" 
