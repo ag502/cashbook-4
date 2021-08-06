@@ -1,5 +1,5 @@
 import mysql from 'mysql2';
-import dbEnv from '../config/db-env.js';
+import dbEnv from './config/db-env.js';
 
 const pool = mysql.createPool({
   host: dbEnv.DB_HOST,
