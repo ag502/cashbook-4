@@ -4,6 +4,8 @@ import paymentAPI from '../api/paymentAPI.js';
 import observer from '@/common/utils/observer';
 import notifyTypes from '../common/utils/notifyTypes';
 
+import cashBookModel from './cashBookModel';
+
 import { getParams, removeURLParameter } from '@/common/utils/functions';
 
 class UserModel {
@@ -23,6 +25,7 @@ class UserModel {
         this.isLogin = await this.githubLogin(params.code);
         const newUrl = removeURLParameter(location.href, 'code');
         window.history.pushState({}, document.title, newUrl);
+        await cashBookModel.init();
       }
     }
 

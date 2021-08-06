@@ -31,7 +31,7 @@ export const getCategoryString = (category) => {
     { name: '식비', color: '#d092e2' },
     { name: '교통', color: '#817dce' },
     { name: '쇼핑/뷰티', color: '#4a6cc3' },
-    { name: '의료/건강', color: '#b9d58' },
+    { name: '의료/건강', color: '#6ED5EB' },
     { name: '문화/여가', color: '#e6d267' },
     { name: '미분류', color: '#e2b765' },
   ];
